@@ -1,0 +1,162 @@
+@import './BaseColor.scss';
+*
+{
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Kanit', sans-serif;
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: $white; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #2D283E;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: $purple;
+  }
+}
+
+
+.btn:focus {
+    outline: none !important;
+    outline-offset: none !important;
+}
+
+body{
+  //margin-top: 4.3rem;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  height: 100%;
+}
+
+
+.Navbar
+{
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 7vh;
+  background-color: $darkpurple; 
+}
+.Blank
+{
+  width: 100%;
+  height: 7vh;
+  background-color: #0B0C10;
+}
+.Navbar h3
+{
+  font-weight: bolder;
+  font-size: 25px;
+  color: $purple; 
+  margin: 0;
+}
+.Navbar
+{
+  .Menu{
+      ul{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+        margin: 0;
+        li{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            font-size: 18px;
+            list-style: none;
+            margin: 1rem;
+            a{
+                text-decoration: none;
+                color: $white;
+                transition: 0.2s;
+                &:hover{
+                  color: $purple !important;
+                  text-decoration: solid;
+                  transform: rotate(15deg);
+
+                  
+                }
+            }
+        }
+      }
+  }
+
+  .LOGO-Text{
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .Login{
+      ul{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        align-items: center;
+        margin: 0;
+        li{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            font-size: 18px;
+            list-style: none;
+            color: 'black';
+            a{
+                text-decoration: none;
+                color: black !important;
+                &:hover{
+                  color: black !important;
+                }
+            }
+        }
+      }
+  }
+
+  .Navbar-items
+    {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0rem;
+    }
+
+}
+
+.list{
+  color: $white;
+  text-decoration: none;
+}
+
+.log-btn {
+  background-Color: $purple ;//, borderRadius:'5rem' , boxShadow:'none' , outline:'none !important' , borderColor:'transparent'
+  border-radius: 5rem;
+  box-shadow: none;
+  outline: none !important;
+  border-color: transparent;
+  &:hover{
+    background-color: $white !important;
+  }
+}
+
+
+
+

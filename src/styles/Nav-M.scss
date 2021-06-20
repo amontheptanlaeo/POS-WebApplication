@@ -1,0 +1,21 @@
+@import './BaseColor.scss';
+
+
+.Navbar-M{
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 7vh;
+    background-color: $darkpurple; 
+} 
+
+.LOGO-Text-M{
+    color: $purple;
+    text-decoration: none;
+    text-align: center;
+
+  }

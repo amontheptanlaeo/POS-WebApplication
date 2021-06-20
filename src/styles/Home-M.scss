@@ -1,0 +1,52 @@
+@import './BaseColor.scss';
+
+.Home-M{
+    background-color: white; //display:'flex' , justifyContent:'center' , alignItems:"center" , width:'100%' , height:'93vh' , backgroundColor:'black'
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 93vh;
+    flex-direction: column;
+    text-align: center;
+    .download{
+        margin-top: 5rem;
+            h4{
+                color: $darkpurple;
+            }
+            img{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+    .Pic{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+       
+    }
+
+}
+
+@keyframes loop {
+    0%{
+        transform: rotate(0deg);
+    }
+    20%{
+        transform: rotate(-5deg);
+    }
+    40%{
+        transform: rotate(0deg);
+    }
+    60%{
+        transform: rotate(5deg);
+    }
+    80%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(0deg);
+    }
+
+}
