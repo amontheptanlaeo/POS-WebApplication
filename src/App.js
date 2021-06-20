@@ -32,7 +32,7 @@ function App() {
         <Blank/>
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/Loginn"   component={Login} />
+          <Route path="/Login"   component={Login} />
           <Route path="/Register"  component={Register} />
           <Route path="/ResetPassword"  component={ResetPass} />
           <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
