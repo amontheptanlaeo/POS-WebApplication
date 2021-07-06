@@ -3,8 +3,8 @@ import { Row, Col, Container } from 'react-bootstrap'
 function Footer() {
     return (
         <>
-            <div className="Section-A" style={{ backgroundColor: `#802BB1`, color: `black`, width: '100%', height: "15vh", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                <Container style={{ backgroundColor: '#802BB1' , textAlign:"center" }}>
+            <div className="Section-A" style={{ backgroundColor: `#802BB1`, color: `black`, width: '100%', height: "100%", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: 'column' , padding:'1rem'}}>
+                <Container style={{  textAlign:"center"  , paddingTop:'1rem' , paddingBottom: '1rem'}}>
                     <Row>
                         <Col>
                             <div>

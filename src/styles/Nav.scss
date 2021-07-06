@@ -90,7 +90,8 @@ body{
                 &:hover{
                   color: $purple !important;
                   text-decoration: solid;
-                  transform: rotate(15deg);
+                  //transform: rotate(15deg);
+                  padding-bottom: 8px;
 
                   
                 }
