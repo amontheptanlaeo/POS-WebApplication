@@ -5,6 +5,8 @@ import img from '../images/SignIn.svg'
 import { motion } from "framer-motion"
 
 
+import '../styles/Login.scss'
+
 
 function Login() {
 
@@ -38,6 +40,12 @@ function Login() {
     setPass(e.target.value)
   }
 
+
+  const signIn = () => {
+    localStorage.setItem('user','MINI SHOP')
+    window.location.href = '/'
+  }
+
   return (
     <>
       <div className="LoginBlog" style={{ display: 'flex', justifyContent: "space-between", alignItems: 'center' }}>
@@ -54,7 +62,7 @@ function Login() {
               <Form.Control type="password" placeholder="ระบุรหัสผ่าน" ref={passRef} value={pass} onChange={handleChangePass} required />
             </Form.Group>
             <motion.p  initial={{x:-100 , opacity:0}} animate={{x:0 , opacity:1 , transition:{duration:1}}} whileTap={{scale:0.9}}>
-              <Button className="w-100 mb-2 log-btn" style={{ backgroundColor: "#802BB1", color:'black' , borderRadius: '5rem', boxShadow: 'none', outline: 'none !important', borderColor: 'transparent' }}>
+              <Button className="w-100 mb-2 log-btn" onClick={signIn} style={{ backgroundColor: "#802BB1", color:'black' , borderRadius: '5rem', boxShadow: 'none', outline: 'none !important', borderColor: 'transparent' }}>
                   เข้าสู่ระบบ
               </Button>
             </motion.p>
@@ -62,9 +70,8 @@ function Login() {
             <p className="mt-2">ลืมรหัสผ่าน? <Link to="/ResetPassword">คลิก</Link></p>
           </Form>
         </div>
-        <div style={{WebkitBoxReflect:" below 5px linear-gradient(transparent, white)"}}>
+        <div className="SidePic" style={{WebkitBoxReflect:" below 5px linear-gradient(transparent, white)"}}>
           <motion.img initial={{scale:0}} animate={{scale:1 , transition:{duration:1}}} src={img} alt="PIC"/>
-           
         </div>
        
       </div>

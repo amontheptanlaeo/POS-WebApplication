@@ -1,0 +1,17 @@
+
+@import './BaseColor.scss';
+@media only screen and (max-width: 1146px) {
+
+.LoginBlog{
+    justify-content: center !important;
+    .box{
+        width: 100% !important;
+    }
+}
+
+    .SidePic{
+        display: none;
+        visibility: hidden;
+    }
+    
+  }

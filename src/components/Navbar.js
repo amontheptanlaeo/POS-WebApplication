@@ -84,11 +84,66 @@ function Navbar() {
                         </div>
                         <div className="Login">
                             <ul>
-                             <motion.li initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 2 } }}  whileTap={{scale:0.9}}>
-                                    <Button className="w-100 mb-2 log-btn" style={{outline: 'none !important'}}>
-                                        <Link to="/Login" ClassName="list">เข้าสู่ระบบ/สมัครสมาชิก</Link>
-                                    </Button>
-                                    </motion.li>
+                                <motion.li initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 2 } }} whileTap={{ scale: 0.9 }}>
+                                    <Link to="/Login" ClassName="list">
+                                        <Button className="w-100 mb-2 log-btn" style={{ outline: 'none !important', color: 'black' }}>
+                                        เข้าสู่ระบบ/สมัครสมาชิก
+                                        </Button>
+                                    </Link>
+                                </motion.li>
+                            </ul>
+                        </div>
+                        <div className="Menu-Responsive">
+                            <ul>
+                                <motion.li initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1 } }}>
+                                    <Target activeClass="active"
+                                        to="system"
+                                        spy={true}
+                                        smooth={true}
+                                        hashSpy={true}
+                                        offset={-40}
+                                        duration={800}
+                                        delay={100}
+                                        isDynamic={true}
+                                        ignoreCancelEvents={false}
+                                    >
+                                        <Link to="/" ClassName="list">ระบบ</Link>
+                                    </Target>
+
+                                </motion.li>
+                                <motion.li initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.3 } }}>
+                                    <Target activeClass="active"
+                                        to="cus"
+                                        spy={true}
+                                        smooth={true}
+                                        hashSpy={true}
+                                        offset={0}
+                                        duration={800}
+                                        delay={100}
+                                        isDynamic={true}
+                                        ignoreCancelEvents={false}
+                                    >
+                                        <Link to="/" ClassName="list">ลูกค้า</Link>
+                                    </Target>
+                                </motion.li>
+                                <motion.li initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.6 } }}>
+                                    <Target activeClass="active"
+                                        to="contact"
+                                        spy={true}
+                                        smooth={true}
+                                        hashSpy={true}
+                                        offset={180}
+                                        duration={800}
+                                        delay={100}
+                                        isDynamic={true}
+                                        ignoreCancelEvents={false}
+                                    >
+                                        <Link to="/" ClassName="list">ติดต่อ</Link>
+                                    </Target>
+                                </motion.li>
+                                <motion.li initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.6 } }}>
+                                    <Link to="/Login" ClassName="list">เข้าสู่ระบบ</Link>
+                                </motion.li>
                             </ul>
                         </div>
 

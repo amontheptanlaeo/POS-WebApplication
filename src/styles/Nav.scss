@@ -2,6 +2,7 @@
 *
 {
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-family: 'Kanit', sans-serif;
   /* width */
@@ -41,9 +42,17 @@ body{
 }
 
 
+
+.Blank
+{
+  width: 100%;
+  height: 7vh;
+  background-color: #0B0C10;
+}
+
 .Navbar
 {
-  z-index: 10;
+  z-index: 999;
   position: fixed;
   top: 0;
   display: flex;
@@ -52,22 +61,12 @@ body{
   width: 100%;
   height: 7vh;
   background-color: $darkpurple; 
-}
-.Blank
-{
-  width: 100%;
-  height: 7vh;
-  background-color: #0B0C10;
-}
-.Navbar h3
-{
-  font-weight: bolder;
-  font-size: 25px;
-  color: $purple; 
-  margin: 0;
-}
-.Navbar
-{
+  h3{
+      font-weight: bolder;
+      font-size: 25px;
+      color: $purple; 
+      margin: 0;
+  }
   .Menu{
       ul{
         display: flex;
@@ -92,14 +91,11 @@ body{
                   text-decoration: solid;
                   //transform: rotate(15deg);
                   padding-bottom: 8px;
-
-                  
                 }
             }
         }
       }
   }
-
   .LOGO-Text{
     text-decoration: none;
     text-align: center;
@@ -140,6 +136,10 @@ body{
     padding: 0rem;
     }
 
+    .Menu-Responsive{
+      display: none;
+    }
+
 }
 
 .list{
@@ -156,6 +156,154 @@ body{
   &:hover{
     background-color: $white !important;
   }
+}
+
+
+
+
+@media only screen and (max-width: 768px) {
+
+   
+
+    .Navbar{
+
+      
+
+      .Menu{
+        display: none;
+        visibility: hidden;
+      }
+
+
+  
+      .Login{
+        display: none;
+      }
+
+      .LOGO-Text{
+        h3{
+          font-size: 14px;
+        }
+      }
+
+
+      .Menu-Responsive{
+        display: inline-block;
+        ul{
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          align-items: center;
+          margin: 0;
+          padding: 0;
+          li{
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+              font-size: 14px;
+              list-style: none;
+              margin: 0rem;
+              a{
+                width: 60px;
+                  text-decoration: none;
+                  color: $white;
+                  transition: 0.2s;
+                  &:hover{
+                    color: $purple !important;
+                    text-decoration: solid;
+                    //transform: rotate(15deg);
+                    padding-bottom: 8px;
+  
+                    
+                  }
+              }
+          }
+        }
+      }
+
+    }
+
+    
+
+}
+
+
+@media only screen and (max-width: 375px) {
+
+   
+
+  .Navbar{
+    height: 10vh;
+    .container{
+      .Navbar-items{
+        display: block;
+        
+    .Menu{
+      display: none;
+      visibility: hidden;
+    }
+
+
+
+    .Login{
+      display: none;
+    }
+
+    .LOGO-Text{
+      
+      h3{
+        font-size: 14px;
+
+      }
+    }
+
+
+    .Menu-Responsive{
+      display: flex;
+      margin-Top: 16px !important;
+      ul{
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        li{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            font-size: 14px;
+            list-style: none;
+            a{
+    
+                text-decoration: none;
+                color: $white;
+                transition: 0.2s;
+                &:hover{
+                  color: $purple !important;
+                  text-decoration: solid;
+                  //transform: rotate(15deg);
+                  padding-bottom: 8px;
+
+                  
+                }
+            }
+        }
+      }
+    }
+        
+      }
+    }
+
+    
+
+
+  }
+
+  
+
 }
 
 

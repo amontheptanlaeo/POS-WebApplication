@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Button, Form, Alert } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import img from '../images/ForgetPass.svg'
-
+import { motion } from "framer-motion"
 function ResetPass() {
 
     
@@ -56,8 +56,8 @@ function ResetPass() {
                 <p className="mt-2">เป็นสมาชิกอยู่แล้ว? <Link to="/Login">เข้าสู่ระบบ</Link></p>
               </Form>
             </div>
-            <div /* style={{WebkitBoxReflect:" below 5px linear-gradient(transparent, white)"}} */ >
-              <img src={img} alt="PIC"/>
+            <div className="SidePic"/* style={{WebkitBoxReflect:" below 5px linear-gradient(transparent, white)"}} */ >
+              <motion.img initial={{scale:0}} animate={{scale:1 , transition:{duration:1}}} src={img} alt="PIC"/>
             </div>
            
           </div>

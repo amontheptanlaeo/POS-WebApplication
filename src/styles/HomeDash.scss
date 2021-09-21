@@ -1,0 +1,12 @@
+@import './BaseColor.scss';
+
+.content-dash{
+
+}
+
+@media only screen and (max-width: 1355px) {
+    .content-dash{
+        display: none;
+    }
+  }
+
