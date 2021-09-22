@@ -32,6 +32,9 @@ function Dashboard() {
                             <Icon path='Sell' img={graph} description='งานขาย'/>
                             <Icon path='Profit' img={basket} description='ภาพรวมยอดขาย'/>
                             <Icon path='Withdraw' img={graph} description='เบิกเงินทอน'/>
+                            <Icon path='Recieve' img={basket} description='ประวัติการรับสินค้า'/>
+                            <Icon path='Barcode' img={graph} description='พิมพ์/สร้างบาร์โค้ด'/>
+                            <Icon path='Conclude' img={basket} description='สรุปยอดขาย'/>
                         </ul>
                     </Col>
                 </Row>
