@@ -11,7 +11,7 @@ function ListMoney({moneyIMG,moneyValue,temptest,test}) {
                 <div className='MoneyAdd' style={{display:'flex' , justifyContent:'center' , alignItems:'center' , flexDirection:'column' , margin:'1rem'}}>
                     <div style={{display:'flex' , justifyContent:'space-between' , alignItems:'center' , width:'100%'}}>
                         <div style={{display:'flex' , justifyContent:'center' , alignItems:'center'}}>
-                            <img onClick={()=>test(temptest+(money*moneyValue))}src={moneyIMG} style={{width:'300px'}}/>
+                            <img onClick={()=>test(temptest+(money*moneyValue))}src={moneyIMG} style={{width:'200px'}}/>
                         </div>
                         <div style={{display:'flex' , justifyContent:'center' , alignItems:'center'}}>
                             <p className="ml-3" style={{textAlign:'center' , margin:'0'}}>{moneyValue} x</p>

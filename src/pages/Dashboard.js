@@ -6,6 +6,18 @@ import {
 import BlankSide from '../components/BlankSide';
 import basket from '../images/IconsMenu/Icons/basket.png'
 import graph from '../images/IconsMenu/Icons/graph.png'
+import barcode from '../images/IconsMenu/Icons/barcode-scanning.png'
+import sell from '../images/IconsMenu/Icons/cash-register.png'
+import add from '../images/IconsMenu/Icons/hand-package.png'
+import recieve from '../images/IconsMenu/Icons/invoice.png'
+import money from '../images/IconsMenu/Icons/euro-bill.png'
+import receipt from '../images/IconsMenu/Icons/receipt.png'
+import delivery from '../images/IconsMenu/Icons/delivery-truck.png'
+import checklist from '../images/IconsMenu/Icons/checklist.png'
+import wallet from '../images/IconsMenu/Icons/wallet.png'
+import shirt from '../images/IconsMenu/Icons/heart-shirt.png'
+import tag from '../images/IconsMenu/Icons/heart-label-tag.png'
+
 import { motion } from 'framer-motion';
 import { Link } from "react-router-dom";
 import Icon from '../components/IconMenu'
@@ -29,21 +41,45 @@ function Dashboard() {
                     <Col xs={12} sm={12} md={9} style={{paddingTop:'2rem'}}>
                         <ul>
                             <Icon path='Product' img={basket} description='สินค้าคงคลัง'/>
-                            <Icon path='Sell' img={graph} description='งานขาย'/>
-                            <Icon path='Profit' img={basket} description='ภาพรวมยอดขาย'/>
-                            <Icon path='Withdraw' img={graph} description='เบิกเงินทอน'/>
-                            <Icon path='Recieve' img={basket} description='ประวัติการรับสินค้า'/>
-                            <Icon path='Barcode' img={graph} description='พิมพ์/สร้างบาร์โค้ด'/>
-                            <Icon path='Conclude' img={basket} description='สรุปยอดขาย'/>
+                            <Icon path='Sell' img={sell} description='งานขาย'/>
+                            <Icon path='AddProduct' img={add} description='เพิ่มสินค้า'/>
+                            <Icon path='AddCategory' img={tag} description='เพิ่มหมวดหมู่'/>
+
+                            <Icon path='AddRecieve' img={delivery} description='เพิ่มแหล่งที่มา'/>
+                            
+                            <Icon path='Recieve' img={recieve} description='ประวัติการรับสินค้า'/>
+                            <Icon path='ListBill' img={receipt} description='ประวัติรายการบิลขาย'/>
+                            <Icon path='Barcode' img={barcode} description='พิมพ์/สร้างบาร์โค้ด'/>
+
+                            <Icon path='Withdraw' img={money} description='เบิกเงินทอน'/>
+
+                            <Icon path='SetWithdraw' img={wallet} description='เซตเงินทอน'/>
+
+                            <Icon path='Profit' img={checklist} description='ภาพรวมยอดขาย'/>
+                            <Icon path='Conclude' img={graph} description='สรุปยอดขาย'/>
+                            <Icon path='AddEmployee' img={shirt} description='เพิ่มพนักงาน'/>
+
                         </ul>
                     </Col>
                 </Row>
                 </motion.div>
                 <ul className='res-Menu'>
-                    <IconResp path='Product' img={basket} description='สินค้าคงคลัง'/>
+                    {/* <IconResp path='Product' img={basket} description='สินค้าคงคลัง'/>
                     <IconResp path='Sell' img={graph} description='งานขาย'/>
                     <IconResp path='Profit' img={basket} description='ภาพรวมยอดขาย'/>
-                    <IconResp path='Withdraw' img={graph} description='เบิกเงินทอน'/>
+                    <IconResp path='Withdraw' img={graph} description='เบิกเงินทอน'/> */}
+                    <IconResp path='Product' img={basket} description='สินค้าคงคลัง'/>
+                    <IconResp path='Sell' img={sell} description='งานขาย'/>
+                    <IconResp path='AddProduct' img={add} description='เพิ่มสินค้า'/>
+                    <IconResp path='AddRecieve' img={delivery} description='เพิ่มแหล่งที่มา'/>
+                    <IconResp path='Barcode' img={barcode} description='พิมพ์/สร้างบาร์โค้ด'/>
+                    <IconResp path='Withdraw' img={money} description='เบิกเงินทอน'/>
+                    <IconResp path='Recieve' img={recieve} description='ประวัติการรับสินค้า'/>
+                    <IconResp path='ListBill' img={receipt} description='ประวัติรายการบิลขาย'/>
+                    <IconResp path='Profit' img={graph} description='ภาพรวมยอดขาย'/>
+                    <IconResp path='Conclude' img={receipt} description='สรุปยอดขาย'/>
+                    <IconResp path='AddEmployee' img={shirt} description='เพิ่มพนักงาน'/>
+                    <IconResp path='AddCategory' img={tag} description='เพิ่มหมวดหมู่'/>
                 </ul>
             </div>
         </div>

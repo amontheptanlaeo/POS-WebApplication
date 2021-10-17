@@ -1,4 +1,4 @@
-import React from 'react'
+import React , { useState , useEffect } from 'react'
 import {
     Row,
     Col
@@ -6,15 +6,40 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 import BlankSide from '../components/BlankSide';
 import { motion } from 'framer-motion';
+import axios from 'axios';
+import ModalSettingProduct from '../components/ModalSettingProduct';
 
 import SwiperCore, {
     Pagination, Autoplay
 } from 'swiper/core';
 
+
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination]);
 
 function Product() {
+
+    const [Allproduct , setAllProduct] = useState([])
+    const [modalP, setModalP] = useState(false);
+    const temp = []
+
+    const [product, setProduct] = useState({
+        name:'',
+        price: 0,
+        img:''
+    });
+
+    const toggle = () => setModalP(!modalP);
+
+    useEffect(async()=>{
+        const data = await axios.post('https://posappserver.herokuapp.com/getAlladdgoods',{
+            Branch_ID: localStorage.getItem('Branch_ID')
+        })
+        console.log(data.data)
+        setAllProduct(data.data)
+    },[])
+
+
     return (
         <motion.div initial={{translateX:500}} animate={{translateX:-50}} transition={{duration:0.5}}   className="content" style={{overflow:'hidden'}}>
         <Row>
@@ -22,109 +47,71 @@ function Product() {
                 <BlankSide/>
             </Col>
             <Col md={9} style={{paddingTop:'2rem' , display:'flex' , flexDirection:'column' , height:'100%' }}>
-                <div style={{height:'100%' , margin:'2rem'}}>
-                    <h4>เครื่องดื่ม <span style={{fontSize:'18px'}}><a href='#'>ทั้งหมด</a></span></h4>
-                    <Swiper
-                    style={{ '--swiper-pagination-color': '#802BB1', height: "100%", position: "relative" }}
-                    slidesPerView={6}
-                    spaceBetween={2}
-                    centeredSlides={true}
-                    loop={true}
-                    // autoplay={{
-                    //     "delay": 8000,
-                    //     "disableOnInteraction": false
-                    // }}
-                    pagination={{
-                        "dynamicBullets": true,
-                        "clickable": true,
-                    }} className="mySwiper">
-                        <SwiperSlide ><img src={'https://bigboy.co.th/bangkok/wp-content/uploads/sites/2/2020/05/Coke-Full-red-325-ml.png'} style={{objectFit:'contain' , height:'200px' ,width:'200px'}} alt="1" /></SwiperSlide>
-                        <SwiperSlide ><img src={'http://pngimg.com/uploads/pepsi/pepsi_PNG5.png'} alt="1"style={{objectFit:'contain' , height:'200px' ,width:'200px' }} /></SwiperSlide>
-                        <SwiperSlide ><img src={'https://freepngdownload.com/image/thumb/sprite-png-free-download-4.png'} alt="1" style={{objectFit:'contain' , height:'200px' ,width:'200px'}}/></SwiperSlide>
-                        <SwiperSlide ><img src={'https://bigboy.co.th/bangkok/wp-content/uploads/sites/2/2020/05/Coke-Full-red-325-ml.png'} style={{objectFit:'contain' , height:'200px' ,width:'200px'}} alt="1" /></SwiperSlide>
-                        <SwiperSlide ><img src={'http://pngimg.com/uploads/pepsi/pepsi_PNG5.png'} alt="1"style={{objectFit:'contain' , height:'200px' ,width:'200px' }} /></SwiperSlide>
-                        <SwiperSlide ><img src={'https://freepngdownload.com/image/thumb/sprite-png-free-download-4.png'} alt="1" style={{objectFit:'contain' , height:'200px' ,width:'200px'}}/></SwiperSlide>
-                    </Swiper>
-                </div>
-                <div style={{height:'100%' , margin:'2rem'}}>
-                    <h4>ขนม</h4>
-                    <Swiper
-                    style={{ '--swiper-pagination-color': '#802BB1', height: "100%", position: "relative" }}
-                    slidesPerView={6}
-                    spaceBetween={2}
-                    centeredSlides={true}
-                    loop={true}
-                    // autoplay={{
-                    //     "delay": 8000,
-                    //     "disableOnInteraction": false
-                    // }}
-                    pagination={{
-                        "dynamicBullets": true,
-                        "clickable": true,
-                    }} className="mySwiper">
-                        <SwiperSlide ><img src={'https://bigboy.co.th/bangkok/wp-content/uploads/sites/2/2020/05/Coke-Full-red-325-ml.png'} style={{objectFit:'contain' , height:'200px' ,width:'200px'}} alt="1" /></SwiperSlide>
-                        <SwiperSlide ><img src={'http://pngimg.com/uploads/pepsi/pepsi_PNG5.png'} alt="1"style={{objectFit:'contain' , height:'200px' ,width:'200px' }} /></SwiperSlide>
-                        <SwiperSlide ><img src={'https://freepngdownload.com/image/thumb/sprite-png-free-download-4.png'} alt="1" style={{objectFit:'contain' , height:'200px' ,width:'200px'}}/></SwiperSlide>
-                        <SwiperSlide ><img src={'https://bigboy.co.th/bangkok/wp-content/uploads/sites/2/2020/05/Coke-Full-red-325-ml.png'} style={{objectFit:'contain' , height:'200px' ,width:'200px'}} alt="1" /></SwiperSlide>
-                        <SwiperSlide ><img src={'http://pngimg.com/uploads/pepsi/pepsi_PNG5.png'} alt="1"style={{objectFit:'contain' , height:'200px' ,width:'200px' }} /></SwiperSlide>
-                        <SwiperSlide ><img src={'https://freepngdownload.com/image/thumb/sprite-png-free-download-4.png'} alt="1" style={{objectFit:'contain' , height:'200px' ,width:'200px'}}/></SwiperSlide>
-                    </Swiper>
-                </div>
-                <div style={{height:'100%' , margin:'2rem'}}>
-                    <h4>อาหาร</h4>
-                    <Swiper
-                    style={{ '--swiper-pagination-color': '#802BB1', height: "100%", position: "relative" }}
-                    slidesPerView={6}
-                    spaceBetween={2}
-                    centeredSlides={true}
-                    loop={true}
-                    // autoplay={{
-                    //     "delay": 8000,
-                    //     "disableOnInteraction": false
-                    // }}
-                    pagination={{
-                        "dynamicBullets": true,
-                        "clickable": true,
-                    }} className="mySwiper">
-                        <SwiperSlide ><img src={'https://bigboy.co.th/bangkok/wp-content/uploads/sites/2/2020/05/Coke-Full-red-325-ml.png'} style={{objectFit:'contain' , height:'200px' ,width:'200px'}} alt="1" /></SwiperSlide>
-                        <SwiperSlide ><img src={'http://pngimg.com/uploads/pepsi/pepsi_PNG5.png'} alt="1"style={{objectFit:'contain' , height:'200px' ,width:'200px' }} /></SwiperSlide>
-                        <SwiperSlide ><img src={'https://freepngdownload.com/image/thumb/sprite-png-free-download-4.png'} alt="1" style={{objectFit:'contain' , height:'200px' ,width:'200px'}}/></SwiperSlide>
-                        <SwiperSlide ><img src={'https://bigboy.co.th/bangkok/wp-content/uploads/sites/2/2020/05/Coke-Full-red-325-ml.png'} style={{objectFit:'contain' , height:'200px' ,width:'200px'}} alt="1" /></SwiperSlide>
-                        <SwiperSlide ><img src={'http://pngimg.com/uploads/pepsi/pepsi_PNG5.png'} alt="1"style={{objectFit:'contain' , height:'200px' ,width:'200px' }} /></SwiperSlide>
-                        <SwiperSlide ><img src={'https://freepngdownload.com/image/thumb/sprite-png-free-download-4.png'} alt="1" style={{objectFit:'contain' , height:'200px' ,width:'200px'}}/></SwiperSlide>
-                    </Swiper>
-                </div>
-                <div style={{height:'100%' , margin:'2rem'}}>
-                    <h4>ของใช้</h4>
-                    <Swiper
-                    style={{ '--swiper-pagination-color': '#802BB1', height: "100%", position: "relative" }}
-                    slidesPerView={6}
-                    spaceBetween={2}
-                    centeredSlides={true}
-                    loop={true}
-                    // autoplay={{
-                    //     "delay": 8000,
-                    //     "disableOnInteraction": false
-                    // }}
-                    pagination={{
-                        "dynamicBullets": true,
-                        "clickable": true,
-                    }} className="mySwiper">
-                        <SwiperSlide ><img src={'https://bigboy.co.th/bangkok/wp-content/uploads/sites/2/2020/05/Coke-Full-red-325-ml.png'} style={{objectFit:'contain' , height:'200px' ,width:'200px'}} alt="1" /></SwiperSlide>
-                        <SwiperSlide ><img src={'http://pngimg.com/uploads/pepsi/pepsi_PNG5.png'} alt="1"style={{objectFit:'contain' , height:'200px' ,width:'200px' }} /></SwiperSlide>
-                        <SwiperSlide ><img src={'https://freepngdownload.com/image/thumb/sprite-png-free-download-4.png'} alt="1" style={{objectFit:'contain' , height:'200px' ,width:'200px'}}/></SwiperSlide>
-                        <SwiperSlide ><img src={'https://bigboy.co.th/bangkok/wp-content/uploads/sites/2/2020/05/Coke-Full-red-325-ml.png'} style={{objectFit:'contain' , height:'200px' ,width:'200px'}} alt="1" /></SwiperSlide>
-                        <SwiperSlide ><img src={'http://pngimg.com/uploads/pepsi/pepsi_PNG5.png'} alt="1"style={{objectFit:'contain' , height:'200px' ,width:'200px' }} /></SwiperSlide>
-                        <SwiperSlide ><img src={'https://freepngdownload.com/image/thumb/sprite-png-free-download-4.png'} alt="1" style={{objectFit:'contain' , height:'200px' ,width:'200px'}}/></SwiperSlide>
-                    </Swiper>
-                </div>
-           
-                
-            
+            {
+                            Allproduct.map(e=>{
+                                
+                                if(temp.indexOf(e.Type_Name) !== -1)  
+                                {  
+                                        return
+                                }   
+                                else  
+                                {
+                                        temp.push(e.Type_Name)
+                                        
+                                        return(
+                                            <div className='ItemListSell'>
+                                                <p>{e.Type_Name}</p>
+                                                <Swiper
+                                                style={{ '--swiper-pagination-color': '#802BB1', height: "100%"}}
+                                                slidesPerView={6}
+                                                spaceBetween={30}
+                                                centeredSlides={true}
+                                                loop={false}
+                                                pagination={{
+                                                    "dynamicBullets": true,
+                                                    "clickable": true,
+                                                }} className="mySwiper">
+                                                    {Allproduct.map((e2,idx)=>{
+                                                        if(e2.Type_Name == e.Type_Name){
+                                                            return <SwiperSlide style={{borderRadius:'3rem'}}><img src={e2.Goods_img} style={{objectFit:'contain' , height:'150px' ,width:'150px'}} alt={idx} 
+                                                            onClick={()=>{
+                                                                setProduct({
+                                                                    name: e2.Goods_Name,
+                                                                    price:18,
+                                                                    img: e2.Goods_img
+                                                                })
+                                                           
+                                                                
+                                                                 toggle()
+                                    
+                                                            }}
+                                                            /></SwiperSlide>
+                                                        }
+                                                        return
+                                                        
+                                                    })}
+                                                </Swiper>
+                                            </div>
+                                    )
+                                }  
+                               
+                            })
+                            
+                        }
 
             </Col>
         </Row>
+
+        <ModalSettingProduct
+                show={modalP}
+                onHide={() => setModalP(false)}
+                toggle={() => toggle()}
+                data={product}           
+            />
+
         </motion.div>
+
+        
 
 
     )

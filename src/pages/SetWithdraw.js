@@ -8,7 +8,7 @@ import BlankSide from '../components/BlankSide';
 import { motion } from 'framer-motion';
 import ListMoney from '../components/ListMoney'
 import { Container } from 'react-bootstrap';
-function Withdraw() {
+function SetWithdraw() {
     const [total,setTotal] = useState(0)
     return (
         <motion.div initial={{translateX:500}} animate={{translateX:-50}} transition={{duration:0.5}} className="content">
@@ -19,8 +19,7 @@ function Withdraw() {
             <Col  xs={12} sm={12} md={9} style={{paddingTop:'2rem' , display:'flex' , flexWrap:'wrap' , justifyContent:'center'}}>
                 
                 <Container>
-                <h4>เบิกเงินทอน</h4>
-
+                <h4>เซตเงินทอน</h4>
                    <div style={{display:'flex' , flexWrap:'wrap' , justifyContent:'center'}}>
                     <ListMoney moneyIMG='https://lifestyle.campus-star.com/app/uploads/2018/03/thmoney-09.jpg' moneyValue='1000' temptest={total} test={setTotal}/>
                     <ListMoney moneyIMG='https://lifestyle.campus-star.com/app/uploads/2018/03/thmoney-07.jpg' moneyValue='500' temptest={total} test={setTotal}/>
@@ -51,4 +50,4 @@ function Withdraw() {
     )
 }
 
-export default Withdraw
+export default SetWithdraw

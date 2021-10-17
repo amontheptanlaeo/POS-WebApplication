@@ -15,7 +15,6 @@ import ResetPass from './pages/ResetPass'
 //Component
 import Nav from './components/Navbar'
 import NavAdmin from './components/NavbarAdmin'
-import NavAdminRes from './components/NavbarAdminResponsive'
 import Blank from './components/Blank'
 
 //Page OnLogIn
@@ -24,8 +23,20 @@ import NotFound from './pages/NotFound'
 import Dashboard from './pages/Dashboard';
 import Withdraw from './pages/Withdraw';
 import Profit from './components/Dashboard/views/Profit';
+import TableList from './components/Dashboard/views/TableList';
 import SellPage from './pages/SellPage';
 import ManageBranch from './pages/ManageBranch';
+import Recieve from './pages/Recieve';
+import AddGoods from './pages/AddGoods';
+import AddEmp from './pages/AddEmp';
+import AddCategory from './pages/AddCategory';
+import AddRecieve from './pages/AddRecieve';
+import OverAll from './pages/OverAll';
+import BillList from './pages/BillList';
+import SellGoods from './pages/SellGoods';
+import SetWithdraw from './pages/SetWithdraw';
+import HistoryRecieve from './pages/HistoryRecieve';
+import HistorySell from './pages/HistorySell';
 
 // import AdminLayout from "./components/Dashboard/layouts/Admin/Admin.js";
 // //import "./components/Dashboard/assets/scss/black-dashboard-react.scss";
@@ -44,20 +55,29 @@ function App() {
 
     return (
       <Router>
-        {
-           window.matchMedia("(min-width: 1355px)").matches && <NavAdmin />
-        }
-        {/* <NavAdminRes/> */}
+      
+        <NavAdmin />
+
         <Switch>
-          {/* {
-            window.matchMedia("(max-width: 1355px)").matches ?  <Route path="/" exact component={NavAdminRes} />: <Route path="/" exact component={Dashboard} />
-          } */}
+
           <Route path="/" exact component={Dashboard} />
-          <Route path="/Profit" component={Profit} />
+          <Route path="/Conclude" component={Profit} />
+          <Route path="/Profit" component={OverAll} />
           <Route path="/Product" component={Product} />
           <Route path="/Withdraw" component={Withdraw} />
           <Route path="/Sell" component={SellPage} />
           <Route path="/Branch" component={ManageBranch} />
+          <Route path="/Recieve" component={Recieve} />
+          <Route path="/AddProduct" component={AddGoods} />
+          <Route path="/AddEmployee" component={AddEmp} />
+          <Route path="/AddCategory" component={AddCategory} />
+          <Route path="/AddRecieve" component={AddRecieve} />
+          <Route path="/ListBill" component={BillList} />
+          <Route path="/SellGoods" component={SellGoods} />
+          <Route path="/SetWithdraw" component={SetWithdraw} />
+          <Route path="/history/recieve/:bill" component={HistoryRecieve} />
+          <Route path="/history/sell/:bill" component={HistorySell} />
+
           <Route path="" component={NotFound} />
         </Switch>
       </Router>

@@ -64,7 +64,7 @@ function Profit(props) {
       <motion.div initial={{ translateX: 500 }} animate={{ translateX: -50 }} transition={{ duration: 0.5 }} className="content">
         <Row>
           <Col md={3}>
-            <BlankSide />
+            {/* <BlankSide /> */}
           </Col>
           <Col md={9} style={{ paddingTop: '2rem' }}>
             <div className="Banner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
@@ -74,7 +74,7 @@ function Profit(props) {
               <p>สาขา กำแพงแสน</p>
             </div>
             <Row>
-              <Col xs="12">
+              <Col md="12">
                 <Card className="card-chart">
                   <CardHeader>
                     <Row>

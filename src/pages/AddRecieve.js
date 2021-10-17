@@ -1,0 +1,358 @@
+import React, { useState, useRef , useEffect } from "react";
+import axios from "axios";
+import {
+  Input,
+  InputGroup,
+  InputGroupText,
+  InputGroupAddon,
+  Table
+} from "reactstrap";
+import { Button, Form, Alert, Row, Col, Container } from "react-bootstrap";
+import ModalAddRecieve from "../components/ModalAddRecieve";
+import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import '../styles/AddRecieve.scss'
+import SwiperCore, {
+    Pagination, Autoplay
+} from 'swiper/core';
+
+// install Swiper modules
+SwiperCore.use([Autoplay, Pagination]);
+
+
+function AddRecieve() {
+
+
+  const [Goods_ID,setGood_ID] = useState("")
+  const [Goods_History_ID,setGoods_History_ID] = useState("")
+  const [Goods_Name,setGoods_Name] = useState("")
+  const [DateAdd_Storks,setDateAdd_Storks] = useState("")
+  const [Count_Begin,setCount_Begin] = useState("")
+  const [Count_Stock,setCount_Stock] = useState("")
+  const [Cost_Unit,setCost_Unit] = useState("")
+  const [Cost_Total_Unit,setCost_Total_Unit] = useState("")
+  const [Type_ID,setType_ID] = useState("")
+  const [Type_Name,setType_Name] = useState("")
+  const [ID,setID] = useState("")
+  const [FirstName,setFirstName] = useState("")
+  const [LastName,setLastName] = useState("")
+  const [Branch_ID,setBranch_ID] = useState("")
+  const [Goods_img,setGoods_img] = useState(null)
+  const [Position,setPosition] = useState("")
+  const [Store_ID,setStore_ID] = useState("")
+  const [Store_Name,setStore_Name] = useState("")
+  const [Cost_Total,setCost_Total] = useState("")
+  const [Origin,setOrigin] = useState("")
+
+
+  const [LinkBill,setLinkBill] = useState(null)
+  const [Bill_Number,setBill_Number]=useState("")
+  const [GoodsPrice, setGoodsPrice] = useState(0);
+  const [Allproduct, setAllProduct] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [modalP, setModalP] = useState(false);
+  const [modalS, setModalS] = useState(false);
+  const [product, setProduct] = useState({
+        name:'',
+        barcode: '',
+        img:''
+    });
+  const temp = []
+  const toggle = () => setModalP(!modalP);
+
+
+
+  const AddRecieveFN = async(e) => {
+    e.preventDefault()
+    const currentdate = new Date();
+    const dateOnAdd = currentdate.getFullYear() +
+    "-" +
+    (currentdate.getMonth() + 1 < 10
+      ? "0" + (currentdate.getMonth() + 1)
+      : currentdate.getMonth() + 1) +
+    "-" +
+    (currentdate.getDate() < 10
+      ? "0" + currentdate.getDate()
+      : currentdate.getDate()) +
+    "T" +
+    (currentdate.getHours() < 10
+      ? "0" + currentdate.getHours()
+      : currentdate.getHours()) +
+    ":" +
+    (currentdate.getMinutes() < 10
+      ? "0" + currentdate.getMinutes()
+      : currentdate.getMinutes()) +
+    ":" +
+    (currentdate.getSeconds() < 10
+      ? "0" + currentdate.getSeconds()
+      : currentdate.getSeconds())
+
+      const genDate = currentdate.getFullYear() +
+      
+      (currentdate.getMonth() + 1 < 10
+        ? "0" + (currentdate.getMonth() + 1)
+        : currentdate.getMonth() + 1) +
+     
+      (currentdate.getDate() < 10
+        ? "0" + currentdate.getDate()
+        : currentdate.getDate()) +
+     
+      (currentdate.getHours() < 10
+        ? "0" + currentdate.getHours()
+        : currentdate.getHours()) +
+     
+      (currentdate.getMinutes() < 10
+        ? "0" + currentdate.getMinutes()
+        : currentdate.getMinutes()) +
+     
+      (currentdate.getSeconds() < 10
+        ? "0" + currentdate.getSeconds()
+        : currentdate.getSeconds()) +
+        (currentdate.getMilliseconds() < 100 
+        ? "00" + currentdate.getMilliseconds():currentdate.getMilliseconds())
+    try {
+        await axios.post('https://posappserver.herokuapp.com/postupdategoods',{
+        ID : localStorage.getItem('ID'),
+        Branch_ID : localStorage.getItem('Branch_ID'),
+        Store_ID : localStorage.getItem('Store_ID'),
+        Origin : Origin,
+        DateAdd_History : dateOnAdd,
+        GenDate: genDate,
+        LinkBill : LinkBill,
+        Bill_Number:Bill_Number
+      })
+
+
+    } catch (error) {
+      console.log(error);
+    }
+    
+  };
+
+  
+
+   
+    
+
+
+    useEffect(async()=>{
+      const data = await axios.post('https://posappserver.herokuapp.com/getAllgoods',{
+        Branch_ID: localStorage.getItem('Branch_ID')
+      })
+      console.log(data.data)
+      setAllProduct(data.data)
+  
+  },[])
+
+  useEffect(()=>{
+    getCart();
+  })
+
+
+  const getCart = async() => {
+    const Resp = await axios.post('https://posappserver.herokuapp.com/getbuffer-cart-recive',{
+      Branch_ID: localStorage.getItem('Branch_ID'),
+      ID: localStorage.getItem('ID'),
+      Store_ID: localStorage.getItem('Store_ID'),
+    })
+    // if(!Resp) return setCart([])
+    console.log(Resp)
+     setCart(Resp.data)
+  }
+
+  
+
+ 
+
+  const deleteProduct = async(barcode) => {
+      const Resp = await axios.post('https://posappserver.herokuapp.com/deletebuffer-cart-recive',{
+      Branch_ID: localStorage.getItem('Branch_ID'),
+      ID: localStorage.getItem('ID'),
+      Store_ID: localStorage.getItem('Store_ID'),
+      Goods_ID: barcode
+    })
+  }
+
+  return (
+    <motion.div
+      initial={{ translateX: 500 }}
+      animate={{ translateX: -50 }}
+      transition={{ duration: 0.5 }}
+      className="content"
+      style={{ overflow: "hidden" }}
+    >
+      <Row>
+        <Col md={3} lg={3} style={{ height: "100%" }}>
+
+        </Col>
+        <Col
+          md={9}
+          lg={9}
+          className='Add-RecievePage'
+          style={{
+            display: "flex",
+            height: "100%",
+            width: "100%",
+            justifyContent: "center",
+            paddingTop: "1rem",
+          }}
+        >
+           <div className="ProductStock">
+             <InputGroup>
+                            
+                            <InputGroupText>ชื่อสินค้า</InputGroupText>
+                            <Input placeholder="ชื่อสินค้า/barcode"/>
+                            <InputGroupAddon addonType="append"><Button color="warning">ค้นหา</Button></InputGroupAddon>
+                        </InputGroup>
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>สินค้า</th>
+                                    <th>ราคา</th>
+                                    <th>จำนวน</th>
+                                    <th>รวม</th>
+                                    <th>ราคาขาย</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {cart.map((e,idx)=>{
+                                    return(
+                                        <tr>
+                                            <th scope="row">{idx+1}</th>
+                                            <td>{e.Goods_Name}</td>
+                                            <td>{e.Cost_Unit}</td>
+                                            <td>{e.Count_Recive}</td>
+                                            <td>{e.Cost_Total}</td>
+                                            <td>{e.Price}</td>
+                                            <td><Button color='danger' onClick={()=>deleteProduct(e.Goods_ID)}>ลบ</Button></td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </Table>
+                        {
+                            Allproduct.map(e=>{
+                                
+                                if(temp.indexOf(e.Type_Name) !== -1)  
+                                {  
+                                        return
+                                }   
+                                else  
+                                {
+                                        temp.push(e.Type_Name)
+                                        
+                                        return(
+                                            <div className='ItemListSell'>
+                                                <p>{e.Type_Name}</p>
+                                                <Swiper
+                                                style={{ '--swiper-pagination-color': '#802BB1', height: "100%"}}
+                                                slidesPerView={6}
+                                                spaceBetween={120}
+                                                centeredSlides={true}
+                                                loop={false}
+                                                pagination={{
+                                                    "dynamicBullets": true,
+                                                    "clickable": true,
+                                                }} className="mySwiper">
+                                                    {Allproduct.map((e2,idx)=>{
+                                                        if(e2.Type_Name == e.Type_Name){
+                                                            return <SwiperSlide style={{borderRadius:'3rem'}}><img src={e2.Goods_img} style={{objectFit:'contain' , height:'150px' ,width:'150px'}} alt={idx} 
+                                                            onClick={()=>{
+                                                                setProduct({
+                                                                    name: e2.Goods_Name,
+                                                                    barcode:e2.Goods_ID,
+                                                                    img: e2.Goods_img,
+                                                                    typeName: e2.Type_Name
+                                                                })
+                                                                 toggle()
+                                                            }}
+                                                            /></SwiperSlide>
+                                                        }
+                                                        return
+                                                    })}
+                                                </Swiper>
+                                            </div>
+                                    )
+                                }  
+                               
+                            })
+                            
+                        }
+                    </div>
+          <div className="Form-Add-Recieve">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop:'2rem'
+                }}
+              >
+                <h4>เพิ่มแหล่งที่มาสินค้า</h4>
+              </div>
+
+              <Form onSubmit={(e)=>AddRecieveFN(e)}>
+                <Form.Group id="FName">
+                  <Form.Label>รับมาจากที่ไหน</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="ระบุสถานที่รับสินค้า"
+                    value={Origin}
+                    onChange={(e)=>setOrigin(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group id="LName">
+                  <Form.Label>หมายเลขบิล</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="ระบุหมายเลขบิล"
+                    value={Bill_Number}
+                    onChange={(e)=>setBill_Number(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group id="branchName">
+                  <Form.Label>รูปบิลรับสินค้า</Form.Label>
+                  <Form.File />
+                </Form.Group>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Button
+                    variant="warning"
+                    className="w-25"
+                    type='submit'
+                  >
+                    เพิ่มแหล่งที่มา
+                  </Button>
+                </div>
+              </Form>
+           
+          </div>
+        </Col>
+      </Row>
+
+
+      <ModalAddRecieve
+                show={modalP}
+                onHide={() => setModalP(false)}
+                toggle={() => toggle()}
+                data={product}
+                GoodsPrice={GoodsPrice}
+                setGoodsPrice={setGoodsPrice}
+                setCart={setCart}
+                
+            />
+
+    </motion.div>
+  );
+}
+
+export default AddRecieve;
