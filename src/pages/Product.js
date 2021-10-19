@@ -64,7 +64,7 @@ function Product() {
                                                 <Swiper
                                                 style={{ '--swiper-pagination-color': '#802BB1', height: "100%"}}
                                                 slidesPerView={6}
-                                                spaceBetween={30}
+                                                spaceBetween={120}
                                                 centeredSlides={true}
                                                 loop={false}
                                                 pagination={{
@@ -78,7 +78,10 @@ function Product() {
                                                                 setProduct({
                                                                     name: e2.Goods_Name,
                                                                     price:18,
-                                                                    img: e2.Goods_img
+                                                                    img: e2.Goods_img,
+                                                                    Count_Stock: e2.Count_Stock,
+                                                                    Favorite: e2.Favorite,
+                                                                    barcode: e2.Goods_ID
                                                                 })
                                                            
                                                                 

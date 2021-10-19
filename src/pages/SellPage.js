@@ -32,23 +32,28 @@ function SellPage() {
 
 
 
-    const temp = []
+
+  
     const [Allproduct, setAllProduct] = useState([]);
-    const [cart, setCart] = useState(localStorage.getItem(`CartSell`) ? JSON.parse(localStorage.getItem(`CartSell`)):[]);
-    let totalPrice = 0
+    const [cart, setCart] = useState([]);
+    const [GoodsPrice, setGoodsPrice] = useState(0);
+  
 
 
     useEffect(async()=>{
-        const data = await axios.get('https://posappserver.herokuapp.com/getaddgoods')
+        const data = await axios.post('https://posappserver.herokuapp.com/getfavoritegoods',{
+            Branch_ID: localStorage.getItem('Branch_ID')
+        })
         console.log(data.data)
         setAllProduct(data.data)
-        let temp = cart
-        temp.map(e=>{
-            totalPrice = totalPrice + e.total
-        })
-        setGoodsPrice(totalPrice)
+    },[])
 
-
+    useEffect(()=>{
+        const interval = setInterval(() => {
+            getCart();
+            getTotal();
+          }, 4500);
+          return () => clearInterval(interval);
     },[])
 
 
@@ -63,20 +68,47 @@ function SellPage() {
     const toggle = () => setModalP(!modalP);
     const toggleSell = () => setModalS(!modalS);
 
-    const [GoodsPrice, setGoodsPrice] = useState(0);
 
-    const deleteProduct = (key) => {
-    //let totalPrice = 0
-    let temp = cart.filter(function (e) {
-        return e.key != key
-  });
-    temp.map(e=>{
-        totalPrice = totalPrice + e.total
-    })
-    setGoodsPrice(totalPrice)
+    const getCart = async() => {
+        const Resp = await axios.post('https://posappserver.herokuapp.com/getbuffer-cart-sell',{
+          Branch_ID: localStorage.getItem('Branch_ID'),
+          ID: localStorage.getItem('ID'),
+          Store_ID: localStorage.getItem('Store_ID'),
+        })
+
+         console.log('Product',Resp)
+         setCart(Resp.data)
   
-    localStorage.setItem(`CartSell`,JSON.stringify(temp))
-    setCart(JSON.parse(localStorage.getItem(`CartSell`)))
+         
+      }
+
+      const getTotal = async() => {
+        const Resp = await axios.post('https://posappserver.herokuapp.com/getbuffer-cart-sell-total',{
+          Branch_ID: localStorage.getItem('Branch_ID'),
+          ID: localStorage.getItem('ID'),
+          Store_ID: localStorage.getItem('Store_ID'),
+        })
+
+         console.log('Total',Resp)
+         setGoodsPrice(Resp.data[0]['SUM(Price_Total)'] == null ? 0:Resp.data[0]['SUM(Price_Total)'])
+  
+         
+      }
+
+
+    //   useEffect(()=>{
+        
+    //   })
+
+    
+
+      const deleteProduct = async(barcode) => {
+          await axios.post('https://posappserver.herokuapp.com/deletebuffer-cart-sell',{
+          Branch_ID: localStorage.getItem('Branch_ID'),
+          ID: localStorage.getItem('ID'),
+          Store_ID: localStorage.getItem('Store_ID'),
+          Goods_ID: barcode
+        })
       }
 
 
@@ -88,9 +120,7 @@ function SellPage() {
     return (
         <motion.div initial={{translateX:500}} animate={{translateX:-50}} transition={{duration:0.5}}   className="content" >
             <Row>
-                <Col md={3} style={{height:'100%'}}>
-                   
-                </Col>
+                <Col md={3} style={{height:'100%'}}></Col>
                 <Col md={9} className='SellPage' style={{display:'flex' , height:'100%' , width:'100%' , justifyContent:'center' , paddingTop:'1rem'}}>
                     <div className="SellProduct">
                         <InputGroup>
@@ -112,70 +142,61 @@ function SellPage() {
                             </thead>
                             <tbody>
                                 {cart.map((e,idx)=>{
+                                    
                                     return(
                                         <tr>
                                             <th scope="row">{idx+1}</th>
-                                            <td>{e.name}</td>
-                                            <td>{e.price}</td>
-                                            <td>{e.count}</td>
-                                            <td>{e.total}</td>
-                                            <td><Button color='danger' onClick={()=>deleteProduct(e.key)}>ลบ</Button></td>
+                                            <td>{e.Goods_Name}</td>
+                                            <td>{e.Price_Unit}</td>
+                                            <td>{e.Count_Sell}</td>
+                                            <td>{e.Price_Total}</td>
+                                            <td><Button color='danger' onClick={()=>deleteProduct(e.Goods_ID)}>ลบ</Button></td>
                                         </tr>
                                     )
-                                })}
+                                })
+                                
+                                }
+                                
                             </tbody>
                         </Table>
-                        {
-                            Allproduct.map(e=>{
-                                
-                                if(temp.indexOf(e.Type_Name) !== -1)  
-                                {  
-                                        return
-                                }   
-                                else  
-                                {
-                                        temp.push(e.Type_Name)
-                                        
-                                        return(
-                                            <div className='ItemListSell'>
-                                                <p>{e.Type_Name}</p>
-                                                <Swiper
-                                                style={{ '--swiper-pagination-color': '#802BB1', height: "100%"}}
-                                                slidesPerView={6}
-                                                spaceBetween={30}
-                                                centeredSlides={true}
-                                                loop={false}
-                                                pagination={{
-                                                    "dynamicBullets": true,
-                                                    "clickable": true,
-                                                }} className="mySwiper">
-                                                    {Allproduct.map((e2,idx)=>{
-                                                        if(e2.Type_Name == e.Type_Name){
-                                                            return <SwiperSlide style={{borderRadius:'3rem'}}><img src={e2.Goods_img} style={{objectFit:'contain' , height:'150px' ,width:'150px'}} alt={idx} 
+                            <div className='ItemListSell'>
+                                <p>รายการขายด่วน</p>
+                                <Swiper
+                                    style={{ '--swiper-pagination-color': '#802BB1', height: "100%"}}
+                                    slidesPerView={6}
+                                    spaceBetween={30}
+                                    centeredSlides={true}
+                                    loop={false}
+                                    pagination={{
+                                        "dynamicBullets": true,
+                                        "clickable": true,
+                                    }} className="mySwiper">
+                                    {Allproduct.map((e,idx)=>{
+                                      return <SwiperSlide style={{borderRadius:'3rem'}}><img src={e.Goods_img} style={{objectFit:'contain' , height:'150px' ,width:'150px'}} alt={idx} 
                                                             onClick={()=>{
                                                                 setProduct({
-                                                                    name: e2.Goods_Name,
-                                                                    price:18,
-                                                                    img: e2.Goods_img
+                                                                    name: e.Goods_Name,
+                                                                    price: e.Price,
+                                                                    img: e.Goods_img,
+                                                                    barcode: e.Goods_ID,
+                                                                    stock: e.Count_Stock
+
                                                                 })
-                                                           
-                                                                
+
                                                                  toggle()
                                     
                                                             }}
                                                             /></SwiperSlide>
-                                                        }
-                                                        return
-                                                        
-                                                    })}
+                                                     
+                                    })}
                                                 </Swiper>
                                             </div>
-                                    )
-                                }  
+                                    
+                                
                                
-                            })
+                   
                             
-                        }
+                        
 
                     </div>
                     <div className="CasheerBox" >

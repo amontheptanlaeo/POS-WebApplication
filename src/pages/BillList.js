@@ -1,4 +1,4 @@
-import React from 'react'
+import React , { useState , useEffect} from 'react'
 import {
     Row,
     Col,
@@ -8,8 +8,21 @@ import {
 import { motion } from 'framer-motion';
 import { Link } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
+import axios from 'axios';
 
 function BillList() {
+
+
+    const [BillHistory,setBillHistory] = useState([])
+
+    useEffect(async()=>{
+        const res = await axios.post('https://posappserver.herokuapp.com/getbilltable',{
+            Branch_ID: localStorage.getItem('Branch_ID')
+        })
+        console.log(res.data)
+        setBillHistory(res.data)
+    },[])
+
     const columns = [
         { field: 'id', headerName: '#', width: 100 },
         { field: 'firstName', headerName: 'รายการ', width: '800' ,
@@ -26,12 +39,16 @@ function BillList() {
           type: 'date',
           width: 500,
         },
+        {
+            field: 'nameSeller',
+            headerName: 'ชื่อผู้ขาย',
+            width: 500,
+          },
       ];
       
-      const rows = [
-        { id: 1, firstName: `S2345`, age: '20/08/21' },
-        { id: 2, firstName: 'S2344', age: '18/08/21' },
-      ];
+      const rows = BillHistory.map((e,idx)=>{
+        return { id: idx+1, firstName: `${e.Number_Bill}`, age: `${e.DateSell_History}` , nameSeller: `${e.FirstName} ${e.LastName}`  }
+      })
     return (
         <motion.div initial={{translateX:500}} animate={{translateX:-50}} transition={{duration:0.5}}   className="content" style={{overflow:'hidden'}}>
         <Row>

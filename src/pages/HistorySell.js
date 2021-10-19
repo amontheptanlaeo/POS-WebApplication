@@ -1,17 +1,26 @@
-import React, { useState, useRef  } from 'react';
+import React, { useState, useRef , useEffect } from 'react';
 import { Button, Form , Alert , Row , Col , Container } from 'react-bootstrap';
 import ReactToPrint , { useReactToPrint } from 'react-to-print';
 import { Link, useParams } from "react-router-dom";
 import img from '../images/Welcome.svg'
 import { motion } from "framer-motion"
 import SellReport from '../components/SellReport';
-
+import axios from 'axios';
 function HistorySell() {
     let { bill } = useParams();
+    const [data,setData] = useState([])
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
       });
+
+      useEffect(async()=>{
+        const res = await axios.post('https://posappserver.herokuapp.com/getsellhistorybill',{
+            Number_Bill: bill
+        })
+        console.log(res.data)
+        setData(res.data)
+      },[])
 
     return (
         <motion.div initial={{translateX:500}} animate={{translateX:-50}} transition={{duration:0.5}}   className="content" style={{overflow:'hidden'}}>
@@ -27,7 +36,7 @@ function HistorySell() {
                 </div>
                 <div>
                     <div ref={componentRef}>
-                        <SellReport bill={bill}/>
+                        <SellReport data={data} bill={bill}/>
                     </div>
                 </div>
           
