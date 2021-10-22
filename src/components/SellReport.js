@@ -13,30 +13,21 @@ function SellReport({data ,bill}) {
             <div className='testPrint' >
                 <div className='Header'>
                     <div style={{width:'100%' , textAlign:'center'}}>
-                        <h4>Mini Shop สาขา กำแพงแสน</h4>
+                    <h4>{localStorage.getItem('Store_Name')} สาขา {localStorage.getItem('Branch_Name')}</h4>
                     </div>
                     <div style={{width:'100%' , textAlign:'center'}}>
-                        <h1>รายการบิลรับสินค้า</h1>
+                        <h1>ใบเสร็จรับเงิน</h1>
                     </div>
-                    <div style={{display:'flex' , justifyContent:'space-between' , alignItems:'center' , width:'100%'   , padding:'1rem 2rem' , border:'1px solid black' , borderRadius:'0.5rem'}}>
-                        <div>
-                            <div>รับมาจาก: {
-                                    // data.map((e,idx)=>{
-                                    //     if(idx == 0) return e.Origin
-                                    //     return
-                                    // })
-                                }
-                              </div>
-                        </div>
-                        <div>
-                            <div>เลขที่บิล: {bill}</div>
+                    <div style={{display:'flex' , justifyContent:'center' , alignItems:'center' , width:'100%'   , padding:'1rem 2rem' , border:'1px solid black' , borderRadius:'0.5rem'}}>
+                        <div style={{display:'flex' , justifyContent:'space-between' , alignItems:'center' , width:'100%'}}>
+                            <div>เลขที่ใบเสร็จ: {bill}</div>
                             <div>วันที่: {
-                                    // data.map((e,idx)=>{
-                                    //     if(idx == 0) return e.DateAdd_History
-                                    //     return
-                                    // })
+                                    data.map((e,idx)=>{
+                                        if(idx == 0) return e.DateSell_History.replace("T", " เวลา: ");
+                                        return
+                                    })
                                 }</div>
-                            <div>ผู้บันทึก:  {
+                            <div>ผู้ขาย:  {
                                     data.map((e,idx)=>{
                                         if(idx == 0) return e.FirstName +" "+ e.LastName
                                         return
@@ -49,12 +40,11 @@ function SellReport({data ,bill}) {
                 <Table style={{textAlign:'center'}}>
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>ลำดับที่</th>
                                     <th>สินค้า</th>
-                                    <th>ราคา</th>
+                                    <th>ราคา/หน่วย</th>
                                     <th>จำนวน</th>
                                     <th>รวม</th>
-            
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,27 +62,20 @@ function SellReport({data ,bill}) {
                                         )
                                     })
                                 }
+                                 <tr>
+                                    <th scope="row"></th>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>รวม</b></td>
+                                    <td>{total}</td>
+                                </tr>
                               
                             </tbody>
                         </Table>
-                        <p>{total}</p>
 
                 </div>
                 
             </div>
-
-
-            {/* <div style={{display:'flex' , justifyContent:'flex-start' , alignItems:'center' , width:'100%' , padding:'1rem 2rem' }}>
-                <div style={{textAlign:'center' , marginRight:'5rem'}}>
-                    <h4>..........................</h4>
-                    <p>(ผู้ส่งสินค้า)</p>
-                </div>
-                <div style={{textAlign:'center'}}>
-                    <h4>..........................</h4>
-                    <p>(ผู้รับสินค้า)</p>
-                </div>
-                
-            </div> */}
 
         </div>
         

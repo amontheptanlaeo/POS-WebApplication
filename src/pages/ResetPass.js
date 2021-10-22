@@ -52,8 +52,9 @@ function ResetPass() {
                 <Button className="w-100 mb-2 log-btn" style={{ backgroundColor: "#802BB1", color:'black' , borderRadius: '5rem', boxShadow: 'none', outline: 'none !important', borderColor: 'transparent' }}>
                   กู้คืนรหัสผ่าน
                 </Button>
-                <p className="mt-2">ยังไม่ได้เป็นสมาชิก? <Link to="/Register">สมัครสมาชิก</Link></p>
-                <p className="mt-2">เป็นสมาชิกอยู่แล้ว? <Link to="/Login">เข้าสู่ระบบ</Link></p>
+                <p className="mt-2">อยากเปิดร้านค้า? <Link to="/Register">สมัครเป็นเจ้าของร้าน</Link></p>
+                <p className="mt-2">เป็นพนักงานมาใหม่? <Link to="/RegisterEMP">สมัครเป็นพนักงาน</Link></p>
+                <p className="mt-2">ลืมรหัสผ่าน? <Link to="/ResetPassword">คลิก</Link></p>
               </Form>
             </div>
             <div className="SidePic"/* style={{WebkitBoxReflect:" below 5px linear-gradient(transparent, white)"}} */ >

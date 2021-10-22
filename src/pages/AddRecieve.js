@@ -1,13 +1,14 @@
-import React, { useState, useRef , useEffect } from "react";
+import React, { useState , useEffect } from "react";
 import axios from "axios";
 import {
-  Input,
-  InputGroup,
-  InputGroupText,
-  InputGroupAddon,
   Table
 } from "reactstrap";
-import { Button, Form, Alert, Row, Col, Container } from "react-bootstrap";
+
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import Autocomplete from '@mui/material/Autocomplete';
+
+import { Button, Form, Row, Col  } from "react-bootstrap";
 import ModalAddRecieve from "../components/ModalAddRecieve";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -23,25 +24,7 @@ SwiperCore.use([Autoplay, Pagination]);
 function AddRecieve() {
 
 
-  const [Goods_ID,setGood_ID] = useState("")
-  const [Goods_History_ID,setGoods_History_ID] = useState("")
-  const [Goods_Name,setGoods_Name] = useState("")
-  const [DateAdd_Storks,setDateAdd_Storks] = useState("")
-  const [Count_Begin,setCount_Begin] = useState("")
-  const [Count_Stock,setCount_Stock] = useState("")
-  const [Cost_Unit,setCost_Unit] = useState("")
-  const [Cost_Total_Unit,setCost_Total_Unit] = useState("")
-  const [Type_ID,setType_ID] = useState("")
-  const [Type_Name,setType_Name] = useState("")
-  const [ID,setID] = useState("")
-  const [FirstName,setFirstName] = useState("")
-  const [LastName,setLastName] = useState("")
-  const [Branch_ID,setBranch_ID] = useState("")
-  const [Goods_img,setGoods_img] = useState(null)
-  const [Position,setPosition] = useState("")
-  const [Store_ID,setStore_ID] = useState("")
-  const [Store_Name,setStore_Name] = useState("")
-  const [Cost_Total,setCost_Total] = useState("")
+
   const [Origin,setOrigin] = useState("")
 
 
@@ -144,9 +127,14 @@ function AddRecieve() {
   
   },[])
 
+
+
   useEffect(()=>{
-    getCart();
-  })
+    const interval = setInterval(() => {
+      getCart();
+    }, 4500);
+    return () => clearInterval(interval);
+  },[])
 
 
   const getCart = async() => {
@@ -198,12 +186,37 @@ function AddRecieve() {
           }}
         >
            <div className="ProductStock">
-             <InputGroup>
+           <Stack className="w-100" spacing={2} sx={{ width: 300 }}>
+                            <Autocomplete
+                                id="free-solo-demo"
+                                freeSolo
+                                options={Allproduct.map((option) => `${option.Goods_Name} ${option.Goods_ID}`)}
+                                renderInput={(params) => <TextField {...params} label="ค้นหาสินค้า" />}
                             
-                            <InputGroupText>ชื่อสินค้า</InputGroupText>
-                            <Input placeholder="ชื่อสินค้า/barcode"/>
-                            <InputGroupAddon addonType="append"><Button color="warning">ค้นหา</Button></InputGroupAddon>
-                        </InputGroup>
+                                onChange={(event, newValue) => {
+                                  if (typeof newValue === 'string') {
+                                      const product = newValue.split(" ")
+                                      Allproduct.map((e)=>{
+                                            if(e.Goods_Name == product[0]){
+                                              setProduct({
+                                                name: e.Goods_Name,
+                                                barcode:e.Goods_ID,
+                                                img: e.Goods_img,
+                                                typeName: e.Type_Name,
+                                                Oldprice: e.Price
+                                            })
+                                             toggle()
+                                            }
+                                        })
+                                  }else{
+                                    return
+                                  }
+                                      
+                       
+                                  }}
+                                  
+                            />
+                        </Stack>
                         <Table>
                             <thead>
                                 <tr>
@@ -249,7 +262,7 @@ function AddRecieve() {
                                                 <Swiper
                                                 style={{ '--swiper-pagination-color': '#802BB1', height: "100%"}}
                                                 slidesPerView={6}
-                                                spaceBetween={120}
+                                                spaceBetween={30}
                                                 centeredSlides={true}
                                                 loop={false}
                                                 pagination={{
@@ -258,17 +271,20 @@ function AddRecieve() {
                                                 }} className="mySwiper">
                                                     {Allproduct.map((e2,idx)=>{
                                                         if(e2.Type_Name == e.Type_Name){
-                                                            return <SwiperSlide style={{borderRadius:'3rem'}}><img src={e2.Goods_img} style={{objectFit:'contain' , height:'150px' ,width:'150px'}} alt={idx} 
+                                                            return <SwiperSlide style={{borderRadius:'3rem',display:'flex' , justifyContent:'center' , alignItems:'center' , flexDirection:'column'}}><img src={e2.Goods_img} style={{objectFit:'contain' , height:'150px' ,width:'150px'}} alt={idx} 
                                                             onClick={()=>{
                                                                 setProduct({
                                                                     name: e2.Goods_Name,
                                                                     barcode:e2.Goods_ID,
                                                                     img: e2.Goods_img,
-                                                                    typeName: e2.Type_Name
+                                                                    typeName: e2.Type_Name,
+                                                                    Oldprice: e2.Price
                                                                 })
                                                                  toggle()
                                                             }}
-                                                            /></SwiperSlide>
+                                                            />
+                                                             <p style={{fontSize:'16px'}}>{e2.Goods_Name}</p>
+                                                            </SwiperSlide>
                                                         }
                                                         return
                                                     })}

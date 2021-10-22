@@ -10,8 +10,7 @@ import { Link } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 
-function BillList() {
-
+function CheckWithdraw() {
 
     const [BillHistory,setBillHistory] = useState([])
 
@@ -23,25 +22,27 @@ function BillList() {
         setBillHistory(res.data)
     },[])
 
+    if(localStorage.getItem('Permistion') != 0 &&  localStorage.getItem('Permistion') != 1) return window.location.href = 'http://localhost:3000/'
+
     const columns = [
         { field: 'id', headerName: '#', width: 100 },
         { field: 'firstName', headerName: 'รายการ', width: '500' ,
-        renderCell: (params) => (
-            <>
-                <Link to={`/history/sell/`+params.row.firstName}>
-                    {params.row.firstName}
-                </Link>
-            </>)
+        // renderCell: (params) => (
+        //     <>
+        //         <Link to={`/history/sell/`+params.row.firstName}>
+        //             {params.row.firstName}
+        //         </Link>
+        //     </>)
         },
         {
           field: 'age',
-          headerName: 'วันที่ ป/ด/ว',
+          headerName: 'วันที่ ว/ด/ป',
           type: 'date',
           width: 400,
         },
         {
             field: 'nameSeller',
-            headerName: 'ชื่อผู้ขาย',
+            headerName: 'ชื่อผู้ทำรายการ',
             width: 400,
           },
       ];
@@ -49,6 +50,7 @@ function BillList() {
       const rows = BillHistory.map((e,idx)=>{
         return { id: idx+1, firstName: `${e.Number_Bill}`, age: `${e.DateSell_History.replace("T"," ")}` , nameSeller: `${e.FirstName} ${e.LastName}`  }
       })
+
     return (
         <motion.div initial={{translateX:500}} animate={{translateX:-50}} transition={{duration:0.5}}   className="content" style={{overflow:'hidden'}}>
         <Row>
@@ -56,7 +58,7 @@ function BillList() {
                 {/* <BlankSide/> */}
             </Col>
             <Col md={9} lg={9} style={{paddingTop:'2rem' , display:'flex' , flexDirection:'column' , height:'100%' }}>
-                <h4>ประวัติรายการขายสินค้า</h4>
+                <h4>ประวัติการเบิกถอน</h4>
                     <div style={{ height: '80vh', width: '100%' }}>
                         <DataGrid
                             rows={rows}
@@ -68,7 +70,7 @@ function BillList() {
             </Col>
         </Row>
     </motion.div>
-    );
+    )
 }
 
-export default BillList
+export default CheckWithdraw

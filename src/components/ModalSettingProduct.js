@@ -60,7 +60,7 @@ function ModalSettingProduct({show , onHide , toggle , data}) {
             <ModalFooter>
             <Button color="success" onClick={()=>{
                  settingProduct()
-            }}>เพิ่มสินค้า</Button>
+            }}>อัพเดทสินค้า</Button>
             <Button color="danger" onClick={()=>{
               toggle()
             }}>ยกเลิก</Button>

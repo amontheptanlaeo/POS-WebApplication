@@ -1,6 +1,25 @@
 @import './BaseColor.scss';
 
 
+.Alert{
+   position: relative;
+}
+
+.circle{
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    background-color: red;
+    right: 39px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    z-index: 9999999;
+}
+
 @media only screen and (max-width: 1355px) {
     .content-dash{
         display: none;

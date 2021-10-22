@@ -3,7 +3,6 @@
 
 
 
-
 @media all {
   .page-break {
     display: none;
@@ -30,7 +29,16 @@
   .mainContain{
     height: 100%;
   }
+ 
+  
 
+}
+
+@media screen {
+  .footer {
+    display: none;
+  }
+  
 }
 
 @media print {
@@ -60,6 +68,12 @@
   .mainContain{
     height: 100vh;
   }
+
+  div.footer{
+    position: fixed;
+    bottom: 0;
+  }
+
 }
 
 @page {

@@ -7,6 +7,7 @@ import {
 import BlankSide from '../components/BlankSide';
 import { motion } from 'framer-motion';
 function ManageBranch() {
+
     return (
         <motion.div initial={{translateX:500}} animate={{translateX:-50}} transition={{duration:0.5}}   className="content" style={{overflow:'hidden'}}>
             <Row>

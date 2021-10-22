@@ -10,14 +10,12 @@ import {
   Modal, ModalHeader, ModalBody, ModalFooter
 } from "reactstrap";
 
-function AddEmp() {
-   
+function ManageEmp() {
   const [show,setShow] = useState(false)
   const toggle = () => setShow(!show);
-  
-  if(localStorage.getItem('Permistion') != 0 &&  localStorage.getItem('Permistion') != 1) return window.location.href = 'http://localhost:3000/'
 
-  
+    if(localStorage.getItem('Permistion') != 0 &&  localStorage.getItem('Permistion') != 1) return window.location.href = 'http://localhost:3000/'
+
     return (
         <motion.div initial={{translateX:500}} animate={{translateX:-50}} transition={{duration:0.5}}   className="content" style={{overflow:'hidden'}}>
         <Row>
@@ -27,7 +25,7 @@ function AddEmp() {
             <Col md={9} lg={9} style={{paddingTop:'2rem' , display:'flex' , flexDirection:'column' , height:'100%' }}>
               <Container>
                   <div style={{display:'flex' , justifyContent:'center' , alignItems:'center'}}>
-                    <h4>เพิ่มพนักงาน</h4>
+                    <h4>จัดการพนักงาน</h4>
                   </div>
                   <Table>
                             <thead style={{textAlign:'center'}}>
@@ -46,12 +44,12 @@ function AddEmp() {
                                   <td>กำแพงแสน</td>
                                   <td>
                                     <div>
-                                    พนักงานขาย
+                                      พนักงานขาย
                                     </div>
                                   </td>
                                   <td>
-                                    <Button className="mr-1" variant='success' onClick={()=>setShow(!show)}>อนุมัติ</Button>
-                                    <Button variant='danger' onClick={()=>setShow(!show)}>ไม่อนุมัติ</Button></td>
+                                    <Button className="mr-1" variant='success' onClick={()=>setShow(!show)}>ลาออก</Button>
+                                    <Button variant='danger' onClick={()=>setShow(!show)}>ไล่ออก</Button></td>
                               </tr>
                               <tr>
                                   <th scope="row">2</th>
@@ -59,13 +57,13 @@ function AddEmp() {
                                   <td>บางแค</td>
                                   <td>
                                     <div>
-                                    ผู้จัดการ
+                                      ผู้จัดการ
                                     </div>
                                    
                                   </td>
                                   <td>
-                                    <Button className="mr-1" variant='success' onClick={()=>setShow(!show)}>อนุมัติ</Button>
-                                    <Button variant='danger' onClick={()=>setShow(!show)}>ไม่อนุมัติ</Button></td>
+                                    <Button className="mr-1" variant='success' onClick={()=>setShow(!show)}>ลาออก</Button>
+                                    <Button variant='danger' onClick={()=>setShow(!show)}>ไล่ออก</Button></td>
                               </tr>
                             </tbody>
                         </Table>
@@ -76,7 +74,6 @@ function AddEmp() {
                
             </Col>
         </Row>
-
         <Modal isOpen={show} toggle={toggle} className='testModal' centered>
             <ModalHeader toggle={toggle}>
                 <p>การยืนยัน</p>
@@ -102,4 +99,4 @@ function AddEmp() {
     )
 }
 
-export default AddEmp
+export default ManageEmp

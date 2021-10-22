@@ -14,27 +14,30 @@ import { motion } from 'framer-motion';
 import { Link } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
 function OverAll() {
+
+  if(localStorage.getItem('Permistion') != 0) return window.location.href = 'http://localhost:3000/'
+
+
     const columns = [
         { field: 'id', headerName: '#', width: 100 },
-        { field: 'firstName', headerName: 'ชื่อสาขา', width: 300 ,
-        // renderCell: (params) => (
-        //     <>
-        //         <Link to={`/history/`+params.row.firstName}>
-        //             {params.row.firstName}
-        //         </Link>
-        //         </>)
+        { field: 'firstName', headerName: 'ชื่อสาขา', width: 450 ,
+        renderCell: (params) => (
+            <>
+                <Link to={`/Conclude/Side/`+params.row.branch}>
+                    {params.row.firstName}
+                </Link>
+                </>)
 
     },
-    { field: 'sell', headerName: 'ยอดขาย', width: 150 },
-    
-    { field: 'cost', headerName: 'ต้นทุน', width: 120 },
-     { field: 'profit', headerName: 'กำไร', width: 120 },
+    { field: 'sell', headerName: 'ยอดขาย', width: 300 },
+    { field: 'cost', headerName: 'ต้นทุน', width: 300 },
+    { field: 'profit', headerName: 'กำไร', width: 240 },
     
     
       ];
       
       const rows = [
-        { id: 1, firstName: `กำแพงแสน`, profit: 1400 , cost: 700 , sell: 2100 },
+        { id: 1, firstName: `กำแพงแสน`, profit: 1400 , cost: 700 , sell: 2100 , branch:'5567' },
         { id: 2, firstName: 'บางแค', profit: 6400 , cost: 3000 , sell: 9400 },
       ];
 
@@ -45,7 +48,7 @@ function OverAll() {
                     {/* <BlankSide/> */}
                 </Col>
                 <Col md={9} lg={9} style={{paddingTop:'2rem' , display:'flex' , flexDirection:'column' , height:'100%' }}>
-                    <h4>ยอดขาย</h4>
+                    <h4>ภาพรวมยอดขาย</h4>
                         <div style={{ height: '80vh', width: '100%' }}>
                             <DataGrid
                                 rows={rows}

@@ -8,10 +8,24 @@ import { Link } from 'react-router-dom'
 import '../styles/ModalSell.scss'
 import axios from 'axios';
 
-
+var ChangeText = {
+  B1000: '',
+  B500: '',
+  B100: '',
+  B50: '',
+  B20: '',
+  C10: '',
+  C5: '',
+  C2: '',
+  C1: '',
+  C50: '',
+  C25: '',
+}
 
 
 function ModalSell({show , onHide , toggle , GoodsPrice}) {
+
+    
 
     const [BankDaily, setBankDaily] = useState(0);
     const [MoneyTotal, setMoneyTotal] = useState(0);
@@ -45,7 +59,9 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
     const [C50Add, setC50Add] = useState(0);
     const [C25Add, setC25Add] = useState(0);
 
+
     const [modalAlert, setModalAlert] = useState(false);
+    const [modalSuccess, setModalSuccess] = useState(false);
 
 
   const GetBankDaily = async() => {
@@ -203,7 +219,6 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
   }
 
   const Sell = () => {
-    if(MoneyTotal == 0) return setModalAlert(!modalAlert)
     if(MoneyTotal < Money - GoodsPrice) return setModalAlert(!modalAlert)
     if (parseFloat(Money) < parseFloat(GoodsPrice)) {
       return alert("ยอดเงินไม่เพียงพอสำหรับการซื้อ");
@@ -212,79 +227,6 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
     }
      
   }
-
-
-
-  // const onCheckMoney = async () => {
-  //   axios({
-  //     method: "POST",
-  //     url: "https://posappserver.herokuapp.com/checkbankdaily",
-  //     data: {
-  //       Branch_ID: Branch_ID,
-  //       Store_ID: Store_ID,
-  //     },
-  //   }).then((resp) => {
-  //     console.log("resp", resp);
-  //     var checktotal = resp.data[0].MoneyTotal;
-  //     console.log("B500",B500Add)
-  //     var total =
-  //       B1000Add * 1000 +
-  //       B500Add * 500 +
-  //       B100Add * 100 +
-  //       B50Add * 50 +
-  //       B20Add * 20 +
-  //       C10Add * 10 +
-  //       C5Add * 5 +
-  //       C2Add * 2 +
-  //       C1Add * 1 +
-  //       C50Add * 0.5 +
-  //       C25Add * 0.25;
-  //     if (Money_Today <= checktotal && total == Money_Today) {
-  //       if (
-  //         resp.data[0].B1000 >= B1000Add &&
-  //         resp.data[0].B500 >= B500Add &&
-  //         resp.data[0].B100 >= B100Add &&
-  //         resp.data[0].B50 >= B50Add &&
-  //         resp.data[0].B20 >= B20Add &&
-  //         resp.data[0].C10 >= C10Add &&
-  //         resp.data[0].C5 >= C5Add &&
-  //         resp.data[0].C2 >= C2Add &&
-  //         resp.data[0].C1 >= C1Add &&
-  //         resp.data[0].C50 >= C50Add &&
-  //         resp.data[0].C25 >= C25Add
-  //       ) {
-  //         alert("ยอดเงินพอจ่าย");
-  //         setCheckBtn(true);
-  //       } else {
-  //         alert("ยอดจำนวนแบงค์ไม่พอ");
-  //         setB1000Add(0);
-  //         setB500Add(0);
-  //         setB100Add(0);
-  //         setB50Add(0);
-  //         setB20Add(0);
-  //         setC10Add(0);
-  //         setC5Add(0);
-  //         setC2Add(0);
-  //         setC1Add(0);
-  //         setC50Add(0);
-  //         setC25Add(0);
-  //       }
-  //     } else {
-  //       alert("False");
-  //       setB1000Add(0);
-  //       setB500Add(0);
-  //       setB100Add(0);
-  //       setB50Add(0);
-  //       setB20Add(0);
-  //       setC10Add(0);
-  //       setC5Add(0);
-  //       setC2Add(0);
-  //       setC1Add(0);
-  //       setC50Add(0);
-  //       setC25Add(0);
-  //     }
-  //   });
-  // };
 
   useEffect(()=>{
     GetBankDaily()
@@ -311,6 +253,7 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
           setB1000(B1000 - Pay);
         }
         console.log("จำนวนแบงค์ 1000: ",Pay)
+        ChangeText.B1000 = "จำนวนแบงค์ 1000: " + Pay
         var B1000Param = Pay
         
         setB1000Add(Pay)
@@ -327,6 +270,8 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
           setB500(B500 - Pay);
         }
         console.log("จำนวนแบงค์ 500: ",Pay)
+        ChangeText.B500 = "จำนวนแบงค์ 500: " + Pay
+
         var B500Param = Pay
         setB500Add(Pay)
         
@@ -343,6 +288,7 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
           setB100(B100 - Pay);
         }
         console.log("จำนวนแบงค์ 100: ",Pay)
+        ChangeText.B100 = "จำนวนแบงค์ 100: " + Pay
         var B100Param = Pay
         setB100Add(Pay)
       }
@@ -358,6 +304,8 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
           setB50(B50 - Pay);
         }
         console.log("จำนวนแบงค์ 50: ",Pay)
+        ChangeText.B50 = "จำนวนแบงค์ 50: " + Pay
+
         var B50Param = Pay
         setB50Add(Pay)
       }
@@ -373,6 +321,7 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
           setB20(B20 - Pay);
         }
         console.log("จำนวนแบงค์ 20: ",Pay)
+        ChangeText.B20 = "จำนวนแบงค์ 20: " + Pay
         var B20Param = Pay
         setB20Add(Pay)
       }
@@ -388,6 +337,7 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
           setC10(C10 - Pay);
         }
         console.log("จำนวนเหรียญ 10: ",Pay)
+        ChangeText.C10 = "จำนวนเหรียญ 10: " + Pay
         var C10Param = Pay
         setC10Add(Pay)
       }
@@ -404,6 +354,7 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
           setC5(C5 - Pay);
         }
         console.log("จำนวนเหรียญ 5: ",Pay)
+        ChangeText.C5 = "จำนวนเหรียญ 5: " + Pay
         var C5Param = Pay
         setC5Add(Pay)
       }
@@ -419,6 +370,8 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
           setC2(C2 - Pay);
         }
         console.log("จำนวนเหรียญ 2: ",Pay)
+        ChangeText.C2 = "จำนวนเหรียญ 2: " + Pay
+
         var C2Param = Pay
         setC2Add(Pay)
       }
@@ -434,6 +387,8 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
           setC1(C1 - Pay);
         }
         console.log("จำนวนเหรียญ 1: ",Pay)
+        ChangeText.C1 = "จำนวนเหรียญ 1: " + Pay
+
         var C1Param = Pay
         setC1Add(Pay)
       }
@@ -449,6 +404,8 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
           setC50(C50 - Pay);
         }
         console.log("จำนวนเหรียญ 50 สตางค์: ",Pay)
+        ChangeText.C50 = "จำนวนเหรียญ 50 สตางค์: " + Pay
+
         var C50Param = Pay
         setC50Add(Pay)
       }
@@ -464,10 +421,14 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
           setC25(C25 - Pay);
         }
         console.log("จำนวนเหรียญ 25 สตางค์: ",Pay)
+        ChangeText.C25 = "จำนวนเหรียญ 25 สตางค์: " + Pay
+
         var C25Param = Pay
         setC25Add(Pay)
       }
       SellAPI(value2,C2Param,B50Param,B20Param,B1000Param,B500Param,B100Param,C10Param,C5Param,C1Param,C50Param,C25Param)
+      setModalSuccess(!modalSuccess)
+
 
     
     
@@ -531,14 +492,7 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
                             setMoney(Money+0.25)
                             }}>0.25</div>
                     </div>
-                    <div style={{width:'100%' , marginTop:'1rem'}}>
-                        <h4>ยอดทอน</h4>
-                        <div className="CasheerBoxSell" >
-                            <div className="TotalBox" style={{color:'red'}}>
-                                <p>{Change.toFixed(2)}</p>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
 
             </ModalBody>
@@ -565,6 +519,50 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
             <Link to='/Withdraw'> <Button color="warning"  onClick={()=>{
                setModalAlert(!modalAlert)
                 }}>เบิกเงินทอน</Button></Link>
+            </ModalFooter>
+        </Modal>
+
+        <Modal isOpen={modalSuccess} toggle={()=>{
+               setModalSuccess(!modalSuccess)
+               window.location.reload()
+                }} className='testModal' centered>
+            <ModalHeader  toggle={()=>{
+               setModalSuccess(!modalSuccess)
+               window.location.reload()
+                }}>ทอนเงิน</ModalHeader>
+            <ModalBody>
+            <div style={{width:'100%' , marginTop:'1rem'}}>
+                        <h4>ยอดทอน</h4>
+                        <div className="CasheerBoxSell" >
+                            <div className="TotalBox" style={{color:'red'}}>
+                                <p>{Change.toFixed(2)}</p>
+                            </div>
+                        </div>
+                        <div style={{display:'flex' , justifyContent:'center' , alignItems:'center' , flexDirection:'column'}}>
+                          <div>
+                            <h5>แบงค์ที่ต้องทอน</h5>
+                          </div>
+                          <p>{ChangeText.B1000}</p>
+                          <p>{ChangeText.B500}</p>
+                          <p>{ChangeText.B100}</p>
+                          <p>{ChangeText.B50}</p>
+                          <p>{ChangeText.B20}</p>
+                          <p>{ChangeText.C10}</p>
+                          <p>{ChangeText.C5}</p>
+                          <p>{ChangeText.C2}</p>
+                          <p>{ChangeText.C1}</p>
+                          <p>{ChangeText.C50}</p>
+                          <p>{ChangeText.C25}</p>
+                        </div>
+
+                    </div>
+            </ModalBody>
+            <ModalFooter>
+            <Button color="warning"  onClick={()=>{
+               alert('ใบเสร็จ')
+               setModalSuccess(!modalSuccess)
+              window.location.reload()
+                }}>พิมพ์ใบเสร็จ</Button>
             </ModalFooter>
         </Modal>
 

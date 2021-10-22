@@ -1,4 +1,4 @@
-import React , { useState } from 'react'
+import React , { useState , useEffect} from 'react'
 import {
     Button,
     Modal, ModalHeader, ModalBody, ModalFooter,
@@ -8,15 +8,21 @@ import axios from 'axios';
 
 function ModalAddRecieve({show , onHide , toggle , data , GoodsPrice , setGoodsPrice , setCart }) {
 
-    const [count,setCount] = useState(0)
-    const [Price,setPrice] = useState(1)
+    const [count,setCount] = useState(1)
+    const [Price,setPrice] = useState(data.Oldprice ? JSON.parse(data.Oldprice):1)
     const [Cost,setCost] = useState(1)
+
+    useEffect(() => {
+        setPrice(data.Oldprice ? JSON.parse(data.Oldprice):1)
+        setCount(1)
+        setCost(1)
+    }, [data])
 
     const IncressMent = () => {
         setCount(count+1)
     }
     const DecressMent = () => {
-        if(count <= 0) return
+        if(count <= 1) return
         setCount(count-1)
     }
 
@@ -28,6 +34,7 @@ function ModalAddRecieve({show , onHide , toggle , data , GoodsPrice , setGoodsP
     }
 
     const AddRecieveBuffer = async() => {
+        if(count <= 0) return alert('จำนวนผิดพลาด')
         const currentdate = new Date();
     const dateOnAdd = currentdate.getFullYear() +
     "-" +
@@ -75,12 +82,16 @@ function ModalAddRecieve({show , onHide , toggle , data , GoodsPrice , setGoodsP
                 <div style={{display:'flex' , width:'100%' , justifyContent:'center' , alignItems:'center' , margin:'1rem 0'}}>
                     <img  style={{objectFit:'contain' , height:'200px' ,width:'200px'}} src={data.img} alt='product'/>
                 </div>
-                <div style={{display:'flex' , width:'100%'  , justifyContent:'center' , alignItems:'center'}}>
-                    <p>ราคาทุน</p>
+                <div style={{display:'flex' , width:'100%'  , justifyContent:'center' , alignItems:'center' , marginBottom:'1rem'}}>
+                    <div style={{width:'150px' , display:'flex' , justifyContent:'center' , alignItems:'center'}}>
+                        <p style={{ margin:'0'}}>ราคาทุน/หน่วย</p>
+                    </div>
                     <Input type='number' min="1" value={Cost} onChange={(e)=>{setCost(e.target.value)}}/> 
                 </div>
-                <div style={{display:'flex' , width:'100%'  , justifyContent:'center' , alignItems:'center'}}>
-                    <p>ราคาขาย</p>
+                <div style={{display:'flex' , width:'100%'  , justifyContent:'center' , alignItems:'center' , marginBottom:'1rem'}}>
+                    <div style={{width:'150px' , display:'flex' , justifyContent:'center' , alignItems:'center'}}>
+                        <p style={{ margin:'0'}}>ราคาขาย/หน่วย</p>
+                    </div>
                     <Input type='number' min="1" value={Price} onChange={(e)=>{setPrice(e.target.value)}}/> 
                 </div>
                 <div style={{display:'flex' , width:'100%'  , justifyContent:'center' , alignItems:'center'}}>

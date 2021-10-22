@@ -44,7 +44,7 @@ import { motion } from "framer-motion"
 
 var elem = document.documentElement;
 
-function Profit(props) {
+function ProfitSide(props) {
 
 
 
@@ -55,7 +55,9 @@ function Profit(props) {
 
 
 
+  let { branch } = useParams();
 
+  if(localStorage.getItem('Permistion') != 0 ) return window.location.href = 'http://localhost:3000/'
 
 
 
@@ -73,7 +75,7 @@ function Profit(props) {
               <h3>ร้าน {localStorage.getItem('user')}</h3>
             </div>
             <div className="detailBox">
-              <p>สาขา {localStorage.getItem('Branch_Name')}</p>
+              <p>สาขา {branch}</p>
             </div>
             <Row>
               <Col md="12">
@@ -557,4 +559,4 @@ function Profit(props) {
   );
 }
 
-export default Profit;
+export default ProfitSide;

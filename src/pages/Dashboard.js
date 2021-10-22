@@ -17,6 +17,13 @@ import checklist from '../images/IconsMenu/Icons/checklist.png'
 import wallet from '../images/IconsMenu/Icons/wallet.png'
 import shirt from '../images/IconsMenu/Icons/heart-shirt.png'
 import tag from '../images/IconsMenu/Icons/heart-label-tag.png'
+import shop from '../images/IconsMenu/Icons/shop.png'
+import wishlist from '../images/IconsMenu/Icons/wish-list.png'
+import moneypig from '../images/IconsMenu/Icons/money-pig.png'
+import dollarbills from '../images/IconsMenu/Icons/dollar-bills.png'
+import pointerscreen from '../images/IconsMenu/Icons/pointer-screen.png'
+import megaphone from '../images/IconsMenu/Icons/megaphone.png'
+import calculator from '../images/IconsMenu/Icons/calculator.png'
 
 import { motion } from 'framer-motion';
 import { Link } from "react-router-dom";
@@ -26,38 +33,62 @@ import '../styles/HomeDash.scss'
 
 function Dashboard() {
 
-    const signOut = () => {
-        localStorage.removeItem('user')
-        window.location.href = '/'
-    }
         return(
             <div className="SideBar-Res">
-            <div className='Container'>
+            <div className='Container' >
                 <motion.div initial={{translateX:500}} animate={{translateX:-50}} transition={{duration:0.5}} className="content-dash">
                 <Row>
                     <Col xs={0} sm={0} md={3}  className='blankSide'>
-                        <BlankSide/>
+                 
                     </Col>
                     <Col xs={12} sm={12} md={9} style={{paddingTop:'2rem'}}>
                         <ul>
-                            <Icon path='Product' img={basket} description='สินค้าคงคลัง'/>
+                            <Icon path='Product' img={basket} description='สินค้าคงคลัง' alert='Alert' count={4}/>
                             <Icon path='Sell' img={sell} description='งานขาย'/>
                             <Icon path='AddProduct' img={add} description='เพิ่มสินค้า'/>
                             <Icon path='AddCategory' img={tag} description='เพิ่มหมวดหมู่'/>
-
                             <Icon path='AddRecieve' img={delivery} description='เพิ่มแหล่งที่มา'/>
-                            
                             <Icon path='Recieve' img={recieve} description='ประวัติการรับสินค้า'/>
                             <Icon path='ListBill' img={receipt} description='ประวัติรายการบิลขาย'/>
+                            <Icon path='Withdraw' img={dollarbills} description='เบิกเงินทอน'/>
+                            {
+                                localStorage.getItem('Permistion') == 0 ? <Icon path='SetWithdraw' img={moneypig} description='เพิ่มเงินกองกลาง'/>: localStorage.getItem('Permistion') == 1 ? <Icon path='SetWithdraw' img={moneypig} description='เพิ่มเงินกองกลาง'/>:null
+                            }
+                            
+                            {
+                                localStorage.getItem('Permistion') == 0 ?  <Icon path='WithdrawCentral' img={wallet} description='ถอนเงินกองกลาง'/>: localStorage.getItem('Permistion') == 1 ?  <Icon path='WithdrawCentral' img={wallet} description='ถอนเงินกองกลาง'/>:null
+                            }
+                   
+                            {
+                                localStorage.getItem('Permistion') == 0 ?  <Icon path='CheckWithdraw' img={pointerscreen} description='เช็คประวัติเบิกถอน'/>: localStorage.getItem('Permistion') == 1 ?  <Icon path='CheckWithdraw' img={pointerscreen} description='เช็คประวัติเบิกถอน'/>:null
+                            }
+                   
+                            {
+                                localStorage.getItem('Permistion') == 0 ?  <Icon path='Profit' img={checklist} description='ภาพรวมยอดขาย'/>:null
+                            }
+                   
+                            {
+                                localStorage.getItem('Permistion') == 0 ?  <Icon path="Conclude" img={graph} description='สรุปยอดขาย'/>: localStorage.getItem('Permistion') == 1 ?  <Icon path="Conclude" img={graph} description='สรุปยอดขาย'/>:null
+                            }
+
+                            {
+                                localStorage.getItem('Permistion') == 0 ?  <Icon path='CreateQuotation' img={wishlist} description='ออกใบเสนอราคา'/>:null
+                            }
+                            
+                            {
+                                localStorage.getItem('Permistion') == 0 ?   <Icon path='AddEmployee' img={shirt} description='เพิ่มพนักงาน' alert='Alert' count={2}/>: localStorage.getItem('Permistion') == 1 ?   <Icon path='AddEmployee' img={shirt} description='เพิ่มพนักงาน' alert='Alert' count={2}/>:null
+                            }
+
+                            {
+                                localStorage.getItem('Permistion') == 0 ?   <Icon path='ManageEmployee' img={megaphone} description='จัดการพนักงาน'/>: localStorage.getItem('Permistion') == 1 ?   <Icon path='ManageEmployee' img={megaphone} description='จัดการพนักงาน'/>:null
+                            }
+
+                            {
+                                localStorage.getItem('Permistion') == 0 ?   <Icon path='AddBranch' img={shop} description='เพิ่มสาขา'/>:null
+                            }
                             <Icon path='Barcode' img={barcode} description='พิมพ์/สร้างบาร์โค้ด'/>
+                            <Icon path='Close' img={calculator} description='ปิดร้าน/ตัดยอด'/>
 
-                            <Icon path='Withdraw' img={money} description='เบิกเงินทอน'/>
-
-                            <Icon path='SetWithdraw' img={wallet} description='เซตเงินทอน'/>
-
-                            <Icon path='Profit' img={checklist} description='ภาพรวมยอดขาย'/>
-                            <Icon path='Conclude' img={graph} description='สรุปยอดขาย'/>
-                            <Icon path='AddEmployee' img={shirt} description='เพิ่มพนักงาน'/>
 
                         </ul>
                     </Col>
@@ -80,6 +111,8 @@ function Dashboard() {
                     <IconResp path='Conclude' img={receipt} description='สรุปยอดขาย'/>
                     <IconResp path='AddEmployee' img={shirt} description='เพิ่มพนักงาน'/>
                     <IconResp path='AddCategory' img={tag} description='เพิ่มหมวดหมู่'/>
+                    <IconResp path='AddBranch' img={shop} description='เพิ่มสาขา'/>
+
                 </ul>
             </div>
         </div>

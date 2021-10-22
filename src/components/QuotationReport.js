@@ -1,12 +1,29 @@
-import React , { useState , useEffect } from 'react'
+import React  , { useState , useEffect } from 'react'
 import { Table } from 'react-bootstrap';
 
-function RecieveReport({ data , bill}) {
+function QuotationReport({NameReciver , Addr , Contact , cart}) {
     const [total,setTotal] = useState(0)
 
-    useEffect(()=>{
-        data.map(e=>setTotal(prev=>prev+e.Cost_Total))
-    },[data])
+    const currentdate = new Date();
+    const dateOnAdd = currentdate.getFullYear() +
+    "-" +
+    (currentdate.getMonth() + 1 < 10
+      ? "0" + (currentdate.getMonth() + 1)
+      : currentdate.getMonth() + 1) +
+    "-" +
+    (currentdate.getDate() < 10
+      ? "0" + currentdate.getDate()
+      : currentdate.getDate())
+
+      useEffect(()=>{
+        setTotal(0)
+        cart.map(e=>setTotal(prev=>prev+e.Total))
+    },[cart])
+
+      
+
+
+    
 
     return (
         <div className='mainContain' style={{display:'flex' , justifyContent:'flex-start' , alignItems:'center' , width:'100%' , margin:'0' , padding:'0' ,marginTop:'1.2rem' , flexDirection:'column'  }}>
@@ -16,32 +33,18 @@ function RecieveReport({ data , bill}) {
                         <h4>{localStorage.getItem('Store_Name')} สาขา {localStorage.getItem('Branch_Name')}</h4>
                     </div>
                     <div style={{width:'100%' , textAlign:'center'}}>
-                        <h1>รายการบิลรับสินค้า</h1>
+                        <h1>ใบเสนอราคา</h1>
                     </div>
                     <div style={{display:'flex' , justifyContent:'space-between' , alignItems:'center' , width:'100%'   , padding:'1rem 2rem' , border:'1px solid black' , borderRadius:'0.5rem'}}>
                         <div>
-                            <div>รับมาจาก: {
-                                    data.map((e,idx)=>{
-                                        if(idx == 0) return e.Origin
-                                        return
-                                    })
-                                }
-                              </div>
+                            <div>ลูกค้า: { NameReciver }</div>
+                            <div>ที่อยู่: { Addr }</div>
+                            <div>ติดต่อ: { Contact }</div>
                         </div>
                         <div>
-                            <div>เลขที่บิล: {bill}</div>
-                            <div>วันที่: {
-                                    data.map((e,idx)=>{
-                                        if(idx == 0) return e.DateAdd_History.replace("T", " เวลา: ");
-                                        return
-                                    })
-                                }</div>
-                            <div>ผู้บันทึก:  {
-                                    data.map((e,idx)=>{
-                                        if(idx == 0) return e.FirstName +" "+ e.LastName
-                                        return
-                                    })
-                                }</div>
+                            <div>เลขที่บิล: {1123213}</div>
+                            <div>วันที่: { dateOnAdd }</div>
+                            <div>ผู้สร้างใบ:  { localStorage.getItem('UserName') }</div>
                         </div>
                     </div>
                 </div>
@@ -54,53 +57,53 @@ function RecieveReport({ data , bill}) {
                                     <th>ราคา/หน่วย</th>
                                     <th>จำนวน</th>
                                     <th>รวม</th>
-            
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                    data.map((e,idx)=>{
+                                    cart.map((e,idx)=>{
+                                 
                                         return(
                                             <tr>
                                                 <th scope="row">{idx+1}</th>
                                                 <td>{e.Goods_Name}</td>
-                                                <td>{e.Cost_Unit}</td>
-                                                <td>{e.Count_Recive}</td>
-                                                <td>{e.Cost_Total}</td>
+                                                <td>{e.Price}</td>
+                                                <td>{e.Count}</td>
+                                                <td>{e.Total}</td>
                                              </tr>
                                         )
                                     })
                                 }
-                                <tr>
+                                 <tr>
                                                 <th scope="row"></th>
                                                 <td></td>
                                                 <td></td>
-                                                <td><b>ต้นทุนรวม</b></td>
+                                                <td><b>รวม</b></td>
                                                 <td>{total}</td>
                                 </tr>
                               
                             </tbody>
                         </Table>
+
                 </div>
                 
             </div>
 
 
-            <div className='footer' style={{display:'flex' , justifyContent:'flex-start' , alignItems:'center' , width:'100%' , padding:'1rem 2rem'}}>
+            <div className='footer' style={{display:'flex' , justifyContent:'flex-start' , alignItems:'center' , width:'100%' , padding:'1rem 2rem' }}>
                 <div style={{textAlign:'center' , marginRight:'5rem'}}>
                     <h4>............................</h4>
-                    <p>(ผู้ส่งของ)</p>
+                    <p>(ผู้เสนอราคา)</p>
                 </div>
                 <div style={{textAlign:'center'}}>
                     <h4>............................</h4>
-                    <p>(ผู้รับของ)</p>
+                    <p>(ผู้อนุมัติ)</p>
                 </div>
                 
             </div>
 
         </div>
-        
     )
 }
 
-export default RecieveReport
+export default QuotationReport

@@ -40,15 +40,15 @@ function Recieve() {
     },
         {
           field: 'age',
-          headerName: 'วันที่ ว/ด/ป',
+          headerName: 'วันที่ ป/ด/ว',
           type: 'date',
-          width: 200,
+          width: 400,
         },
         ,
         {
           field: 'origin',
           headerName: 'แหล่งที่มา',
-          width: 200,
+          width: 400,
         },
       ];
       
@@ -59,7 +59,7 @@ function Recieve() {
     //   ];
 
       const rows = GoodHistory.map((e,idx)=>{
-        return { id: idx+1, firstName: `${e.Goods_History_ID}`, age: `${e.DateAdd_History}` , origin: `${e.Origin}`  }
+        return { id: idx+1, firstName: `${e.Goods_History_ID}`, age: `${e.DateAdd_History.replace("T"," ")}` , origin: `${e.Origin}`  }
       })
 
     return (

@@ -50,8 +50,8 @@ function NavbarAdmin() {
                     <img src={Banner} alt="LOGO" style={{width:'50px' , height:'50px' , borderRadius:'100%' , marginLeft:'10px'}}/>
                 </div>
                 <div className="detailBox">
-                    <p>สาขา กำแพงแสน</p>
-                    <p>ผู้ใช้งาน: อามรเทพ ทันแล้ว</p>
+                    <p>สาขา {localStorage.getItem('Branch_Name')}</p>
+                    <p>ผู้ใช้งาน: {localStorage.getItem('UserName')}</p>
                 </div>
                 
             </div>
@@ -63,51 +63,18 @@ function NavbarAdmin() {
                     </Link>
                 </li>
 
-                {/* <li>
-                    <Link to="/Product" ClassName="LOGO-Text" style={{ textDecoration: 'none', textAlign: "center", width: '100%', color: 'black' }}>
-                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.9 } }}>จัดการสินค้า</motion.span>
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/Employee" ClassName="LOGO-Text" style={{ textDecoration: 'none', textAlign: "center", width: '100%', color: 'black' }}>
-                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.9 } }}>จัดการพนักงาน</motion.span>
-                    </Link>
-                </li> */}
-                   <li>
-                    <Link to="/Branch" ClassName="LOGO-Text" style={{ textDecoration: 'none', textAlign: "center", width: '100%', color: 'black' }}>
-                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.9 } }}>จัดการสาขา</motion.span>
-                    </Link>
-                </li>
                 <li>
                     <Link to="/Setting" ClassName="LOGO-Text" style={{ textDecoration: 'none', textAlign: "center", width: '100%', color: 'black' }}>
-                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.9 } }}>ตั้งค่า</motion.span>
+                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.9 } }}>ตั้งค่าร้าน</motion.span>
                     </Link>
                 </li>
-             
-                {/* <li>
-                    <Link to="/Profit" ClassName="LOGO-Text" style={{ textDecoration: 'none', textAlign: "center", width: '100%', color: 'black' }}>
-                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.9 } }}>ภาพรวมยอดขาย</motion.span>
-                    </Link>
-                </li> */}
+
                 <li className='Logout-admin' onClick={signOut} >
                     <Link ClassName="LOGO-Text" style={{ textDecoration: 'none', textAlign: "center", width: '100%', color: 'black' }}>
                         <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.9 } }}>ออกจากระบบ</motion.span>
                     </Link>
                 </li>
-                <li className='FullScreenBTN' onClick={() => {
-              setFullScreen(!fullScreen)
-              if (fullScreen) {
-                closeFullscreen()
-
-              } else {
-
-                openFullscreen()
-              }
-            }}>
-                    <Link ClassName="LOGO-Text" style={{ textDecoration: 'none', textAlign: "center", width: '100%', color: 'black' }}>
-                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.9 } }}>{fullScreen ? 'โหมดปกติ' : 'โหมดเต็มจอ'}</motion.span>
-                    </Link>
-                </li>
+        
 
             </ul>
         </div>

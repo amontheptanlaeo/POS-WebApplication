@@ -79,7 +79,9 @@ function ModalProduct({show , onHide , toggle , data , GoodsPrice , setGoodsPric
                 {data.name}
             </ModalHeader>
             <ModalBody>
-                {data.stock <= 0 ? <p>สินค้าหมด</p>:<p>{data.stock}</p>}
+                <div style={{textAlign:'center'}}>
+                    {data.stock <= 0 ? <p>สินค้าหมด</p>:<p>คงเหลือ: {data.stock}</p>}
+                </div>
                 <div style={{display:'flex' , width:'100%' , justifyContent:'center' , alignItems:'center'}}>
                     <h5> ราคา {data.price}</h5>
                 </div>

@@ -66,7 +66,8 @@ function Login() {
                   เข้าสู่ระบบ
               </Button>
             </motion.p>
-            <p className="mt-2">ยังไม่ได้เป็นสมาชิก? <Link to="/Register">สมัครสมาชิก</Link></p>
+            <p className="mt-2">อยากเปิดร้านค้า? <Link to="/Register">สมัครเป็นเจ้าของร้าน</Link></p>
+            <p className="mt-2">เป็นพนักงานมาใหม่? <Link to="/RegisterEMP">สมัครเป็นพนักงาน</Link></p>
             <p className="mt-2">ลืมรหัสผ่าน? <Link to="/ResetPassword">คลิก</Link></p>
           </Form>
         </div>

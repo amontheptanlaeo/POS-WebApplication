@@ -1,16 +1,29 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import axios from "axios";
 import { motion } from 'framer-motion';
-
-
-
 import { Button, Form , Row,
   Col, Alert, Container} from 'react-bootstrap';
 
-function AddCategory() {
+  import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import Autocomplete from '@mui/material/Autocomplete';
+
+function Barcode() {
 
     const [err, setErr] = useState('')
     const [Type_Name, setType_Name] = useState("");
+    const [Allproduct, setAllProduct] = useState([]);
+
+    useEffect(async()=>{
+        const data = await axios.post('https://posappserver.herokuapp.com/getAllgoods',{
+          Branch_ID: localStorage.getItem('Branch_ID')
+        })
+        console.log(data.data)
+        setAllProduct(data.data)
+
+    },[])
+
+   
     const AddNewCategory = async(e) => {
       try {
         e.preventDefault();
@@ -28,7 +41,6 @@ function AddCategory() {
       
     }
 
-
     return (
         <motion.div initial={{translateX:500}} animate={{translateX:-50}} transition={{duration:0.5}}   className="content" style={{overflow:'hidden'}}>
         <Row>
@@ -38,19 +50,19 @@ function AddCategory() {
             <Col md={9} lg={9} style={{paddingTop:'2rem' , display:'flex' , flexDirection:'column' , height:'100%' }}>
               <Container>
               <div style={{display:'flex' , justifyContent:'center' , alignItems:'center' }}>
-                 <h4>เพิ่มหมวดหมู่</h4>
+                 <h4>สร้างบาร์โค้ด</h4>
                 </div>
                     <div style={{ height: '100%', width: '100%' }}>
-                    {err && <Alert variant="danger">{err}</Alert>}
-                  <Form onSubmit={(e)=>AddNewCategory(e)}>
-                    <Form.Group id="storeName">
-                      <Form.Label>ชื่อหมวดหมู่</Form.Label>
-                      <Form.Control type="text" placeholder="ระบุชื่อหมวดหมู่" value={Type_Name} onChange={(e)=>setType_Name(e.target.value)} required />
-                    </Form.Group>
-                    <Button type='submit' className="w-100 mb-2 log-btn" style={{ backgroundColor: "#802BB1", color:'black' , borderRadius: '5rem', boxShadow: 'none', outline: 'none !important', borderColor: 'transparent' }}>
-                      เพิ่มหมวดหมู่
-                    </Button>
-                  </Form>
+                    <Stack className="w-100" spacing={2} sx={{ width: 300 }}>
+                            <Autocomplete
+                                id="free-solo-demo"
+                                freeSolo
+                                options={Allproduct.map((option) => `${option.Goods_Name} ${option.Goods_ID}`)}
+                                renderInput={(params) => <TextField {...params} label="ค้นหาสินค้า" />}
+                                
+                            />
+                        </Stack>
+                        <Button className="w-100 btn btn-warning">สร้างบาร์โค้ด</Button>
                     </div>
               </Container>
                
@@ -60,4 +72,4 @@ function AddCategory() {
     )
 }
 
-export default AddCategory
+export default Barcode
