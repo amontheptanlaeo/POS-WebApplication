@@ -10,16 +10,15 @@ import { Link } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 
-function CheckWithdraw() {
-
-    const [withDrawCen,setwithDrawCen] = useState([])
+function CheckWitthdrawCus() {
+    const [checkMoneydraw,setcheckMoneydraw] = useState([])
 
     useEffect(async()=>{
-        const res = await axios.post('https://posappserver.herokuapp.com/getlogwithdrawCentralMoney',{
+        const res = await axios.post('https://posappserver.herokuapp.com/getlogwithdrawbankdaily',{
             Branch_ID: localStorage.getItem('Branch_ID')
         })
         console.log(res.data)
-        setwithDrawCen(res.data)
+        setcheckMoneydraw(res.data)
     },[])
 
     if(localStorage.getItem('Permistion') != 0 &&  localStorage.getItem('Permistion') != 1) return window.location.href = 'http://localhost:3000/'
@@ -53,8 +52,8 @@ function CheckWithdraw() {
           },
       ];
       
-      const rows = withDrawCen.map((e,idx)=>{
-        return { id: idx+1, firstName: `${e.Type_Status}`, total:`${e.MoneyTotal}` ,age: `${e.DateAdd.replace("T"," ")}` , nameSeller: `${e.FirstName} ${e.LastName}`  }
+      const rows = checkMoneydraw.map((e,idx)=>{
+        return { id: idx+1, firstName: `${e.Type_Status == 'WithDraw' ? 'นำออก':'นำเข้า'}`, total:`${e.MoneyTotal}` ,age: `${e.DateAdd.replace("T"," ")}` , nameSeller: `${e.FirstName} ${e.LastName}`  }
       })
 
     return (
@@ -64,7 +63,7 @@ function CheckWithdraw() {
                 {/* <BlankSide/> */}
             </Col>
             <Col md={9} lg={9} style={{paddingTop:'2rem' , display:'flex' , flexDirection:'column' , height:'100%' }}>
-                <h4>ประวัติการเบิกถอนกองกลาง</h4>
+                <h4>ประวัติการเบิกถอนเงินทอน</h4>
                     <div style={{ height: '80vh', width: '100%' }}>
                         <DataGrid
                             rows={rows}
@@ -79,4 +78,4 @@ function CheckWithdraw() {
     )
 }
 
-export default CheckWithdraw
+export default CheckWitthdrawCus

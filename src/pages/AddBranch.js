@@ -14,15 +14,39 @@ function AddBranch() {
 
 
     const AddNewBranch = async(e) => {
+
+  
       try {
         e.preventDefault();
-        const data = await axios.post('https://posappserver.herokuapp.com/postcategory',{
-            Branch_Name: BranchName,
-            Store_ID: localStorage.getItem('Store_ID')
-        });
-        console.log('SUCCESS')
-        console.log(data)
+        const currentdate = new Date();
+        const genDate = currentdate.getFullYear().toString() +
+        
+        (currentdate.getMonth() + 1 < 10
+          ? "0" + (currentdate.getMonth() + 1)
+          : currentdate.getMonth() + 1).toString() +
+       
+        (currentdate.getDate() < 10
+          ? "0" + currentdate.getDate()
+          : currentdate.getDate()).toString() +
+       
+        (currentdate.getHours() < 10
+          ? "0" + currentdate.getHours()
+          : currentdate.getHours()).toString() +
+       
+        (currentdate.getMinutes() < 10
+          ? "0" + currentdate.getMinutes()
+          : currentdate.getMinutes()).toString() +
+       
+        (currentdate.getSeconds() < 10
+          ? "0" + currentdate.getSeconds()
+          : currentdate.getSeconds()).toString()
 
+        await axios.post('https://posappserver.herokuapp.com/addbranch',{
+            Branch_Name: BranchName,
+            Store_ID: localStorage.getItem('Store_ID'),
+            IDCard: localStorage.getItem('IDCard'),
+            GenDate: genDate
+        }).then((res)=>console.log(res))
 
       } catch (error) {
         console.log(error)

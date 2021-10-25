@@ -17,9 +17,11 @@ function AddCategory() {
         const data = await axios.post('https://posappserver.herokuapp.com/postcategory',{
             Type_Name: Type_Name,
             Branch_ID: localStorage.getItem('Branch_ID')
-        });
-        console.log('SUCCESS')
-        console.log(data)
+        }).then((res)=>{
+          alert('เพิ่มสำเร็จ')
+          window.location.reload()
+        })
+       
 
 
       } catch (error) {

@@ -23,6 +23,7 @@ var ChangeText = {
 }
 
 
+
 function ModalSell({show , onHide , toggle , GoodsPrice}) {
 
     
@@ -64,25 +65,36 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
     const [modalSuccess, setModalSuccess] = useState(false);
 
 
+
+    const [linkSlip, setlinkSlip] = useState([{
+      Number_Bill:'0'
+    }]);
+
+
   const GetBankDaily = async() => {
     const Resp = await axios.post('https://posappserver.herokuapp.com/checkbankdaily',{
       Branch_ID: localStorage.getItem('Branch_ID'),
       Store_ID: localStorage.getItem('Store_ID')
     })
-    console.log('Sell',Resp)
-    setBankDaily(Resp.data)
-    setMoneyTotal(Resp.data[0].MoneyTotal)
-    setB1000(Resp.data[0].B1000)
-    setB500(Resp.data[0].B500)
-    setB100(Resp.data[0].B100)
-    setB50(Resp.data[0].B50)
-    setB20(Resp.data[0].B20)
-    setC10(Resp.data[0].C10)
-    setC5(Resp.data[0].C5)
-    setC2(Resp.data[0].C2)
-    setC1(Resp.data[0].C1)
-    setC50(Resp.data[0].C50)
-    setC25(Resp.data[0].C25)
+    if(Resp.data != ''){
+      console.log('Sell',Resp)
+      setBankDaily(Resp.data)
+      setMoneyTotal(Resp.data[0].MoneyTotal)
+      setB1000(Resp.data[0].B1000)
+      setB500(Resp.data[0].B500)
+      setB100(Resp.data[0].B100)
+      setB50(Resp.data[0].B50)
+      setB20(Resp.data[0].B20)
+      setC10(Resp.data[0].C10)
+      setC5(Resp.data[0].C5)
+      setC2(Resp.data[0].C2)
+      setC1(Resp.data[0].C1)
+      setC50(Resp.data[0].C50)
+      setC25(Resp.data[0].C25)
+    }else{
+      setModalAlert(!modalAlert)
+    }
+    
     
    
   }
@@ -204,9 +216,13 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
                 Branch_ID: localStorage.getItem('Branch_ID'),
                 ID: localStorage.getItem('ID'),
                 Store_ID: localStorage.getItem('Store_ID')
-          }).then((res)=>console.log('SERVER',res))
+          }).then((res)=>{console.log('SERVER',res)
+          getSlip()
+
+        })
 
             } else {
+              
               setModalAlert(!modalAlert)
              
             }
@@ -216,6 +232,17 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
 
 
         
+  }
+
+  const getSlip = async() =>{
+
+    const res = await axios.post('https://posappserver.herokuapp.com/getbilltable',{
+      Branch_ID: localStorage.getItem('Branch_ID')
+  })
+
+    setlinkSlip(res.data)
+    setModalSuccess(!modalSuccess)
+
   }
 
   const Sell = () => {
@@ -427,7 +454,7 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
         setC25Add(Pay)
       }
       SellAPI(value2,C2Param,B50Param,B20Param,B1000Param,B500Param,B100Param,C10Param,C5Param,C1Param,C50Param,C25Param)
-      setModalSuccess(!modalSuccess)
+      
 
 
     
@@ -558,11 +585,10 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
                     </div>
             </ModalBody>
             <ModalFooter>
-            <Button color="warning"  onClick={()=>{
-               alert('ใบเสร็จ')
-               setModalSuccess(!modalSuccess)
-              window.location.reload()
-                }}>พิมพ์ใบเสร็จ</Button>
+            <Link to={`/history/sell/`+linkSlip[0].Number_Bill}>
+              <Button color="warning">พิมพ์ใบเสร็จ</Button>
+            </Link>
+           
             </ModalFooter>
         </Modal>
 

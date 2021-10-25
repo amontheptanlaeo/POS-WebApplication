@@ -13,7 +13,7 @@ function IconMenu({path , img , description , alert ,count}) {
     const [show,setShow] = useState(false)
     const toggle = () => setShow(!show);
     return (
-        <motion.li className={alert ? alert:''}>
+        <motion.li className={alert == 'Alert' ? alert:''}>
             {alert && <motion.div animate={{ opacity: 1, scale:1 , y:[1,5,1] }} transition={{ repeat: Infinity, duration: 1 }}className='circle'>{count}</motion.div>}
 
             {path == 'Close' ? <div onClick={()=>setShow(!show)} ClassName="LOGO-Text" style={{ textDecoration: 'none', textAlign: "center", width: '100%', color: 'black' }}>

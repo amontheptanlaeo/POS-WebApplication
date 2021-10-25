@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef , useEffect} from 'react';
 import { Button, Form , Alert , Row , Col , Container } from 'react-bootstrap';
 import {
   Table
@@ -9,11 +9,48 @@ import { motion } from "framer-motion"
 import {
   Modal, ModalHeader, ModalBody, ModalFooter
 } from "reactstrap";
+import axios from 'axios';
 
 function AddEmp() {
    
   const [show,setShow] = useState(false)
+  const [show2,setShow2] = useState(false)
+  const [emp,setEmp] = useState([])
   const toggle = () => setShow(!show);
+  const toggle2 = () => setShow2(!show2);
+
+  const getEmp = async() => {
+    await axios.post('https://posappserver.herokuapp.com/getapprove',{
+      Store_ID:localStorage.getItem('Store_ID')
+    }).then((res)=>{
+      setEmp(res.data)
+    })
+  }
+
+
+  const approve = async() => {
+
+    await axios.post('https://posappserver.herokuapp.com/updateapprove',{
+      ID:emp[0].ID
+    }).then((res)=>{
+      console.log(res)
+     alert('สำเร็จ')
+     window.location.reload()
+    })
+  }
+
+  const notapprove = async() => {
+    await axios.post('https://posappserver.herokuapp.com/deleteperson',{
+      ID:emp[0].ID
+    }).then((res)=>{
+      alert('สำเร็จ')
+     window.location.reload()
+    })
+  }
+
+  useEffect(()=>{
+    getEmp()
+  },[])
   
   if(localStorage.getItem('Permistion') != 0 &&  localStorage.getItem('Permistion') != 1) return window.location.href = 'http://localhost:3000/'
 
@@ -40,33 +77,23 @@ function AddEmp() {
                                 </tr>
                             </thead>
                             <tbody style={{textAlign:'center'}}>
-                              <tr>
-                                  <th scope="row">1</th>
-                                  <td>วัชรินทร์ ราชกุณา</td>
-                                  <td>กำแพงแสน</td>
-                                  <td>
-                                    <div>
-                                    พนักงานขาย
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <Button className="mr-1" variant='success' onClick={()=>setShow(!show)}>อนุมัติ</Button>
-                                    <Button variant='danger' onClick={()=>setShow(!show)}>ไม่อนุมัติ</Button></td>
-                              </tr>
-                              <tr>
-                                  <th scope="row">2</th>
-                                  <td>วัชรินทร์ ราชกุณา</td>
-                                  <td>บางแค</td>
-                                  <td>
-                                    <div>
-                                    ผู้จัดการ
-                                    </div>
-                                   
-                                  </td>
-                                  <td>
-                                    <Button className="mr-1" variant='success' onClick={()=>setShow(!show)}>อนุมัติ</Button>
-                                    <Button variant='danger' onClick={()=>setShow(!show)}>ไม่อนุมัติ</Button></td>
-                              </tr>
+                              {
+                                emp.map((e,idx)=>{
+                                  return(
+                                    <tr>
+                                      <th scope="row">{idx+1}</th>
+                                      <td>{e.FirstName}  {e.LastName}</td>
+                                      <td>{e.Branch_Name}</td>
+                                      <td>
+                                        {e.Permission_Name}
+                                      </td>
+                                      <td>
+                                        <Button className="mr-1" variant='success' onClick={()=>setShow(!show)}>อนุมัติ</Button>
+                                        <Button variant='danger' onClick={()=>setShow2(!show2)}>ไม่อนุมัติ</Button></td>
+                                    </tr>
+                                  )
+                                })
+                              }
                             </tbody>
                         </Table>
 
@@ -79,12 +106,12 @@ function AddEmp() {
 
         <Modal isOpen={show} toggle={toggle} className='testModal' centered>
             <ModalHeader toggle={toggle}>
-                <p>การยืนยัน</p>
+                <p>การยืนยันอนุมัติ</p>
             </ModalHeader>
             <ModalBody>
                 <div style={{display:'flex' , alignItems:'center' , justifyContent:'center' , flexDirection:'column'}}>
                      <div>
-                        <p>แน่ใจแล้ว?</p>
+                        <p>แน่ใจแล้วหรือไม่?</p>
                     </div>
                     
                   
@@ -94,8 +121,30 @@ function AddEmp() {
             </ModalBody>
             <ModalFooter>
             <Button variant="success" onClick={()=>{
+                approve()
                  setShow(!show)
-            }}>ยืนยัน</Button>
+            }}>อนุมัติ</Button>
+            </ModalFooter>
+        </Modal>
+
+        <Modal isOpen={show2} toggle={toggle2} className='testModal' centered>
+            <ModalHeader toggle={toggle2}>
+                <p>การยืนยันไม่อนุมัติ</p>
+            </ModalHeader>
+            <ModalBody>
+                <div style={{display:'flex' , alignItems:'center' , justifyContent:'center' , flexDirection:'column'}}>
+                     <div>
+                        <p>แน่ใจแล้วหรือไม่?</p>
+                    </div>
+                </div>
+           
+              
+            </ModalBody>
+            <ModalFooter>
+            <Button variant="danger" onClick={()=>{
+              notapprove()
+                 setShow2(!show2)
+            }}>ไม่อนุมัติ</Button>
             </ModalFooter>
         </Modal>
     </motion.div>

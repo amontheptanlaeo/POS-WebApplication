@@ -1,4 +1,4 @@
-import React from 'react'
+import React , { useState , useEffect } from 'react'
 import {
     Row,
     Col
@@ -23,7 +23,8 @@ import moneypig from '../images/IconsMenu/Icons/money-pig.png'
 import dollarbills from '../images/IconsMenu/Icons/dollar-bills.png'
 import pointerscreen from '../images/IconsMenu/Icons/pointer-screen.png'
 import megaphone from '../images/IconsMenu/Icons/megaphone.png'
-import calculator from '../images/IconsMenu/Icons/calculator.png'
+import calculator from '../images/IconsMenu/Icons/calculator.png' 
+import screencart from '../images/IconsMenu/Icons/screen-cart.png'
 
 import { motion } from 'framer-motion';
 import { Link } from "react-router-dom";
@@ -31,7 +32,30 @@ import Icon from '../components/IconMenu'
 import IconResp from '../components/IconMenuResp'
 import '../styles/HomeDash.scss'
 
+import axios from 'axios';
+
 function Dashboard() {
+
+    const [alert,setalert] = useState(0)
+    const [alertE,setalertE] = useState(0)
+   
+
+    useEffect(async()=>{
+        const res = await axios.post('https://posappserver.herokuapp.com/checkgoodsinstocks',{
+            Branch_ID: localStorage.getItem('Branch_ID')
+        })
+        console.log(res.data)
+        setalert(res.data.length)
+
+        const res2 = await axios.post('https://posappserver.herokuapp.com/getcountapprove',{
+            Store_ID: localStorage.getItem('Store_ID')
+        })
+        console.log(res2)
+        setalertE(res2.data[0]['COUNT(Approve)'])
+
+      
+    },[])
+
 
         return(
             <div className="SideBar-Res">
@@ -43,7 +67,7 @@ function Dashboard() {
                     </Col>
                     <Col xs={12} sm={12} md={9} style={{paddingTop:'2rem'}}>
                         <ul>
-                            <Icon path='Product' img={basket} description='สินค้าคงคลัง' alert='Alert' count={4}/>
+                            <Icon path='Product' img={basket} description='สินค้าคงคลัง' alert={alert > 0 ? 'Alert':null} count={alert}/>
                             <Icon path='Sell' img={sell} description='งานขาย'/>
                             <Icon path='AddProduct' img={add} description='เพิ่มสินค้า'/>
                             <Icon path='AddCategory' img={tag} description='เพิ่มหมวดหมู่'/>
@@ -60,7 +84,11 @@ function Dashboard() {
                             }
                    
                             {
-                                localStorage.getItem('Permistion') == 0 ?  <Icon path='CheckWithdraw' img={pointerscreen} description='เช็คประวัติเบิกถอน'/>: localStorage.getItem('Permistion') == 1 ?  <Icon path='CheckWithdraw' img={pointerscreen} description='เช็คประวัติเบิกถอน'/>:null
+                                localStorage.getItem('Permistion') == 0 ?  <Icon path='CheckWithdraw' img={pointerscreen} description='ประวัติกองกลาง'/>: localStorage.getItem('Permistion') == 1 ?  <Icon path='CheckWithdraw' img={pointerscreen} description='ประวัติกองกลาง'/>:null
+                            }
+
+                            {
+                                localStorage.getItem('Permistion') == 0 ?  <Icon path='CheckWithdrawCus' img={screencart} description='ประวัติเงินทอน'/>: localStorage.getItem('Permistion') == 1 ?  <Icon path='CheckWithdrawCus' img={screencart} description='ประวัติเงินทอน'/>:null
                             }
                    
                             {
@@ -76,11 +104,11 @@ function Dashboard() {
                             }
                             
                             {
-                                localStorage.getItem('Permistion') == 0 ?   <Icon path='AddEmployee' img={shirt} description='เพิ่มพนักงาน' alert='Alert' count={2}/>: localStorage.getItem('Permistion') == 1 ?   <Icon path='AddEmployee' img={shirt} description='เพิ่มพนักงาน' alert='Alert' count={2}/>:null
+                                localStorage.getItem('Permistion') == 0 ?   <Icon path='AddEmployee' img={shirt} description='เพิ่มพนักงาน' alert={alertE > 0 ? 'Alert':null} count={alertE}/>:null
                             }
 
                             {
-                                localStorage.getItem('Permistion') == 0 ?   <Icon path='ManageEmployee' img={megaphone} description='จัดการพนักงาน'/>: localStorage.getItem('Permistion') == 1 ?   <Icon path='ManageEmployee' img={megaphone} description='จัดการพนักงาน'/>:null
+                                localStorage.getItem('Permistion') == 0 ?   <Icon path='ManageEmployee' img={megaphone} description='จัดการพนักงาน'/>:null
                             }
 
                             {

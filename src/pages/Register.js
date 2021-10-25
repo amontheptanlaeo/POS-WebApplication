@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import img from '../images/Welcome.svg'
 import { motion } from "framer-motion"
 import axios from 'axios';
+import ImageUploading from "react-images-uploading";
 
 function Register() {
     const emailRef = useRef();
@@ -22,24 +23,13 @@ function Register() {
     const [currentUser, setCurrentUser] = useState(false)
     const [info, setInfo] = useState() */
   
-    async function handleLogin(e) {
-      //e.preventDefault()
-  
-      try {
-        setErr('')
-  
-      } catch (e) {
-        setErr(e.message)
-      }
-  
-    }
   
 
     //MainFN
     const Register = async(e) => {
       e.preventDefault()
       try {
-
+        if(pass != conpass) return alert('รหัสผ่านไม่ตรงกัน')
         const currentdate = new Date();
         const genDate = currentdate.getFullYear().toString() +
         
@@ -64,20 +54,44 @@ function Register() {
           : currentdate.getSeconds()).toString() +
           (currentdate.getMilliseconds() < 100 
           ? "00" + currentdate.getMilliseconds():currentdate.getMilliseconds()).toString()
-  
-        const result = await axios.post('https://posappserver.herokuapp.com/register-owner',{
-          GenDate: genDate,
-          IDCard: CitizenNumber,
-          FirstName: FName,
-          LastName: LName,
-          Email: email.toLowerCase(),
-          Pass: pass,
-          img_Person: '',
-          Store_Name: storeName,
-          Branch_Name: branchName
-        })
 
-        console.log(result)
+          const check = await axios.post('https://posappserver.herokuapp.com/checkemail',{
+
+            Email: email.toLowerCase(),
+  
+          })
+
+          console.log(check.data[0]['COUNT(Email)'])
+          if(check.data[0]['COUNT(Email)'] == 0){
+
+             await axios.post('https://posappserver.herokuapp.com/register-owner',{
+              GenDate: genDate,
+              IDCard: CitizenNumber,
+              FirstName: FName,
+              LastName: LName,
+              Email: email.toLowerCase(),
+              Pass: pass,
+              img_Person: '',
+              Store_Name: storeName,
+              Branch_Name: branchName
+            }).then((res)=>{
+              alert('สมัครสำเร็จ')
+              window.location.href = '/login'
+            })
+
+            
+
+
+          }else{
+            return alert('อีเมลล์ซ้ำ')
+          }
+    
+
+  
+  
+       
+
+      
         
       } catch (error) {
         console.log(error)

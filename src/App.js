@@ -24,7 +24,7 @@ import NotFound from './pages/NotFound'
 import Dashboard from './pages/Dashboard';
 import Withdraw from './pages/Withdraw';
 import Profit from './components/Dashboard/views/Profit';
-import TableList from './components/Dashboard/views/TableList';
+import Conclude from './pages/Conclude';
 import SellPage from './pages/SellPage';
 import ManageBranch from './pages/ManageBranch';
 import Recieve from './pages/Recieve';
@@ -41,11 +41,13 @@ import HistorySell from './pages/HistorySell';
 import AddBranch from './pages/AddBranch';
 import Barcode from './pages/Barcode';
 import ProfitSide from './components/Dashboard/views/ProfitSide';
+import ConcludeSide from './pages/ConcludeSide';
 import ManageEmp from './pages/ManageEmp';
 import WithdrawCentral from './pages/WithdrawCentral';
 import CheckWithdraw from './pages/CheckWithdraw';
 import CreateQuotation from './pages/CreateQuotation';
 import Setting from './pages/Setting';
+import CheckWitthdrawCus from './pages/CheckWitthdrawCus';
 
 // import AdminLayout from "./components/Dashboard/layouts/Admin/Admin.js";
 // //import "./components/Dashboard/assets/scss/black-dashboard-react.scss";
@@ -60,7 +62,7 @@ import Setting from './pages/Setting';
 function App() {
 
 
-  if (localStorage.getItem('user')) {
+  if (localStorage.getItem('UserName')) {
 
     return (
       <Router>
@@ -70,8 +72,8 @@ function App() {
         <Switch>
 
           <Route path="/" exact component={Dashboard} />
-          <Route path="/Conclude/Side/:branch" component={ProfitSide} />
-          <Route path="/Conclude" component={Profit} />
+          <Route path="/Conclude/Side/:branch" component={ConcludeSide} />
+          <Route path="/Conclude" component={Conclude} />
           <Route path="/Profit" component={OverAll} />
           <Route path="/Product" component={Product} />
           <Route path="/Withdraw" component={Withdraw} />
@@ -84,6 +86,7 @@ function App() {
           <Route path="/Withdrawcentral" component={WithdrawCentral} />
           <Route path="/CreateQuotation" component={CreateQuotation} />
           <Route path="/CheckWithdraw" component={CheckWithdraw} />
+          <Route path="/CheckWithdrawCus" component={CheckWitthdrawCus} />
           <Route path="/Setting" component={Setting} />
           <Route path="/AddEmployee" component={AddEmp} />
           <Route path="/AddCategory" component={AddCategory} />

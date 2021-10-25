@@ -308,6 +308,7 @@ function SellPage() {
                 setCart={setCart}
                 
             />
+            
             <ModalSell
                 show={modalS}
                 onHide={() => setModalS(false)}

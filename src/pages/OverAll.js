@@ -1,4 +1,4 @@
-import React from 'react'
+import React , { useState , useEffect } from 'react'
 import {
     Button,
     Row,
@@ -13,11 +13,28 @@ import {
 import { motion } from 'framer-motion';
 import { Link } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
+import axios from 'axios';
+
 function OverAll() {
+
+    const [branch,setBranch] = useState([])
+
+    useEffect(()=>{
+        getBranch()
+      },[])
+
 
   if(localStorage.getItem('Permistion') != 0) return window.location.href = 'http://localhost:3000/'
 
+  
 
+ 
+
+  const getBranch = async() => {
+    await axios.post('https://posappserver.herokuapp.com/getbranch',{
+        Store_ID:localStorage.getItem('Store_ID')
+    }).then((res)=>setBranch(res.data))
+  }
     const columns = [
         { field: 'id', headerName: '#', width: 100 },
         { field: 'firstName', headerName: 'ชื่อสาขา', width: 450 ,
@@ -29,18 +46,14 @@ function OverAll() {
                 </>)
 
     },
-    { field: 'sell', headerName: 'ยอดขาย', width: 300 },
-    { field: 'cost', headerName: 'ต้นทุน', width: 300 },
-    { field: 'profit', headerName: 'กำไร', width: 240 },
+    { field: 'branch', headerName: 'ID สาขา', width: 500 },
     
     
       ];
       
-      const rows = [
-        { id: 1, firstName: `กำแพงแสน`, profit: 1400 , cost: 700 , sell: 2100 , branch:'5567' },
-        { id: 2, firstName: 'บางแค', profit: 6400 , cost: 3000 , sell: 9400 },
-      ];
-
+      const rows = branch.map((e,idx)=>{
+        return { id: idx+1, firstName: `${e.Branch_Name}`, branch: `${e.Branch_ID}`}
+      })
     return (
         <motion.div initial={{translateX:500}} animate={{translateX:-50}} transition={{duration:0.5}}   className="content" style={{overflow:'hidden'}}>
             <Row>

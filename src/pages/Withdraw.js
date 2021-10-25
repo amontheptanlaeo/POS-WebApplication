@@ -4,6 +4,7 @@ import {
     Col,
     Button
 } from "reactstrap";
+import { Link } from 'react-router-dom'
 import BlankSide from '../components/BlankSide';
 import { motion } from 'framer-motion';
 import ListMoney from '../components/ListMoney'
@@ -11,6 +12,10 @@ import { Container } from 'react-bootstrap';
 import TextField from "@material-ui/core/TextField";
 // import Button from "@material-ui/core/Button";
 import axios from "axios";
+import {
+  Modal, ModalHeader, ModalBody, ModalFooter,
+  Input
+} from "reactstrap";
 
 var total1000 = 0
 var total500 = 0
@@ -47,6 +52,11 @@ function Withdraw() {
 
     const [CentralB, setCentralB] = useState([]);
 
+
+    const [modalC, setModalC] = useState(false);
+    const toggle = () => setModalC(!modalC);
+
+
     useEffect(async() => {
       axios({
         method: "POST",
@@ -60,219 +70,6 @@ function Withdraw() {
         setCentralB(resp.data[0])})
     }, [])
     
-    // const onRecommend = async (e) => {
-    //   e.preventDefault();
-    //   setB1000Add(0);
-    //   setB500Add(0);
-    //   setB100Add(0);
-    //   setB50Add(0);
-    //   setB20Add(0);
-    //   setC10Add(0);
-    //   setC5Add(0);
-    //   setC2Add(0);
-    //   setC1Add(0);
-    //   setC50Add(0);
-    //   setC25Add(0);
-
-    //   total1000 = 0
-    //   total500 = 0
-    //   total100 = 0
-    //   total50 = 0
-    //   total20 = 0
-    //   total10 = 0
-    //   total5 = 0
-    //   total2 = 0
-    //   total1 = 0
-    //   totalC50 = 0
-    //   totalC25 = 0
-
-    //   axios({
-    //     method: "POST",
-    //     url: "https://posappserver.herokuapp.com/getmoneycenter",
-    //     data: {
-    //       Branch_ID: localStorage.getItem('Branch_ID'),
-    //       Store_ID: localStorage.getItem('Store_ID'),
-    //     },
-    //   }).then((resp) => {
-    //     console.log("resp", resp);
-    //     var checktotal = resp.data[0].MoneyTotal;
-    //     setTotalMoneyDB(checktotal);
-    //     var total =
-    //       B1000 * 1000 +
-    //       B500 * 500 +
-    //       B100 * 100 +
-    //       B50 * 50 +
-    //       B20 * 20 +
-    //       C10 * 10 +
-    //       C5 * 5 +
-    //       C2 * 2 +
-    //       C1 * 1 +
-    //       C50 * 0.5 +
-    //       C25 * 0.25;
-    //     if (Money_Today <= checktotal) {
-    //       var value = Money_Today;
-    //       console.log("จำนวนเงินที่ต้องทอน: ", value);
-    //       if (value >= 1000) {
-    //         var Pay = Math.floor(value / 1000);
-    //         value = value - Pay * 1000;
-    //         if (Pay > resp.data[0].B1000) {
-    //           var ex = Pay - resp.data[0].B1000;
-    //           value = value + ex * 1000;
-    //           Pay = resp.data[0].B1000;
-    //           setB1000(0);
-    //         } else {
-    //           setB1000(resp.data[0].B1000 - Pay);
-    //         }
-    //         setB1000Add(Pay);
-    //         console.log("จำนวนแบงค์ 1000: ", Pay);
-    //       }
-    //       if (value >= 500) {
-    //         var Pay = Math.floor(value / 500);
-    //         value = value - Pay * 500;
-    //         if (Pay > resp.data[0].B500) {
-    //           var ex = Pay - resp.data[0].B500;
-    //           value = value + ex * 500;
-    //           Pay = resp.data[0].B500;
-    //           setB500(0);
-    //         } else {
-    //           setB500(resp.data[0].B500 - Pay);
-    //         }
-    //         setB500Add(Pay);
-    //         console.log("จำนวนแบงค์ 500: ", Pay);
-    //       }
-    //       if (value >= 100) {
-    //         var Pay = Math.floor(value / 100);
-    //         value = value - Pay * 100;
-    //         if (Pay > resp.data[0].B100) {
-    //           var ex = Pay - resp.data[0].B100;
-    //           value = value + ex * 100;
-    //           Pay = resp.data[0].B100;
-    //           setB100(0);
-    //         } else {
-    //           setB100(resp.data[0].B100 - Pay);
-    //         }
-    //         setB100Add(Pay);
-    //         console.log("จำนวนแบงค์ 100: ", Pay);
-    //       }
-    //       if (value >= 50) {
-    //         var Pay = Math.floor(value / 50);
-    //         value = value - Pay * 50;
-    //         if (Pay > resp.data[0].B50) {
-    //           var ex = Pay - resp.data[0].B50;
-    //           value = value + ex * 50;
-    //           Pay = resp.data[0].B50;
-    //           setB50(0);
-    //         } else {
-    //           setB50(resp.data[0].B50 - Pay);
-    //         }
-    //         setB50Add(Pay);
-    //         console.log("จำนวนแบงค์ 50: ", Pay);
-    //       }
-    //       if (value >= 20) {
-    //         var Pay = Math.floor(value / 20);
-    //         value = value - Pay * 20;
-    //         if (Pay > resp.data[0].B20) {
-    //           var ex = Pay - resp.data[0].B20;
-    //           value = value + ex * 20;
-    //           Pay = resp.data[0].B20;
-    //           setB20(0);
-    //         } else {
-    //           setB20(resp.data[0].B20 - Pay);
-    //         }
-    //         setB20Add(Pay);
-    //         console.log("จำนวนแบงค์ 20: ", Pay);
-    //       }
-    //       if (value >= 10) {
-    //         var Pay = Math.floor(value / 10);
-    //         value = value - Pay * 10;
-    //         if (Pay > resp.data[0].C10) {
-    //           var ex = Pay - resp.data[0].C10;
-    //           value = value + ex * 10;
-    //           Pay = resp.data[0].C10;
-    //           setC10(0);
-    //         } else {
-    //           setC10(resp.data[0].C10 - Pay);
-    //         }
-    //         setC10Add(Pay);
-    //         console.log("จำนวนเหรียญ 10: ", Pay);
-    //       }
-  
-    //       if (value >= 5) {
-    //         var Pay = Math.floor(value / 5);
-    //         value = value - Pay * 5;
-    //         if (Pay > resp.data[0].C5) {
-    //           var ex = Pay - resp.data[0].C5;
-    //           value = value + ex * 5;
-    //           Pay = resp.data[0].C5;
-    //           setC5(0);
-    //         } else {
-    //           setC5(resp.data[0].C5 - Pay);
-    //         }
-    //         setC5Add(Pay);
-    //         console.log("จำนวนเหรียญ 5: ", Pay);
-    //       }
-    //       if (value >= 2) {
-    //         var Pay = Math.floor(value / 2);
-    //         value = value - Pay * 2;
-    //         if (Pay > resp.data[0].C2) {
-    //           var ex = Pay - resp.data[0].C2;
-    //           value = value + ex * 2;
-    //           Pay = resp.data[0].C2;
-    //           setC2(0);
-    //         } else {
-    //           setC2(resp.data[0].C2 - Pay);
-    //         }
-    //         setC2Add(Pay);
-    //         console.log("จำนวนเหรียญ 2: ", Pay);
-    //       }
-    //       if (value >= 1) {
-    //         var Pay = Math.floor(value / 1);
-    //         value = value - Pay * 1;
-    //         if (Pay > resp.data[0].C1) {
-    //           var ex = Pay - resp.data[0].C1;
-    //           value = value + ex * 1;
-    //           Pay = resp.data[0].C1;
-    //           setC1(0);
-    //         } else {
-    //           setC1(resp.data[0].C1 - Pay);
-    //         }
-    //         setC1Add(Pay);
-    //         console.log("จำนวนเหรียญ 1: ", Pay);
-    //       }
-    //       if (value >= 0.5) {
-    //         var Pay = Math.floor(value / 0.5);
-    //         value = value - Pay * 0.5;
-    //         if (Pay > resp.data[0].C1) {
-    //           var ex = Pay - resp.data[0].C50;
-    //           value = value + ex * 0.5;
-    //           Pay = resp.data[0].C50;
-    //           setC50(0);
-    //         } else {
-    //           setC50(resp.data[0].C50 - Pay);
-    //         }
-    //         setC50Add(Pay);
-    //         console.log("จำนวนเหรียญ 25 สตางค์: ", Pay);
-    //       }
-    //       if (value >= 0.25) {
-    //         var Pay = Math.floor(value / 0.25);
-    //         value = value - Pay * 0.25;
-    //         if (Pay > resp.data[0].C25) {
-    //           var ex = Pay - resp.data[0].C25;
-    //           value = value + ex * 0.25;
-    //           Pay = resp.data[0].C25;
-    //           setC25(0);
-    //         } else {
-    //           setC25(resp.data[0].C25 - Pay);
-    //         }
-    //         setC25Add(Pay);
-    //         console.log("จำนวนเหรียญ 25 สตางค์: ", Pay);
-    //       }
-    //     } else {
-    //         alert("ยอดเงินไม่พอจ่าย");
-          
-    //     }
-    //   });
-    // };
   
     const onCheckMoney = async () => {
       if(Money_Today <= 0) return alert('ระบุให้ถูกต้อง')
@@ -285,6 +82,7 @@ function Withdraw() {
           
         },
       }).then((resp) => {
+        if(resp.data[0] == null) return setModalC(!modalC)
         var checktotal = resp.data[0].MoneyTotal;
         var total =
           B1000Add * 1000 +
@@ -318,7 +116,7 @@ function Withdraw() {
             alert("ยอดเงินพอจ่าย");
             setCheckBtn(true);
           } else {
-            alert("ยอดจำนวนแบงค์ไม่พอ");
+            setModalC(!modalC)
             setMoney_Today(0);
             setB1000Add(0);
             setB500Add(0);
@@ -382,6 +180,7 @@ function Withdraw() {
             Store_ID: localStorage.getItem('Store_ID'),
         },
       }).then((resp) => {
+        if(resp.data[0] == null) return setModalC(!modalC)
         var checktotal = resp.data[0].MoneyTotal;
         if (
           Money_Today <= checktotal &&
@@ -410,9 +209,8 @@ function Withdraw() {
             C50Add * 0.5 +
             C25Add * 0.25;
   
-          console.log("ยอดเงิน", total);
+    
           if (total == Money_Today) {
-            alert("ยอดเงินถูกต้อง");
             var currentdate = new Date();
             var datetime =
               currentdate.getFullYear() +
@@ -486,10 +284,12 @@ function Withdraw() {
                 GenDate: GenDate,
               },
             }).then((res) => {
+              alert("เบิกสำเร็จ");
               console.log(res);
+              window.location.reload()
             });
           } else {
-            alert("ยอดเงินไม่ถูกต้อง");
+            setModalC(!modalC)
             setMoney_Today(0);
             setB1000Add(0);
             setB500Add(0);
@@ -515,7 +315,7 @@ function Withdraw() {
             totalC25 = 0
           }
         } else {
-          alert("ยอดเงินไม่พอจ่าย");
+          setModalC(!modalC)
           setMoney_Today(0);
           setB1000Add(0);
           setB500Add(0);
@@ -777,8 +577,9 @@ function Withdraw() {
                 </div>
                 <div style={{marginTop:'2rem'}}>
                   <h5>ยอดคงเหลือในกองกลาง</h5>
-                  <div style={{display:'flex' ,justifyContent:'flex-start' , alignItems:'center' , flexWrap:'wrap'}}>
-                    <p style={{marginRight:'1rem'}}>[ แบงค์ 1000: {CentralB.B1000} ]</p>
+                  {
+                    CentralB == null ? <p>เพิ่มกองกลางก่อน</p>:<div style={{display:'flex' ,justifyContent:'flex-start' , alignItems:'center' , flexWrap:'wrap'}}>
+                    <p style={{marginRight:'1rem'}}>[ แบงค์ 1000: {CentralB.B1000 ? CentralB.B1000:0} ]</p>
                     <p style={{marginRight:'1rem'}}>[ แบงค์ 500: {CentralB.B500} ]</p>
                     <p style={{marginRight:'1rem'}}>[ แบงค์ 100: {CentralB.B100} ]</p>
                     <p style={{marginRight:'1rem'}}>[ แบงค์ 50: {CentralB.B50} ]</p>
@@ -787,9 +588,11 @@ function Withdraw() {
                     <p style={{marginRight:'1rem'}}>[ เหรียญ 5: {CentralB.C5} ]</p>
                     <p style={{marginRight:'1rem'}}>[ เหรียญ 2: {CentralB.C2} ]</p>
                     <p style={{marginRight:'1rem'}}>[ เหรียญ 1: {CentralB.C1} ]</p>
-                    <p style={{marginRight:'1rem'}}>[ เหรียญ 50 สตางค์: {CentralB.B50} ]</p>
+                    <p style={{marginRight:'1rem'}}>[ เหรียญ 50 สตางค์: {CentralB.C50} ]</p>
                     <p>[ เหรียญ 25 สตางค์: {CentralB.C25} ]</p>
                   </div>
+                  }
+                  
                 </div>
                
                 {/* <Button
@@ -805,8 +608,31 @@ function Withdraw() {
                 
             </Col>
         </Row>
+
+        <Modal isOpen={modalC} toggle={toggle} className='testModal' centered>
+            <ModalHeader toggle={toggle}>
+                แจ้งเตือน
+            </ModalHeader>
+            <ModalBody>
+              <h5>เงินกองกลางไม่เพียงพอ</h5>
+            </ModalBody>
+            <ModalFooter>
+              {
+                localStorage.getItem('Permistion') == 2 ? null:<Link to='/SetWithdraw'><Button color="warning"  onClick={()=>{
+                                                                setModalC(!modalC)
+                                                                }}>เพิ่มกองกลาง</Button></Link>
+              }
+                
+                <Button color="danger" onClick={()=>{
+                    toggle()
+                }}>ยกเลิก</Button>
+            </ModalFooter>
+    </Modal>
+              
+        
         </motion.div>
     )
+    
 }
 
 export default Withdraw

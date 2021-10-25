@@ -1,11 +1,11 @@
-import React , { useState } from 'react'
+import React , { useState , useEffect } from 'react'
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion"
 
 import '../styles/NavAdmin.scss'
 import Banner from '../images/LOGO/Shop-Starter.jpg'
 
-var elem = document.documentElement;
+import axios from 'axios';
 
 
 
@@ -13,40 +13,41 @@ var elem = document.documentElement;
 
 function NavbarAdmin() {
 
-    const [fullScreen, setFullScreen] = useState(false)
+    const [storeName,setstoreName] = useState('')
+
+    useEffect(async()=>{
+
+        await axios.post('https://posappserver.herokuapp.com/getnamestore',{
+            Store_ID: localStorage.getItem('Store_ID')
+        }).then((res)=>{
+            setstoreName(res.data[0].Store_Name)
+            localStorage.setItem('Store_Name',res.data[0].Store_Name)
+        })
+
+    },[])
+
 
 
     const signOut = () => {
-        localStorage.removeItem('user')
+        localStorage.removeItem('UserName')
+        localStorage.removeItem('Branch_ID')
+        localStorage.removeItem('Store_ID')
+        localStorage.removeItem('Branch_Name')
+        localStorage.removeItem('Store_Name')
+        localStorage.removeItem('ID')
+        localStorage.removeItem('Permistion')
+        localStorage.removeItem('UserName')
+        localStorage.removeItem('IDCard')
         window.location.href = '/'
     }
     
-    function openFullscreen() {
-    
-        if (elem.requestFullscreen) {
-          elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { /* Safari */
-          elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { /* IE11 */
-          elem.msRequestFullscreen();
-        }
-      }
-      function closeFullscreen() {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) { /* Safari */
-          document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { /* IE11 */
-          document.msExitFullscreen();
-        }
-      }
 
 
     return (
         <div className="SideBar">
             <div className="detailStore">
                 <div className="Banner" style={{display:'flex' ,justifyContent:'space-between' , alignItems:'center' , textAlign:'center'}}>
-                    <h3>ร้าน {localStorage.getItem('user')}</h3>
+                    <h3>ร้าน {storeName}</h3>
                     <img src={Banner} alt="LOGO" style={{width:'50px' , height:'50px' , borderRadius:'100%' , marginLeft:'10px'}}/>
                 </div>
                 <div className="detailBox">
@@ -63,11 +64,18 @@ function NavbarAdmin() {
                     </Link>
                 </li>
 
-                <li>
+                {
+                    localStorage.getItem('Permistion') == 0 ?  <li>
                     <Link to="/Setting" ClassName="LOGO-Text" style={{ textDecoration: 'none', textAlign: "center", width: '100%', color: 'black' }}>
                         <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.9 } }}>ตั้งค่าร้าน</motion.span>
                     </Link>
-                </li>
+                </li>:null
+                }
+                {/* <li>
+                    <Link to="/Setting" ClassName="LOGO-Text" style={{ textDecoration: 'none', textAlign: "center", width: '100%', color: 'black' }}>
+                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.9 } }}>ตั้งค่าร้าน</motion.span>
+                    </Link>
+                </li> */}
 
                 <li className='Logout-admin' onClick={signOut} >
                     <Link ClassName="LOGO-Text" style={{ textDecoration: 'none', textAlign: "center", width: '100%', color: 'black' }}>

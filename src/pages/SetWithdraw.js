@@ -1,4 +1,4 @@
-import React , {useState}  from 'react'
+import React , {useState , useEffect}  from 'react'
 import {
     Button,
     Row,
@@ -45,6 +45,20 @@ function SetWithdraw() {
   const [C1, setC1] = useState(0);
   const [C50, setC50] = useState(0);
   const [C25, setC25] = useState(0);
+  const [CentralB, setCentralB] = useState([]);
+
+    useEffect(async() => {
+          axios({
+            method: "POST",
+            url: "https://posappserver.herokuapp.com/getmoneycenter",
+            data: {
+                Branch_ID: localStorage.getItem('Branch_ID'),
+                Store_ID: localStorage.getItem('Store_ID'),
+              
+            },
+          }).then((resp) => {
+            setCentralB(resp.data[0])})
+        }, [])
 
   if(localStorage.getItem('Permistion') != 0 &&  localStorage.getItem('Permistion') != 1) return window.location.href = 'http://localhost:3000/'
 
@@ -385,74 +399,26 @@ function SetWithdraw() {
 
                 
                 </div>
-
-{/* <TextField
-        id="standard-basic"
-        label="จำนวนเงินทอนวันนี้"
-        onChange={(e) => setMoney_Today(e.target.value)}
-      />
-      <TextField
-        id="standard-basic"
-        label="จำนวนแบงค์ 1000 บาท"
-        onChange={(e) => setB1000(e.target.value)}
-      />
-      <TextField
-        id="standard-basic"
-        label="จำนวนแบงค์ 500 บาท"
-        onChange={(e) => setB500(e.target.value)}
-      />
-      <TextField
-        id="standard-basic"
-        label="จำนวนแบงค์ 100 บาท"
-        onChange={(e) => setB100(e.target.value)}
-      />
-      <TextField
-        id="standard-basic"
-        label="จำนวนแบงค์ 50 บาท"
-        onChange={(e) => setB50(e.target.value)}
-      />
-      <TextField
-        id="standard-basic"
-        label="จำนวนแบงค์ 20 บาท"
-        onChange={(e) => setB20(e.target.value)}
-      />
-      <TextField
-        id="standard-basic"
-        label="จำนวนเหรียญ 10 บาท"
-        onChange={(e) => setC10(e.target.value)}
-      />
-      <TextField
-        id="standard-basic"
-        label="จำนวนเหรียญ 5 บาท"
-        onChange={(e) => setC5(e.target.value)}
-      />
-      <TextField
-        id="standard-basic"
-        label="จำนวนเหรียญ 2 บาท"
-        onChange={(e) => setC2(e.target.value)}
-      />
-      <TextField
-        id="standard-basic"
-        label="จำนวนเหรียญ 1 บาท"
-        onChange={(e) => setC1(e.target.value)}
-      />
-      <TextField
-        id="standard-basic"
-        label="จำนวนเหรียญ 50 สตางค์"
-        onChange={(e) => setC50(e.target.value)}
-      />
-      <TextField
-        id="standard-basic"
-        label="จำนวนเหรียญ 25 สตางค์"
-        onChange={(e) => setC25(e.target.value)}
-      /> */}
-      {/* <Button
-        variant="contained"
-        color="primary"
-        onClick={(e) => onCheckMoney(e)}
-      >
-        เซ็ตยอดเงิน
-      </Button> */}
+                
+          <div style={{marginTop:'2rem'}}>
+                  <h5>ยอดคงเหลือในกองกลาง</h5>
+                  {
+                    CentralB == null ? <p>เพิ่มกองกลางก่อน</p>:<div style={{display:'flex' ,justifyContent:'flex-start' , alignItems:'center' , flexWrap:'wrap'}}>
+                    <p style={{marginRight:'1rem'}}>[ แบงค์ 1000: {CentralB.B1000 ? CentralB.B1000:0} ]</p>
+                    <p style={{marginRight:'1rem'}}>[ แบงค์ 500: {CentralB.B500} ]</p>
+                    <p style={{marginRight:'1rem'}}>[ แบงค์ 100: {CentralB.B100} ]</p>
+                    <p style={{marginRight:'1rem'}}>[ แบงค์ 50: {CentralB.B50} ]</p>
+                    <p style={{marginRight:'1rem'}}>[ แบงค์ 20: {CentralB.B20} ]</p>
+                    <p style={{marginRight:'1rem'}}>[ เหรียญ 10: {CentralB.C10} ]</p>
+                    <p style={{marginRight:'1rem'}}>[ เหรียญ 5: {CentralB.C5} ]</p>
+                    <p style={{marginRight:'1rem'}}>[ เหรียญ 2: {CentralB.C2} ]</p>
+                    <p style={{marginRight:'1rem'}}>[ เหรียญ 1: {CentralB.C1} ]</p>
+                    <p style={{marginRight:'1rem'}}>[ เหรียญ 50 สตางค์: {CentralB.C50} ]</p>
+                    <p>[ เหรียญ 25 สตางค์: {CentralB.C25} ]</p>
+                  </div>
+                  }
+                  
+                </div>
 
                 </Container>
                 

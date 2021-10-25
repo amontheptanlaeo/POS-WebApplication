@@ -60,7 +60,6 @@ function Product() {
                                 options={Allproduct.map((option) => `${option.Goods_Name} ${option.Goods_ID}`)}
                                 renderInput={(params) => <TextField {...params} label="ค้นหาสินค้า" />}
                                 onChange={(event, newValue) => {
-                       
                                     if (typeof newValue === 'string') {
                                         Allproduct.map((e)=>{
                                             const product = newValue.split(" ")
@@ -95,13 +94,12 @@ function Product() {
                             Allproduct.map(e=>{
                                 
                                 if(temp.indexOf(e.Type_Name) !== -1)  
-                                {  
-                                        return
+                                {
+                                    return
                                 }   
                                 else  
                                 {
                                         temp.push(e.Type_Name)
-                                        
                                         return(
                                             <div className='ItemListSell' style={{width:'100%'}}>
                                                 <p>{e.Type_Name}</p>
@@ -123,7 +121,7 @@ function Product() {
                                                             onClick={()=>{
                                                                 setProduct({
                                                                     name: e2.Goods_Name,
-                                                                    price:18,
+                                                                    price:e2.Price,
                                                                     img: e2.Goods_img,
                                                                     Count_Stock: e2.Count_Stock,
                                                                     Favorite: e2.Favorite,
@@ -132,10 +130,10 @@ function Product() {
                                                                  toggle() 
                                                             }}
                                                             /> 
-                                                            <div className={e2.Count_Stock <= 0 ? 'OutOff':e2.Count_Stock <= 70 ? 'Warn':'Normal'}></div>
+                                                            <div className={e2.Count_Stock <= 0 ? 'OutOff':e2.Count_Stock < 20 ? 'Warn':'Normal'}></div>
                                                                 </div>
                                                                
-                                                            <p className={e2.Count_Stock <= 0 ? 'Out':e2.Count_Stock <= 70 ? 'Near':'In'} style={{textAlign:'center' , width:'100%' }}>{e2.Goods_Name}</p>
+                                                            <p className={e2.Count_Stock <= 0 ? 'Out':e2.Count_Stock < 20 ? 'Near':'In'} style={{textAlign:'center' , width:'100%' }}>{e2.Goods_Name}</p>
                                                             </SwiperSlide>
                                                         }
                                                         return

@@ -43,6 +43,22 @@ function AddRecieve() {
   const temp = []
   const toggle = () => setModalP(!modalP);
 
+  const [loading, setLoading] = useState(false);
+
+const uploadImage = async (files) => {
+    const formData = new FormData();
+    formData.append("file", files);
+    formData.append("upload_preset", "xabqurhq");
+    setLoading(true)
+    axios
+      .post("https://api.cloudinary.com/v1_1/diyf7i0tt/upload", formData)
+      .then((res) => {
+        console.log(res);
+        setLinkBill(res.data.url)
+        setLoading(false)
+      });
+    }
+
 
 
   const AddRecieveFN = async(e) => {
@@ -103,7 +119,7 @@ function AddRecieve() {
         GenDate: genDate,
         LinkBill : LinkBill,
         Bill_Number:Bill_Number
-      })
+      }).then(()=>alert('เพิ่มสำเร็จ'))
 
 
     } catch (error) {
@@ -132,7 +148,7 @@ function AddRecieve() {
   useEffect(()=>{
     const interval = setInterval(() => {
       getCart();
-    }, 4500);
+    }, 3000);
     return () => clearInterval(interval);
   },[])
 
@@ -330,10 +346,18 @@ function AddRecieve() {
                     required
                   />
                 </Form.Group>
-                <Form.Group id="branchName">
-                  <Form.Label>รูปบิลรับสินค้า</Form.Label>
-                  <Form.File />
-                </Form.Group>
+                <input
+                        style={{marginBottom:'2rem'}}
+                            type="file"
+                            name="file"
+                            placeholder="Upload an image"
+                            onChange={(e) => uploadImage(e.target.files[0])}
+                          />
+                          {loading ? (
+                            <h3>Loading...</h3>
+                          ) : (
+                            <img src={LinkBill} style={{ width: '150px' }} />
+                          )}
                 <div
                   style={{
                     display: "flex",

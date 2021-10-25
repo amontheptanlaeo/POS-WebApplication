@@ -57,7 +57,10 @@ function ModalAddRecieve({show , onHide , toggle , data , GoodsPrice , setGoodsP
     (currentdate.getSeconds() < 10
       ? "0" + currentdate.getSeconds()
       : currentdate.getSeconds())
-        const Resp = await axios.post('https://posappserver.herokuapp.com/postbuffer-cart-recive',{
+
+    
+
+        await axios.post('https://posappserver.herokuapp.com/postbuffer-cart-recive',{
             Branch_ID: localStorage.getItem('Branch_ID'),
             ID: localStorage.getItem('ID'),
             Store_ID: localStorage.getItem('Store_ID'),
@@ -67,7 +70,7 @@ function ModalAddRecieve({show , onHide , toggle , data , GoodsPrice , setGoodsP
             Price: Price,
             DateAdd: dateOnAdd
           })
-          console.log(Resp.data)
+          
     }
 
     return (

@@ -50,15 +50,92 @@ function ModalProduct({show , onHide , toggle , data , GoodsPrice , setGoodsPric
         ? "0" + currentdate.getSeconds()
         : currentdate.getSeconds())
         try {
-                await axios.post('https://posappserver.herokuapp.com/postbuffer-cart-sell',{
+
+                // DB Query ALLSTOCK =  SELECT COUNSTOCK FROM STOCKS WHERE Goods_ID = .. AND Branch_ID = ... 
+                // DB Query Buff =  SELECT Count_Sell FROM BuffSell WHERE Goods_ID = .. AND Branch_ID = ...  AND ID=.. 
+                // const total =  Buff + Count_Sell
+                //if(total <= ALL)  DB Query Buff INSERT UPDATE res.send(LESS)
+                //else res.send(MORE)
+
+                //GETSTOCK
+                const stockGood = await axios.post('https://posappserver.herokuapp.com/checkgetstocks',{
                     Branch_ID: localStorage.getItem('Branch_ID'),
-                    ID: localStorage.getItem('ID'),
-                    Store_ID: localStorage.getItem('Store_ID'),
                     Goods_ID: data.barcode,
-                    Count_Sell: count,
-                    Price_Unit: data.price,
-                    DateAdd: dateOnAdd
                 })
+                //GETCARTBUFF
+                const CartBuff = await axios.post('https://posappserver.herokuapp.com/checkbuffer-cart-sell',{
+                    Branch_ID: localStorage.getItem('Branch_ID'),
+                    Goods_ID: data.barcode,
+                    ID: localStorage.getItem('ID'),
+                })
+                //CHECK FOR POST
+                console.log('STOCK',stockGood)
+                console.log('CartBuff',CartBuff)
+                if(CartBuff.data.length == 0){
+
+                    await axios.post('https://posappserver.herokuapp.com/postbuffer-cart-sell',{
+                                    Branch_ID: localStorage.getItem('Branch_ID'),
+                                    ID: localStorage.getItem('ID'),
+                                    Store_ID: localStorage.getItem('Store_ID'),
+                                    Goods_ID: data.barcode,
+                                    Count_Sell: count,
+                                    Price_Unit: data.price,
+                                    DateAdd: dateOnAdd
+                                })
+
+                }else if(count+CartBuff.data[0].Count_Sell <= stockGood.data[0].Count_Stock){
+
+                    await axios.post('https://posappserver.herokuapp.com/postbuffer-cart-sell',{
+                                    Branch_ID: localStorage.getItem('Branch_ID'),
+                                    ID: localStorage.getItem('ID'),
+                                    Store_ID: localStorage.getItem('Store_ID'),
+                                    Goods_ID: data.barcode,
+                                    Count_Sell: count,
+                                    Price_Unit: data.price,
+                                    DateAdd: dateOnAdd
+                                })
+
+                }else{
+                    return alert('สินค้าเกินจำนวน')
+                }
+          
+
+                // await axios.post('https://posappserver.herokuapp.com/postbuffer-cart-sell',{
+                //                     Branch_ID: localStorage.getItem('Branch_ID'),
+                //                     ID: localStorage.getItem('ID'),
+                //                     Store_ID: localStorage.getItem('Store_ID'),
+                //                     Goods_ID: data.barcode,
+                //                     Count_Sell: count,
+                //                     Price_Unit: data.price,
+                //                     DateAdd: dateOnAdd
+                //                 })
+
+
+                // const result = await axios.post('https://posappserver.herokuapp.com/checkbuffer-cart-sell',{
+                //     Branch_ID: localStorage.getItem('Branch_ID'),
+                //     ID: localStorage.getItem('ID'),
+                //     Branch_ID: localStorage.getItem('Store_ID'),
+                //     Goods_ID: data.barcode,
+                //     Count_Sell: count,
+                // })
+                // console.log(result)
+
+
+                // if(result.data == 'LESS'){
+                //    await axios.post('https://posappserver.herokuapp.com/postbuffer-cart-sell',{
+                //                     Branch_ID: localStorage.getItem('Branch_ID'),
+                //                     ID: localStorage.getItem('ID'),
+                //                     Store_ID: localStorage.getItem('Store_ID'),
+                //                     Goods_ID: '',
+                //                     Count_Sell: count,
+                //                     Price_Unit: data.price,
+                //                     DateAdd: dateOnAdd
+                //                 })
+
+                // }else{
+                //     return alert('สินค้าเกินจำนวนคลัง')
+                // }
+                
                 // setGoodsPrice(GoodsPrice+data.price*count)
         } catch (error) {
             console.log(error)

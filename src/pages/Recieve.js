@@ -42,14 +42,19 @@ function Recieve() {
           field: 'age',
           headerName: 'วันที่ ป/ด/ว',
           type: 'date',
-          width: 400,
+          width: 200,
         },
         ,
         {
           field: 'origin',
           headerName: 'แหล่งที่มา',
-          width: 400,
+          width: 200,
         },
+        {
+            field: 'img',
+            headerName: 'รูปบิล',
+            width: 400,
+          }
       ];
       
     //   const rows = [
@@ -59,7 +64,7 @@ function Recieve() {
     //   ];
 
       const rows = GoodHistory.map((e,idx)=>{
-        return { id: idx+1, firstName: `${e.Goods_History_ID}`, age: `${e.DateAdd_History.replace("T"," ")}` , origin: `${e.Origin}`  }
+        return { id: idx+1, firstName: `${e.Goods_History_ID}`, age: `${e.DateAdd_History.replace("T"," ")}` , origin: `${e.Origin}` , img: `${e.LinkBill ? e.LinkBill:'ไม่มีรูป'}` }
       })
 
     return (

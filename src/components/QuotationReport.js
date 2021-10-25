@@ -42,7 +42,6 @@ function QuotationReport({NameReciver , Addr , Contact , cart}) {
                             <div>ติดต่อ: { Contact }</div>
                         </div>
                         <div>
-                            <div>เลขที่บิล: {1123213}</div>
                             <div>วันที่: { dateOnAdd }</div>
                             <div>ผู้สร้างใบ:  { localStorage.getItem('UserName') }</div>
                         </div>

@@ -3,7 +3,7 @@ import { Button, Form , Alert } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import img from '../images/Welcome.svg'
 import { motion } from "framer-motion"
-
+import axios from 'axios';
 
 
 function RegisterEmp() {
@@ -15,8 +15,7 @@ function RegisterEmp() {
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
     const [conpass, setConPass] = useState('')
-    const [storeName, setStoreName] = useState('')
-    const [branchName, setBranchName] = useState('')
+    const [branchID, setBranchID] = useState('')
     const [CitizenNumber, setCitizenNumber] = useState('')
     const [FName, setFName] = useState('')
     const [LName, setLName] = useState('')
@@ -25,22 +24,83 @@ function RegisterEmp() {
     const [currentUser, setCurrentUser] = useState(false)
     const [info, setInfo] = useState() */
   
-    async function handleLogin(e) {
-      //e.preventDefault()
-  
-      try {
-        setErr('')
-  
-      } catch (e) {
-        setErr(e.message)
-      }
-  
-    }
+    
   
 
     //MainFN
-    const Register = () => {
-      console.log('OK')
+    const Register = async(e) => {
+      e.preventDefault()
+      try {
+
+        if(pass != conpass) return alert('รหัสผ่านไม่ตรงกัน')
+
+        const currentdate = new Date();
+        const genDate = currentdate.getFullYear().toString() +
+        
+        (currentdate.getMonth() + 1 < 10
+          ? "0" + (currentdate.getMonth() + 1)
+          : currentdate.getMonth() + 1).toString() +
+       
+        (currentdate.getDate() < 10
+          ? "0" + currentdate.getDate()
+          : currentdate.getDate()).toString() +
+       
+        (currentdate.getHours() < 10
+          ? "0" + currentdate.getHours()
+          : currentdate.getHours()).toString() +
+       
+        (currentdate.getMinutes() < 10
+          ? "0" + currentdate.getMinutes()
+          : currentdate.getMinutes()).toString() +
+       
+        (currentdate.getSeconds() < 10
+          ? "0" + currentdate.getSeconds()
+          : currentdate.getSeconds()).toString() +
+          (currentdate.getMilliseconds() < 100 
+          ? "00" + currentdate.getMilliseconds():currentdate.getMilliseconds()).toString()
+
+          const check = await axios.post('https://posappserver.herokuapp.com/checkemail',{
+
+            Email: email.toLowerCase(),
+  
+          })
+
+          console.log(check.data[0]['COUNT(Email)'])
+          if(check.data[0]['COUNT(Email)'] == 0){
+
+             await axios.post('https://posappserver.herokuapp.com/register-employee',{
+              GenDate: genDate,
+              IDCard: CitizenNumber,
+              FirstName: FName,
+              LastName: LName,
+              Email: email.toLowerCase(),
+              Pass: pass,
+              img_Person: '',
+              Branch_ID: branchID,
+              Permission_ID:checkTypeRole
+            }).then((res)=>{
+              alert('สมัครสำเร็จ')
+              window.location.href = '/login'
+            })
+
+            
+
+
+          }else{
+            return alert('อีเมลล์ซ้ำ')
+          }
+    
+
+  
+  
+       
+
+      
+        
+      } catch (error) {
+        console.log(error)
+      }
+     
     }
 
 
@@ -64,8 +124,8 @@ function RegisterEmp() {
     const handleChangeLName = (e) => {
       setLName(e.target.value)
     }
-    const handleChangeStoreName = (e) => {
-      setStoreName(e.target.value)
+    const handleChangeBranchID = (e) => {
+      setBranchID(e.target.value)
     }
     const handleChangeCheckTypeRole = (e) => {
 
@@ -80,10 +140,10 @@ function RegisterEmp() {
           <div className="box" style={{boxShadow: "rgba(0, 0, 0, 0.35) 0px 50px 15px" ,backgroundColor: '#2D283E' ,height: '93vh', width: '90vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', color: '#D1E7E0' , overflow:'hidden'}}>
             <h2 className="text-center mb-4">สมัครสมาชิกพนักงาน</h2>
             {err && <Alert variant="danger">{err}</Alert>}
-            <Form onSubmit={handleLogin}>
+            <Form onSubmit={Register}>
               <Form.Group id="storeName">
                 <Form.Label>ID สาขา</Form.Label>
-                <Form.Control type="text" placeholder="ระบุไอดีสาขา" value={storeName} onChange={handleChangeStoreName} required />
+                <Form.Control type="text" placeholder="ระบุไอดีสาขา" value={branchID} onChange={handleChangeBranchID} required />
               </Form.Group>
               <Form.Group id="FName">
                 <Form.Label>ระบุเลขบัตรประชาชน</Form.Label>
@@ -117,7 +177,7 @@ function RegisterEmp() {
                 <Form.Label>ยืนยันรหัสผ่าน</Form.Label>
                 <Form.Control type="password" placeholder="ระบุรหัสผ่านอีกครั้ง"  ref={conPassRef} value={conpass} onChange={handleChangeConPass} require required />
               </Form.Group>
-              <Button onClick={()=>Register()}className="w-100 mb-2 log-btn" style={{ backgroundColor: "#802BB1", color:'black' , borderRadius: '5rem', boxShadow: 'none', outline: 'none !important', borderColor: 'transparent' }}>
+              <Button type='submit' className="w-100 mb-2 log-btn" style={{ backgroundColor: "#802BB1", color:'black' , borderRadius: '5rem', boxShadow: 'none', outline: 'none !important', borderColor: 'transparent' }}>
                 ลงทะเบียน
               </Button>
               <p className="mt-2">มีบัญชีอยู่แล้ว? <Link to="/Login">เข้าสู่ระบบ</Link></p>

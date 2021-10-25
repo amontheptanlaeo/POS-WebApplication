@@ -2,25 +2,60 @@ import React, { useState , useEffect } from "react";
 import axios from "axios";
 import { motion } from 'framer-motion';
 import { Link } from "react-router-dom";
-
+import ImageUploading from "react-images-uploading";
 
 
 import { Button, Form , Row, Col, Alert, Container} from 'react-bootstrap';
 
 function AddGoods() {
+
+  let clientId = "d9f72698c647be3";
+
   const [err, setErr] = useState('')
 
+ 
   const [Goods_ID, setGoods_ID] = useState("");
-  const [Goods_img, setGoods_img] = useState("");
   const [Goods_Name, setGoods_Name] = useState("");
   const [Type_ID, setType_ID] = useState(''); //ListBox
   const [selectCate, setSelectCate] = useState([]);
 
+  const [image, setImage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const uploadImage = async (files) => {
+    const formData = new FormData();
+    formData.append("file", files);
+    formData.append("upload_preset", "xabqurhq");
+    setLoading(true)
+    axios
+      .post("https://api.cloudinary.com/v1_1/diyf7i0tt/upload", formData)
+      .then((res) => {
+        console.log(res);
+        setImage(res.data.url)
+        setLoading(false)
+      });
+    }
+
+
+
+
   
-  const AddProduct = (e) => {
+  const AddProduct = async(e) => {
     try {
       e.preventDefault();
-      axios({
+      const check =  await axios({
+        method: "POST",
+        url: "https://posappserver.herokuapp.com/checkbarcode",
+        data: {
+           Goods_ID : Goods_ID,
+           Branch_ID : localStorage.getItem('Branch_ID'),
+           Store_ID : localStorage.getItem('Store_ID')
+        },
+      })
+
+      if(check.data[0]['COUNT(Goods_ID)'] == 0){
+
+        await axios({
         method: "POST",
         url: "https://posappserver.herokuapp.com/postgoods",
         data: {
@@ -30,13 +65,43 @@ function AddGoods() {
            Goods_Name : Goods_Name,
            Type_ID : Type_ID,
            Branch_ID : localStorage.getItem('Branch_ID'),
-           Goods_img : Goods_img ? Goods_img:'http://www2.tistr.or.th/Projects/tistrbiza/images/default_product.png',
+           Goods_img : image ? image:'http://www2.tistr.or.th/Projects/tistrbiza/images/default_product.png',
            Store_ID : localStorage.getItem('Store_ID'),
            Favorite: false
         },
-      });
+      }).then((res) => {
+        alert('เพิ่มสำเร็จ')
+        window.location.reload()
+      })
 
-      console.log('SUCCESS')
+      
+
+     }else{
+       return alert('บาร์โค้ดซ้ำ')
+     }
+
+
+     
+      // await axios({
+      //   method: "POST",
+      //   url: "https://posappserver.herokuapp.com/postgoods",
+      //   data: {
+      //      Goods_ID : Goods_ID,
+      //      Count_Stock: 0,
+      //      Price: 0,
+      //      Goods_Name : Goods_Name,
+      //      Type_ID : Type_ID,
+      //      Branch_ID : localStorage.getItem('Branch_ID'),
+      //      Goods_img : Goods_img ? Goods_img:'http://www2.tistr.or.th/Projects/tistrbiza/images/default_product.png',
+      //      Store_ID : localStorage.getItem('Store_ID'),
+      //      Favorite: false
+      //   },
+      // }).then((res)=>{
+      //   alert('OK')
+      //   console.log('SUCCESS')
+      //   console.log(res)
+      // });
+
     } catch (error) {
       console.log(error)
     }
@@ -45,7 +110,9 @@ function AddGoods() {
 
   useEffect( async()=>{
 
-  const data = await axios.get('https://posappserver.herokuapp.com/getcategory')
+  const data = await axios.post('https://posappserver.herokuapp.com/getcategory',{
+    Branch_ID: localStorage.getItem('Branch_ID')
+  })
     setSelectCate(data.data)
     console.log(data.data)
   },[])
@@ -60,6 +127,7 @@ function AddGoods() {
     })
     setType_ID(item)
   }
+
 
 
 
@@ -128,10 +196,19 @@ function AddGoods() {
                           <Form.Label>เลขบาร์โค้ดสินค้า</Form.Label>
                           <Form.Control type="text" placeholder="ระบุเลขบาร์โค้ด" value={Goods_ID} onChange={(e)=>setGoods_ID(e.target.value)} required />
                         </Form.Group>
-                        <Form.Group id="branchName">
-                          <Form.Label>รูป</Form.Label>
-                          <Form.File />
-                        </Form.Group>
+                        <input
+                        style={{marginBottom:'2rem'}}
+                            type="file"
+                            name="file"
+                            placeholder="Upload an image"
+                            onChange={(e) => uploadImage(e.target.files[0])}
+                          />
+                          {loading ? (
+                            <h3>Loading...</h3>
+                          ) : (
+                            <img src={image} style={{ width: '150px' }} />
+                          )}
+                     
                         <Button type='submit' className="w-100 mb-2 log-btn" style={{ backgroundColor: "#802BB1", color:'black' , borderRadius: '5rem', boxShadow: 'none', outline: 'none !important', borderColor: 'transparent' }}>
                           เพิ่มสินค้า
                         </Button>

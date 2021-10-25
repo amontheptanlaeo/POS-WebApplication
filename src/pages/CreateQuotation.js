@@ -67,6 +67,7 @@ function CreateQuotation() {
 
   const CreateQuotationBill = async(e) => {
     e.preventDefault()
+    if(cart.length == 0) return alert('เลือกสินค้าก่อน')
     const currentdate = new Date();
     const dateOnAdd = currentdate.getFullYear() +
     "-" +

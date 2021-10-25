@@ -9,17 +9,17 @@ import {
 function ModalAlert({show , toggle , msg}) {
     return (
         <Modal isOpen={show} toggle={toggle} className='testModal' centered>
-        <ModalHeader toggle={toggle}>
-            แจ้งเตือน
-        </ModalHeader>
-        <ModalBody>
-           <h5>{msg}</h5>
-        </ModalBody>
-        <ModalFooter>
-            <Button color="danger" onClick={()=>{
-                toggle()
-            }}>ยกเลิก</Button>
-        </ModalFooter>
+            <ModalHeader toggle={toggle}>
+                แจ้งเตือน
+            </ModalHeader>
+            <ModalBody>
+            <h5>{msg}</h5>
+            </ModalBody>
+            <ModalFooter>
+                <Button color="danger" onClick={()=>{
+                    toggle()
+                }}>ยกเลิก</Button>
+            </ModalFooter>
     </Modal>
     )
 }
