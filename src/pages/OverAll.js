@@ -40,7 +40,7 @@ function OverAll() {
         { field: 'firstName', headerName: 'ชื่อสาขา', width: 450 ,
         renderCell: (params) => (
             <>
-                <Link to={`/Conclude/Side/`+params.row.branch}>
+                <Link to={`/Conclude/Side/`+params.row.branch+'/'+params.row.firstName}>
                     {params.row.firstName}
                 </Link>
                 </>)

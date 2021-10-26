@@ -51,6 +51,8 @@ function Login() {
           localStorage.setItem('UserName',result.data[0].FirstName+' '+result.data[0].LastName)
           localStorage.setItem('IDCard',result.data[0].IDCard)
           window.location.href = '/'
+        }else if(result.data[0].Approve == 10){
+          alert('บัญชีนี้ได้ลาออกไปแล้ว')
         }else{
           alert('รอการอนุมัติ')
         }

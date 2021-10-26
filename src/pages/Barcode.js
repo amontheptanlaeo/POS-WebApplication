@@ -1,14 +1,14 @@
-import React, { useState , useEffect } from "react";
+import React, { useState , useEffect , useRef } from "react";
 import axios from "axios";
 import { motion } from 'framer-motion';
 import { Form , Row,
   Col, Alert, Container} from 'react-bootstrap';
-
+  import ReactToPrint , { useReactToPrint } from 'react-to-print';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 import BarcodeGen from 'react-barcode'
-
+import BarcodeReport from "../components/BarcodeReport";
 import {
   Button,
   Modal, ModalHeader, ModalBody, ModalFooter,
@@ -28,6 +28,13 @@ function Barcode() {
         img:''
     });
     const toggle = () => setModalA(!modalA);
+
+
+    const handlePrint = useReactToPrint({
+      content: () => componentRef.current,
+    });
+    const componentRef = useRef();
+
     useEffect(async()=>{
         const data = await axios.post('https://posappserver.herokuapp.com/getAllgoods',{
           Branch_ID: localStorage.getItem('Branch_ID')
@@ -103,7 +110,11 @@ function Barcode() {
                             />
                         </Stack>
                         <Button className="w-100 btn btn-warning" onClick={()=>toggle()}>สร้างบาร์โค้ด</Button>
-                        <BarcodeGen value="4234234324342224" />
+                        <div style={{display:'none'}}>
+                          <div ref={componentRef}>
+                            <BarcodeReport data={product} count={count}/>
+                          </div>
+                        </div>
                     </div>
               </Container>
                
@@ -118,9 +129,9 @@ function Barcode() {
             </ModalBody>
             <ModalFooter>
                 <Button color="success" onClick={()=>{
-                    toggle()
+                    handlePrint()
                 }}>พิมพ์บาร์โค้ด</Button>
-                <Button color="success" onClick={()=>{
+                <Button color="danger" onClick={()=>{
                     toggle()
                 }}>ยกเลิก</Button>
             </ModalFooter>

@@ -72,7 +72,7 @@ function App() {
         <Switch>
 
           <Route path="/" exact component={Dashboard} />
-          <Route path="/Conclude/Side/:branch" component={ConcludeSide} />
+          <Route path="/Conclude/Side/:branch/:branchName" component={ConcludeSide} />
           <Route path="/Conclude" component={Conclude} />
           <Route path="/Profit" component={OverAll} />
           <Route path="/Product" component={Product} />

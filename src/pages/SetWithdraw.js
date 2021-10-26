@@ -103,26 +103,27 @@ function SetWithdraw() {
             (currentdate.getSeconds() < 10
               ? "0" + currentdate.getSeconds()
               : currentdate.getSeconds());
-          var GenDate =
-            currentdate.getFullYear().toString() +
-            (currentdate.getMonth() + 1 < 10
-              ? "0" + (currentdate.getMonth() + 1)
-              : currentdate.getMonth() + 1).toString() +
-            (currentdate.getDate() < 10
-              ? "0" + currentdate.getDate()
-              : currentdate.getDate()).toString() +
-            (currentdate.getHours() < 10
-              ? "0" + currentdate.getHours()
-              : currentdate.getHours()).toString() +
-            (currentdate.getMinutes() < 10
-              ? "0" + currentdate.getMinutes()
-              : currentdate.getMinutes()).toString() +
-            (currentdate.getSeconds() < 10
-              ? "0" + currentdate.getSeconds()
-              : currentdate.getSeconds()).toString() +
-            (currentdate.getMilliseconds() < 100
-              ? "00" + currentdate.getMilliseconds()
-              : currentdate.getMilliseconds()).toString();
+              const genDate = currentdate.getFullYear() +
+      
+              (currentdate.getMonth() + 1 < 10
+                ? "0" + (currentdate.getMonth() + 1)
+                : currentdate.getMonth() + 1).toString() +
+             
+              (currentdate.getDate() < 10
+                ? "0" + currentdate.getDate()
+                : currentdate.getDate()).toString() +
+             
+              (currentdate.getHours() < 10
+                ? "0" + currentdate.getHours()
+                : currentdate.getHours()).toString() +
+             
+              (currentdate.getMinutes() < 10
+                ? "0" + currentdate.getMinutes()
+                : currentdate.getMinutes()).toString() +
+             
+              (currentdate.getSeconds() < 10
+                ? "0" + currentdate.getSeconds()
+                : currentdate.getSeconds()).toString()
       alert("เพิ่มสำเร็จ")
       axios({
         method: "POST",
@@ -144,7 +145,7 @@ function SetWithdraw() {
           C25:C25,
           MoneyTotal:Money_Today,
           ID:localStorage.getItem('ID'),
-          GenDate:GenDate
+          GenDate:genDate
         },
       });
       total1000 = 0

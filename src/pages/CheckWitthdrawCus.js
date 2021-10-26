@@ -53,7 +53,7 @@ function CheckWitthdrawCus() {
       ];
       
       const rows = checkMoneydraw.map((e,idx)=>{
-        return { id: idx+1, firstName: `${e.Type_Status == 'WithDraw' ? 'นำออก':'นำเข้า'}`, total:`${e.MoneyTotal}` ,age: `${e.DateAdd.replace("T"," ")}` , nameSeller: `${e.FirstName} ${e.LastName}`  }
+        return { id: idx+1, firstName: `${e.Type_Status == 'WithDraw' ? 'นำออก':e.Type_Status == 'Cut off amount' ? 'ตัดยอดเข้ากองกลาง':'นำเข้า'}`, total:`${e.Type_Status == 'WithDraw' ? "-"+e.MoneyTotal:e.Type_Status == 'Cut off amount' ? "-"+e.MoneyTotal:"+"+e.MoneyTotal}` ,age: `${e.DateAdd.replace("T"," ")}` , nameSeller: `${e.FirstName} ${e.LastName}`  }
       })
 
     return (
@@ -63,7 +63,7 @@ function CheckWitthdrawCus() {
                 {/* <BlankSide/> */}
             </Col>
             <Col md={9} lg={9} style={{paddingTop:'2rem' , display:'flex' , flexDirection:'column' , height:'100%' }}>
-                <h4>ประวัติการเบิกถอนเงินทอน</h4>
+                <h4>ประวัติการเพิ่มถอนเงินทอน</h4>
                     <div style={{ height: '80vh', width: '100%' }}>
                         <DataGrid
                             rows={rows}

@@ -16,6 +16,7 @@ import img4 from '../images/pos-terminal-shop-ready-work.jpg'
 import AppIMG from '../images/app-store-google-play-logo.png'
 import Platform from '../images/platform.svg'
 import nut from '../images/nut.jpg'
+import wat from '../images/watcha.jpg'
 import '../styles/Swiper.scss'
 import '../styles/Home.scss'
 import '../styles/Home-M.scss'
@@ -102,7 +103,7 @@ function Home() {
                 <Content header="NB-POS ทำอะไรได้" design="C" />
                 <Content body="เราใส่ใจลูกค้าทุกท่าน ให้ธุรกิจของคุณเติบโต ได้อย่างมีประสิทธิภาพ" header="บริการ POS ออนไลน์" design="D" />
                 <Content header="ลูกค้าที่เชื่อใจ" design="B" />
-                <Content img1={nut} body="Amonthep.t@ku.th" img2={nut} body2="Watcharin@ku.th" header="ติดต่อ" design="E" />
+                <Content img1={nut} body="Amonthep.t@ku.th" img2={wat} body2="Watcharin.ra@ku.th" header="ติดต่อ" design="E" />
             </div>
             <Footer />
 

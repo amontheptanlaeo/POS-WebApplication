@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 
 import { Button, Form , Row,
   Col, Alert, Container} from 'react-bootstrap';
+import { isWindows } from "react-device-detect";
 function AddBranch() {
     const [err, setErr] = useState('')
     const [BranchName, setฺBranchName] = useState("");
@@ -19,8 +20,8 @@ function AddBranch() {
       try {
         e.preventDefault();
         const currentdate = new Date();
-        const genDate = currentdate.getFullYear().toString() +
-        
+        const genDate = currentdate.getFullYear() +
+      
         (currentdate.getMonth() + 1 < 10
           ? "0" + (currentdate.getMonth() + 1)
           : currentdate.getMonth() + 1).toString() +
@@ -46,7 +47,9 @@ function AddBranch() {
             Store_ID: localStorage.getItem('Store_ID'),
             IDCard: localStorage.getItem('IDCard'),
             GenDate: genDate
-        }).then((res)=>console.log(res))
+        }).then((res)=>{alert('เพิ่มสำเร็จ')
+        window.location.reload()
+      })
 
       } catch (error) {
         console.log(error)

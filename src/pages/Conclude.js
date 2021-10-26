@@ -1,4 +1,4 @@
-import React , { useState , useEffect } from 'react'
+import React , { useState , useEffect , useRef} from 'react'
 import {
     Button,
     Row,
@@ -15,10 +15,10 @@ import {
 import axios from 'axios';
 // import BlankSide from '../components/BlankSide';
 import { motion } from 'framer-motion';
-import { Doughnut } from 'react-chartjs-2';
 import { Bar } from 'react-chartjs-2';
 import { HorizontalBar } from 'react-chartjs-2';
-
+import ReactToPrint , { useReactToPrint } from 'react-to-print';
+import MonthReport from '../components/MonthReport';
 
     
 
@@ -28,14 +28,20 @@ function Conclude() {
     const [graphA,setgraphA] = useState(null)
     const [graphB,setgraphB] = useState(null)
     const [show,setShow] = useState(false)
-    const [dateRe,setDateRe] = useState(null)
+    const [dateRe,setDateRe] = useState(null)//useState(new Date().getFullYear()+"-"+((new Date().getMonth()+1)<10?"0"+new Date().getMonth()+1:(new Date().getMonth()+1)))
     const [loading,setLoading] = useState(false)
-    const [test,setTest] = useState(null)
+    const [data,setData] = useState([])
+    const [data2,setData2] = useState([])
+    const [total,setTotal] = useState(0)
     const tempName=[]
     const tempTotalP=[]
     const tempTotalC=[]
 
-    
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+      });
+
     const toggle = () => setShow(!show)
 
     const getData = async() => {
@@ -115,8 +121,6 @@ function Conclude() {
   
       })
 
-     
-
     }
   
 
@@ -127,77 +131,10 @@ function Conclude() {
       
     },[])
 
-  
-
-    
-
-    // const data = {
-    //   labels: [product.map((e)=>{
-    //     console.log(e.Goods_ID)
-    //     return(e.Goods_ID)})],
-    //   datasets: [
-    //     {
-    //       label: '# of Votes',
-    //       data: [12, 19, 3, 5, 2, 3],
-    //       backgroundColor: [
-    //         'rgba(255, 99, 132, 0.2)',
-    //         'rgba(54, 162, 235, 0.2)',
-    //         'rgba(255, 206, 86, 0.2)',
-    //         'rgba(75, 192, 192, 0.2)',
-    //         'rgba(153, 102, 255, 0.2)',
-    //         'rgba(255, 159, 64, 0.2)',
-    //       ],
-    //       borderColor: [
-    //         'rgba(255, 99, 132, 1)',
-    //         'rgba(54, 162, 235, 1)',
-    //         'rgba(255, 206, 86, 1)',
-    //         'rgba(75, 192, 192, 1)',
-    //         'rgba(153, 102, 255, 1)',
-    //         'rgba(255, 159, 64, 1)',
-    //       ],
-    //       borderWidth: 1,
-    //     },
-    //   ],
-    // };
-  
-    const data2 = {
-      labels: ['1', '2', '3', '4', '5', '6'],
-      datasets: [
-        {
-          label: '# of Red Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: 'rgb(255, 99, 132)',
-          stack: 'Stack 0',
-        },
-        {
-          label: '# of Blue Votes',
-          data: [2, 3, 20, 5, 1, 4],
-          backgroundColor: 'rgb(54, 162, 235)',
-          stack: 'Stack 0',
-        },
-        {
-          label: '# of Green Votes',
-          data: [3, 10, 13, 15, 22, 30],
-          backgroundColor: 'rgb(75, 192, 192)',
-          stack: 'Stack 1',
-        },
-      ],
-    };
-
-    
-
-
-    // const data4 = product.map(()=>)
-    
- 
-   
-  
-   
     
     const options = {
       indexAxis: 'y',
-      // Elements options apply to all of the options unless overridden in a dataset
-      // In this case, we are setting the border of each horizontal bar to be 2px wide
+    
       elements: {
         bar: {
           borderWidth: 2,
@@ -217,8 +154,7 @@ function Conclude() {
   
     const options2 = {
       indexAxis: 'y',
-      // Elements options apply to all of the options unless overridden in a dataset
-      // In this case, we are setting the border of each horizontal bar to be 2px wide
+   
       elements: {
         bar: {
           borderWidth: 2,
@@ -301,13 +237,40 @@ function Conclude() {
   }
 
   const dateQueryReport = async(e) => {
-    console.log(dateRe.substring(0,7))
-    await axios.post('https://posappserver.herokuapp.com/getreportmonth',{
-      Branch_ID:localStorage.getItem('Branch_ID'),
-      DateSell_History: dateRe.substring(0,7)
-    }).then((res)=>{
-     console.log(res)
-  })
+    if(dateRe == null){ return alert('เลือกเดือนก่อน')}else{
+
+      console.log(dateRe.substring(0,7))
+      await axios.post('https://posappserver.herokuapp.com/getreportmonth',{
+        Branch_ID:localStorage.getItem('Branch_ID'),
+        DateSell_History: dateRe.substring(0,7)
+      }).then(async(res1)=>{
+       console.log(res1)
+       setData(res1.data)
+       await axios.post('https://posappserver.herokuapp.com/getcostreport',{
+          Branch_ID:localStorage.getItem('Branch_ID')
+        }).then((res2)=>{
+        console.log(res2)
+        setData2(res2.data)
+        setTotal(0)
+        res1.data.map((e,idx)=>{
+
+          return res2.data.map((e2,idx)=>{
+              if(e.Goods_ID == e2.Goods_ID){
+                  return( setTotal(prev=>prev+e['SUM(Sell_History.Price_Total)']-(e['SUM(Sell_History.Count_Sell)']*e2['AVG(Goods_History.Cost_Unit)'])))
+              }
+             
+          })
+          
+      })
+
+
+
+        handlePrint()
+        })
+        })
+
+    }
+
 }
 
     
@@ -337,6 +300,11 @@ function Conclude() {
                 <div style={{display:'flex'  , width:'50%' , padding:'3rem' , marginBottom:'1rem', borderRadius:'1rem'}}>
                     <Bar data={graphA} options={options2} />
                 </div>
+                <div style={{display:'none'}}>
+                          <div ref={componentRef}>
+                            <MonthReport data={data} data2={data2} total={total} day={dateRe ? dateRe:'2021-10'}/>
+                          </div>
+                        </div>
                 
 
             </div>

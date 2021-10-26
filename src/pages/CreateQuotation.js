@@ -95,25 +95,23 @@ function CreateQuotation() {
       
       (currentdate.getMonth() + 1 < 10
         ? "0" + (currentdate.getMonth() + 1)
-        : currentdate.getMonth() + 1) +
+        : currentdate.getMonth() + 1).toString() +
      
       (currentdate.getDate() < 10
         ? "0" + currentdate.getDate()
-        : currentdate.getDate()) +
+        : currentdate.getDate()).toString() +
      
       (currentdate.getHours() < 10
         ? "0" + currentdate.getHours()
-        : currentdate.getHours()) +
+        : currentdate.getHours()).toString() +
      
       (currentdate.getMinutes() < 10
         ? "0" + currentdate.getMinutes()
-        : currentdate.getMinutes()) +
+        : currentdate.getMinutes()).toString() +
      
       (currentdate.getSeconds() < 10
         ? "0" + currentdate.getSeconds()
-        : currentdate.getSeconds()) +
-        (currentdate.getMilliseconds() < 100 
-        ? "00" + currentdate.getMilliseconds():currentdate.getMilliseconds())
+        : currentdate.getSeconds()).toString()
     try {
         handlePrint()
 

@@ -5,6 +5,7 @@ function SellReport({data ,bill}) {
     const [total,setTotal] = useState(0)
 
     useEffect(()=>{
+        setTotal(0)
         data.map(e=>setTotal(prev=>prev+e.Price_Total))
     },[data])
 

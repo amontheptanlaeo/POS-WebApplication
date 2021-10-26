@@ -31,29 +31,27 @@ function Register() {
       try {
         if(pass != conpass) return alert('รหัสผ่านไม่ตรงกัน')
         const currentdate = new Date();
-        const genDate = currentdate.getFullYear().toString() +
-        
-        (currentdate.getMonth() + 1 < 10
-          ? "0" + (currentdate.getMonth() + 1)
-          : currentdate.getMonth() + 1).toString() +
-       
-        (currentdate.getDate() < 10
-          ? "0" + currentdate.getDate()
-          : currentdate.getDate()).toString() +
-       
-        (currentdate.getHours() < 10
-          ? "0" + currentdate.getHours()
-          : currentdate.getHours()).toString() +
-       
-        (currentdate.getMinutes() < 10
-          ? "0" + currentdate.getMinutes()
-          : currentdate.getMinutes()).toString() +
-       
-        (currentdate.getSeconds() < 10
-          ? "0" + currentdate.getSeconds()
-          : currentdate.getSeconds()).toString() +
-          (currentdate.getMilliseconds() < 100 
-          ? "00" + currentdate.getMilliseconds():currentdate.getMilliseconds()).toString()
+        const genDate = currentdate.getFullYear() +
+      
+      (currentdate.getMonth() + 1 < 10
+        ? "0" + (currentdate.getMonth() + 1)
+        : currentdate.getMonth() + 1).toString() +
+     
+      (currentdate.getDate() < 10
+        ? "0" + currentdate.getDate()
+        : currentdate.getDate()).toString() +
+     
+      (currentdate.getHours() < 10
+        ? "0" + currentdate.getHours()
+        : currentdate.getHours()).toString() +
+     
+      (currentdate.getMinutes() < 10
+        ? "0" + currentdate.getMinutes()
+        : currentdate.getMinutes()).toString() +
+     
+      (currentdate.getSeconds() < 10
+        ? "0" + currentdate.getSeconds()
+        : currentdate.getSeconds()).toString()
 
           const check = await axios.post('https://posappserver.herokuapp.com/checkemail',{
 
@@ -63,7 +61,7 @@ function Register() {
 
           console.log(check.data[0]['COUNT(Email)'])
           if(check.data[0]['COUNT(Email)'] == 0){
-
+            
              await axios.post('https://posappserver.herokuapp.com/register-owner',{
               GenDate: genDate,
               IDCard: CitizenNumber,
@@ -78,9 +76,6 @@ function Register() {
               alert('สมัครสำเร็จ')
               window.location.href = '/login'
             })
-
-            
-
 
           }else{
             return alert('อีเมลล์ซ้ำ')
@@ -144,7 +139,7 @@ function Register() {
               </Form.Group>
               <Form.Group id="FName">
                 <Form.Label>เลขบัตรประชาชน</Form.Label>
-                <Form.Control type="text" placeholder="ระบุเลขบัตรประชาชน" value={CitizenNumber} onChange={handleChangeCitizen}  />
+                <Form.Control type="text" placeholder="ระบุเลขบัตรประชาชน" value={CitizenNumber} type='number' onChange={handleChangeCitizen}  />
               </Form.Group>
               <Form.Group id="FName">
                 <Form.Label>ชื่อจริง</Form.Label>

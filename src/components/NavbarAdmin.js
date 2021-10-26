@@ -38,6 +38,7 @@ function NavbarAdmin() {
         localStorage.removeItem('Permistion')
         localStorage.removeItem('UserName')
         localStorage.removeItem('IDCard')
+        localStorage.removeItem('CartQ')
         window.location.href = '/'
     }
     

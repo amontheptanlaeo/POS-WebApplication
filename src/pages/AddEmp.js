@@ -16,6 +16,7 @@ function AddEmp() {
   const [show,setShow] = useState(false)
   const [show2,setShow2] = useState(false)
   const [emp,setEmp] = useState([])
+  const [empID,setEmpID] = useState(null)
   const toggle = () => setShow(!show);
   const toggle2 = () => setShow2(!show2);
 
@@ -31,9 +32,8 @@ function AddEmp() {
   const approve = async() => {
 
     await axios.post('https://posappserver.herokuapp.com/updateapprove',{
-      ID:emp[0].ID
+      ID:empID
     }).then((res)=>{
-      console.log(res)
      alert('สำเร็จ')
      window.location.reload()
     })
@@ -41,11 +41,21 @@ function AddEmp() {
 
   const notapprove = async() => {
     await axios.post('https://posappserver.herokuapp.com/deleteperson',{
-      ID:emp[0].ID
+      ID:empID
     }).then((res)=>{
       alert('สำเร็จ')
      window.location.reload()
     })
+  }
+
+  const AppEmp = (id) => {
+    setEmpID(id)
+    setShow(!show)
+  }
+
+  const notApp = (id) => {
+    setEmpID(id)
+    setShow2(!show2)
   }
 
   useEffect(()=>{
@@ -88,8 +98,8 @@ function AddEmp() {
                                         {e.Permission_Name}
                                       </td>
                                       <td>
-                                        <Button className="mr-1" variant='success' onClick={()=>setShow(!show)}>อนุมัติ</Button>
-                                        <Button variant='danger' onClick={()=>setShow2(!show2)}>ไม่อนุมัติ</Button></td>
+                                        <Button className="mr-1" variant='success' onClick={()=>AppEmp(e.ID)}>อนุมัติ</Button>
+                                        <Button variant='danger' onClick={()=>notApp(e.ID)}>ไม่อนุมัติ</Button></td>
                                     </tr>
                                   )
                                 })

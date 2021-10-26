@@ -232,32 +232,27 @@ function WithdrawCentral() {
             (currentdate.getSeconds() < 10
               ? "0" + currentdate.getSeconds()
               : currentdate.getSeconds());
-          var GenDate =
-            currentdate.getFullYear().toString() +
-            (currentdate.getMonth() + 1 < 10
-              ? "0" + (currentdate.getMonth() + 1)
-              : currentdate.getMonth() + 1
-            ).toString() +
-            (currentdate.getDate() < 10
-              ? "0" + currentdate.getDate()
-              : currentdate.getDate()
-            ).toString() +
-            (currentdate.getHours() < 10
-              ? "0" + currentdate.getHours()
-              : currentdate.getHours()
-            ).toString() +
-            (currentdate.getMinutes() < 10
-              ? "0" + currentdate.getMinutes()
-              : currentdate.getMinutes()
-            ).toString() +
-            (currentdate.getSeconds() < 10
-              ? "0" + currentdate.getSeconds()
-              : currentdate.getSeconds()
-            ).toString() +
-            (currentdate.getMilliseconds() < 100
-              ? "00" + currentdate.getMilliseconds()
-              : currentdate.getMilliseconds()
-            ).toString();
+              const genDate = currentdate.getFullYear() +
+      
+              (currentdate.getMonth() + 1 < 10
+                ? "0" + (currentdate.getMonth() + 1)
+                : currentdate.getMonth() + 1).toString() +
+             
+              (currentdate.getDate() < 10
+                ? "0" + currentdate.getDate()
+                : currentdate.getDate()).toString() +
+             
+              (currentdate.getHours() < 10
+                ? "0" + currentdate.getHours()
+                : currentdate.getHours()).toString() +
+             
+              (currentdate.getMinutes() < 10
+                ? "0" + currentdate.getMinutes()
+                : currentdate.getMinutes()).toString() +
+             
+              (currentdate.getSeconds() < 10
+                ? "0" + currentdate.getSeconds()
+                : currentdate.getSeconds()).toString()
           axios({
             method: "POST",
             url: "https://posappserver.herokuapp.com/withdrawcentralmoney",
@@ -279,7 +274,7 @@ function WithdrawCentral() {
               Store_ID: localStorage.getItem('Store_ID'),
               Store_Name: Store_Name,
               Branch_ID: localStorage.getItem('Branch_ID'),
-              GenDate: GenDate,
+              GenDate: genDate,
               Type_Status: Status
             },
           }).then((res) => {

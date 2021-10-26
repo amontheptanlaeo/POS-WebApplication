@@ -54,14 +54,19 @@ function Recieve() {
             field: 'img',
             headerName: 'รูปบิล',
             width: 400,
+            renderCell: (params) => (
+                <>
+                   
+                        <a href={params.row.img} target='_blank'>
+                            {params.row.img}
+                        </a>
+                       
+                  
+                    </>)
           }
       ];
       
-    //   const rows = [
-    //     GoodHistory.map((e,idx)=>({ id: idx, firstName: `${e.Bill_Number}`, age: `${e.DateAdd_History}` }))
-    //     // { id: 1, firstName: `R2345`, age: '20/08/21' },
-    //     // { id: 2, firstName: 'R2344', age: '18/08/21' },
-    //   ];
+
 
       const rows = GoodHistory.map((e,idx)=>{
         return { id: idx+1, firstName: `${e.Goods_History_ID}`, age: `${e.DateAdd_History.replace("T"," ")}` , origin: `${e.Origin}` , img: `${e.LinkBill ? e.LinkBill:'ไม่มีรูป'}` }

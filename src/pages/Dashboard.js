@@ -67,7 +67,7 @@ function Dashboard() {
                     </Col>
                     <Col xs={12} sm={12} md={9} style={{paddingTop:'2rem'}}>
                         <ul>
-                            <Icon path='Product' img={basket} description='สินค้าคงคลัง' alert={alert > 0 ? 'Alert':null} count={alert}/>
+                            <Icon path='Product' img={basket} description='สินค้าคงคลัง' alertM={alert > 0 ? 'AlertM':null} count={alert}/>
                             <Icon path='Sell' img={sell} description='งานขาย'/>
                             <Icon path='AddProduct' img={add} description='เพิ่มสินค้า'/>
                             <Icon path='AddCategory' img={tag} description='เพิ่มหมวดหมู่'/>
@@ -104,7 +104,7 @@ function Dashboard() {
                             }
                             
                             {
-                                localStorage.getItem('Permistion') == 0 ?   <Icon path='AddEmployee' img={shirt} description='เพิ่มพนักงาน' alert={alertE > 0 ? 'Alert':null} count={alertE}/>:null
+                                localStorage.getItem('Permistion') == 0 ?   <Icon path='AddEmployee' img={shirt} description='เพิ่มพนักงาน' alertM={alertE > 0 ? 'AlertM':null} count={alertE}/>:null
                             }
 
                             {
@@ -123,23 +123,57 @@ function Dashboard() {
                 </Row>
                 </motion.div>
                 <ul className='res-Menu'>
-                    {/* <IconResp path='Product' img={basket} description='สินค้าคงคลัง'/>
-                    <IconResp path='Sell' img={graph} description='งานขาย'/>
-                    <IconResp path='Profit' img={basket} description='ภาพรวมยอดขาย'/>
-                    <IconResp path='Withdraw' img={graph} description='เบิกเงินทอน'/> */}
-                    <IconResp path='Product' img={basket} description='สินค้าคงคลัง'/>
-                    <IconResp path='Sell' img={sell} description='งานขาย'/>
-                    <IconResp path='AddProduct' img={add} description='เพิ่มสินค้า'/>
-                    <IconResp path='AddRecieve' img={delivery} description='เพิ่มแหล่งที่มา'/>
-                    <IconResp path='Barcode' img={barcode} description='พิมพ์/สร้างบาร์โค้ด'/>
-                    <IconResp path='Withdraw' img={money} description='เบิกเงินทอน'/>
-                    <IconResp path='Recieve' img={recieve} description='ประวัติการรับสินค้า'/>
-                    <IconResp path='ListBill' img={receipt} description='ประวัติรายการบิลขาย'/>
-                    <IconResp path='Profit' img={graph} description='ภาพรวมยอดขาย'/>
-                    <IconResp path='Conclude' img={receipt} description='สรุปยอดขาย'/>
-                    <IconResp path='AddEmployee' img={shirt} description='เพิ่มพนักงาน'/>
-                    <IconResp path='AddCategory' img={tag} description='เพิ่มหมวดหมู่'/>
-                    <IconResp path='AddBranch' img={shop} description='เพิ่มสาขา'/>
+                   
+
+                    <IconResp path='Product' img={basket} description='สินค้าคงคลัง' alertM={alert > 0 ? 'AlertM':null} count={alert}/>
+                            <IconResp path='Sell' img={sell} description='งานขาย'/>
+                            <IconResp path='AddProduct' img={add} description='เพิ่มสินค้า'/>
+                            <IconResp path='AddCategory' img={tag} description='เพิ่มหมวดหมู่'/>
+                            <IconResp path='AddRecieve' img={delivery} description='เพิ่มแหล่งที่มา'/>
+                            <IconResp path='Recieve' img={recieve} description='ประวัติการรับสินค้า'/>
+                            <IconResp path='ListBill' img={receipt} description='ประวัติรายการบิลขาย'/>
+                            <IconResp path='Withdraw' img={dollarbills} description='เบิกเงินทอน'/>
+                            {
+                                localStorage.getItem('Permistion') == 0 ? <IconResp path='SetWithdraw' img={moneypig} description='เพิ่มเงินกองกลาง'/>: localStorage.getItem('Permistion') == 1 ? <IconResp path='SetWithdraw' img={moneypig} description='เพิ่มเงินกองกลาง'/>:null
+                            }
+                            
+                            {
+                                localStorage.getItem('Permistion') == 0 ?  <IconResp path='WithdrawCentral' img={wallet} description='ถอนเงินกองกลาง'/>: localStorage.getItem('Permistion') == 1 ?  <IconResp path='WithdrawCentral' img={wallet} description='ถอนเงินกองกลาง'/>:null
+                            }
+                   
+                            {
+                                localStorage.getItem('Permistion') == 0 ?  <IconResp path='CheckWithdraw' img={pointerscreen} description='ประวัติกองกลาง'/>: localStorage.getItem('Permistion') == 1 ?  <IconResp path='CheckWithdraw' img={pointerscreen} description='ประวัติกองกลาง'/>:null
+                            }
+
+                            {
+                                localStorage.getItem('Permistion') == 0 ?  <IconResp path='CheckWithdrawCus' img={screencart} description='ประวัติเงินทอน'/>: localStorage.getItem('Permistion') == 1 ?  <IconResp path='CheckWithdrawCus' img={screencart} description='ประวัติเงินทอน'/>:null
+                            }
+                   
+                            {
+                                localStorage.getItem('Permistion') == 0 ?  <IconResp path='Profit' img={checklist} description='ภาพรวมยอดขาย'/>:null
+                            }
+                   
+                            {
+                                localStorage.getItem('Permistion') == 0 ?  <IconResp path="Conclude" img={graph} description='สรุปยอดขาย'/>: localStorage.getItem('Permistion') == 1 ?  <IconResp path="Conclude" img={graph} description='สรุปยอดขาย'/>:null
+                            }
+
+                            {
+                                localStorage.getItem('Permistion') == 0 ?  <IconResp path='CreateQuotation' img={wishlist} description='ออกใบเสนอราคา'/>:null
+                            }
+                            
+                            {
+                                localStorage.getItem('Permistion') == 0 ?   <IconResp path='AddEmployee' img={shirt} description='เพิ่มพนักงาน' alertM={alertE > 0 ? 'AlertM':null} count={alertE}/>:null
+                            }
+
+                            {
+                                localStorage.getItem('Permistion') == 0 ?   <IconResp path='ManageEmployee' img={megaphone} description='จัดการพนักงาน'/>:null
+                            }
+
+                            {
+                                localStorage.getItem('Permistion') == 0 ?   <IconResp path='AddBranch' img={shop} description='เพิ่มสาขา'/>:null
+                            }
+                            <IconResp path='Barcode' img={barcode} description='พิมพ์/สร้างบาร์โค้ด'/>
+                            <IconResp path='Close' img={calculator} description='ปิดร้าน/ตัดยอด'/>
 
                 </ul>
             </div>

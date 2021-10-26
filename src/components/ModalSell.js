@@ -157,9 +157,8 @@ function ModalSell({show , onHide , toggle , GoodsPrice}) {
      
       (currentdate.getSeconds() < 10
         ? "0" + currentdate.getSeconds()
-        : currentdate.getSeconds()).toString() +
-        (currentdate.getMilliseconds() < 100 
-        ? "00" + currentdate.getMilliseconds():currentdate.getMilliseconds()).toString()
+        : currentdate.getSeconds()).toString()
+
         console.log('กำลังPOST')
         
         await axios({

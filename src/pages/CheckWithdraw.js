@@ -54,7 +54,7 @@ function CheckWithdraw() {
       ];
       
       const rows = withDrawCen.map((e,idx)=>{
-        return { id: idx+1, firstName: `${e.Type_Status}`, total:`${e.MoneyTotal}` ,age: `${e.DateAdd.replace("T"," ")}` , nameSeller: `${e.FirstName} ${e.LastName}`  }
+        return { id: idx+1, firstName: `${e.Type_Status == 'WithDraw' ? 'เบิกเงินทอน':e.Type_Status == 'AddMoney' ? 'เพิ่มกองกลาง':e.Type_Status == 'Cut off amount' ? 'ส่งเงินคืน':e.Type_Status}`, total:`${e.Type_Status == 'WithDraw' ? "-"+e.MoneyTotal:e.Type_Status == 'AddMoney' ? "+"+e.MoneyTotal:e.Type_Status == 'Cut off amount' ? "+"+e.MoneyTotal:"-"+e.MoneyTotal}` ,age: `${e.DateAdd.replace("T"," ")}` , nameSeller: `${e.FirstName} ${e.LastName}`  }
       })
 
     return (
@@ -64,7 +64,7 @@ function CheckWithdraw() {
                 {/* <BlankSide/> */}
             </Col>
             <Col md={9} lg={9} style={{paddingTop:'2rem' , display:'flex' , flexDirection:'column' , height:'100%' }}>
-                <h4>ประวัติการเบิกถอนกองกลาง</h4>
+                <h4>ประวัติการเพิ่มถอนกองกลาง</h4>
                     <div style={{ height: '80vh', width: '100%' }}>
                         <DataGrid
                             rows={rows}
