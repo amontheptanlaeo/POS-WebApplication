@@ -67,8 +67,8 @@ function MonthReport({data , data2 , total , day , branchName}) {
                                                         <th scope="row">{idx+1}</th>
                                                         <td>{e2.Goods_Name}</td>
                                                         <td>{e['SUM(Sell_History.Count_Sell)']}</td>
-                                                        <td>{e['SUM(Sell_History.Price_Total)']}</td>
-                                                        <td>{e['SUM(Sell_History.Price_Total)']-(e['SUM(Sell_History.Count_Sell)']*e2['AVG(Goods_History.Cost_Unit)'])}</td>
+                                                        <td>{e['SUM(Sell_History.Price_Total)']} บาท</td>
+                                                        <td>{e['SUM(Sell_History.Price_Total)']-(e['SUM(Sell_History.Count_Sell)']*e2['AVG(Goods_History.Cost_Unit)'])} บาท</td>
                                                      </tr>
                                                 )
 
@@ -85,7 +85,7 @@ function MonthReport({data , data2 , total , day , branchName}) {
                                     <td></td>
                                     <td></td>
                                     <td><b>รวม</b></td>
-                                    <td>{total}</td>
+                                    <td>{total} บาท</td>
                                 </tr>
                               
                             </tbody>

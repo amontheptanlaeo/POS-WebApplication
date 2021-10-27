@@ -65,9 +65,9 @@ function RecieveReport({ data , bill}) {
                                             <tr>
                                                 <th scope="row">{idx+1}</th>
                                                 <td>{e.Goods_Name}</td>
-                                                <td>{e.Cost_Unit}</td>
+                                                <td>{e.Cost_Unit} บาท</td>
                                                 <td>{e.Count_Recive}</td>
-                                                <td>{e.Cost_Total}</td>
+                                                <td>{e.Cost_Total} บาท</td>
                                              </tr>
                                         )
                                     })
@@ -77,7 +77,7 @@ function RecieveReport({ data , bill}) {
                                                 <td></td>
                                                 <td></td>
                                                 <td><b>ต้นทุนรวม</b></td>
-                                                <td>{total}</td>
+                                                <td>{total} บาท</td>
                                 </tr>
                               
                             </tbody>

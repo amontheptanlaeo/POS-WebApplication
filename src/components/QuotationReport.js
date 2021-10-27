@@ -66,9 +66,9 @@ function QuotationReport({NameReciver , Addr , Contact , cart}) {
                                             <tr>
                                                 <th scope="row">{idx+1}</th>
                                                 <td>{e.Goods_Name}</td>
-                                                <td>{e.Price}</td>
+                                                <td>{e.Price} บาท</td>
                                                 <td>{e.Count}</td>
-                                                <td>{e.Total}</td>
+                                                <td>{e.Total} บาท</td>
                                              </tr>
                                         )
                                     })
@@ -78,7 +78,7 @@ function QuotationReport({NameReciver , Addr , Contact , cart}) {
                                                 <td></td>
                                                 <td></td>
                                                 <td><b>รวม</b></td>
-                                                <td>{total}</td>
+                                                <td>{total} บาท</td>
                                 </tr>
                               
                             </tbody>

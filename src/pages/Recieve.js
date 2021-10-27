@@ -55,14 +55,15 @@ function Recieve() {
             headerName: 'รูปบิล',
             width: 400,
             renderCell: (params) => (
-                <>
-                   
-                        <a href={params.row.img} target='_blank'>
-                            {params.row.img}
-                        </a>
-                       
-                  
-                    </>)
+                <>  
+                {
+                    params.row.img == 'ไม่มีรูป' ? <p style={{margin:'0'}}>{params.row.img}</p>:<a href={params.row.img} target='_blank'>
+                    {params.row.img}
+                </a>
+                }
+                    
+
+                </>)
           }
       ];
       

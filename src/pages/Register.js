@@ -30,6 +30,7 @@ function Register() {
       e.preventDefault()
       try {
         if(pass != conpass) return alert('รหัสผ่านไม่ตรงกัน')
+        if(CitizenNumber.length != 13) return alert('กรอกเลขบัตรประชาชนไม่ครบ')
         const currentdate = new Date();
         const genDate = currentdate.getFullYear() +
       
@@ -130,11 +131,11 @@ function Register() {
             {err && <Alert variant="danger">{err}</Alert>}
             <Form onSubmit={(e)=>Register(e)}>
               <Form.Group id="storeName">
-                <Form.Label>ชื่อร้านค้า</Form.Label>
+                <Form.Label>ชื่อร้านค้า (ไทย/อังกฤษ)</Form.Label>
                 <Form.Control type="text" placeholder="ระบุชื่อร้านค้า" value={storeName} onChange={handleChangeStoreName}  />
               </Form.Group>
               <Form.Group id="branchName">
-                <Form.Label>ชื่อสาขา</Form.Label>
+                <Form.Label>ชื่อสาขา (ไทย/อังกฤษ)</Form.Label>
                 <Form.Control type="text" placeholder="ระบุชื่อสาขา" value={branchName} onChange={handleChangeBranchName}  />
               </Form.Group>
               <Form.Group id="FName">

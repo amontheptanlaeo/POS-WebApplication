@@ -344,6 +344,7 @@ const uploadImage = async (files) => {
                     required
                   />
                 </Form.Group>
+                <p style={{marginBottom:'0.5rem'}}>เพิ่มรูปบิลรับสินค้า</p>
                 <input
                         style={{marginBottom:'2rem'}}
                             type="file"

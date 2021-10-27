@@ -56,9 +56,9 @@ function SellReport({data ,bill}) {
                                             <tr>
                                                 <th scope="row">{idx+1}</th>
                                                 <td>{e.Goods_Name}</td>
-                                                <td>{e.Price_Unit}</td>
+                                                <td>{e.Price_Unit} บาท</td>
                                                 <td>{e.Count_Sell}</td>
-                                                <td>{e.Price_Total}</td>
+                                                <td>{e.Price_Total} บาท</td>
                                              </tr>
                                         )
                                     })
@@ -68,7 +68,7 @@ function SellReport({data ,bill}) {
                                     <td></td>
                                     <td></td>
                                     <td><b>รวม</b></td>
-                                    <td>{total}</td>
+                                    <td>{total} บาท</td>
                                 </tr>
                               
                             </tbody>

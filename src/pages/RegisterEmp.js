@@ -33,6 +33,8 @@ function RegisterEmp() {
       try {
 
         if(pass != conpass) return alert('รหัสผ่านไม่ตรงกัน')
+        if(CitizenNumber.length != 13) return alert('กรอกเลขบัตรประชาชนไม่ครบ')
+
 
         const currentdate = new Date();
         const genDate = currentdate.getFullYear() +

@@ -66,11 +66,8 @@ function App() {
 
     return (
       <Router>
-      
-        <NavAdmin />
-
+          <NavAdmin />
         <Switch>
-
           <Route path="/" exact component={Dashboard} />
           <Route path="/Conclude/Side/:branch/:branchName" component={ConcludeSide} />
           <Route path="/Conclude" component={Conclude} />

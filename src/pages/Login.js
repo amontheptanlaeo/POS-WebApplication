@@ -56,8 +56,6 @@ function Login() {
         }else{
           alert('รอการอนุมัติ')
         }
-
-        
       }else{
         alert('รหัสผ่าน หรือ เมลไม่ถูกต้อง')
       }
@@ -93,7 +91,6 @@ function Login() {
             </motion.p>
             <p className="mt-2">อยากเปิดร้านค้า? <Link to="/Register">สมัครเป็นเจ้าของร้าน</Link></p>
             <p className="mt-2">เป็นพนักงานมาใหม่? <Link to="/RegisterEMP">สมัครเป็นพนักงาน</Link></p>
-            <p className="mt-2">ลืมรหัสผ่าน? <Link to="/ResetPassword">คลิก</Link></p>
           </Form>
         </div>
         <div className="SidePic" style={{WebkitBoxReflect:" below 5px linear-gradient(transparent, white)"}}>

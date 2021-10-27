@@ -72,11 +72,6 @@ function NavbarAdmin() {
                     </Link>
                 </li>:null
                 }
-                {/* <li>
-                    <Link to="/Setting" ClassName="LOGO-Text" style={{ textDecoration: 'none', textAlign: "center", width: '100%', color: 'black' }}>
-                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.9 } }}>ตั้งค่าร้าน</motion.span>
-                    </Link>
-                </li> */}
 
                 <li className='Logout-admin' onClick={signOut} >
                     <Link ClassName="LOGO-Text" style={{ textDecoration: 'none', textAlign: "center", width: '100%', color: 'black' }}>

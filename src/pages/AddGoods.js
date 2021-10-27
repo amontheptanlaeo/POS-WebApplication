@@ -196,6 +196,7 @@ function AddGoods() {
                           <Form.Label>เลขบาร์โค้ดสินค้า</Form.Label>
                           <Form.Control type="text" placeholder="ระบุเลขบาร์โค้ด" value={Goods_ID} onChange={(e)=>setGoods_ID(e.target.value)} required />
                         </Form.Group>
+                        <p style={{marginBottom:'0.5rem'}}>เพิ่มรูปสินค้า</p>
                         <input
                         style={{marginBottom:'2rem'}}
                             type="file"
