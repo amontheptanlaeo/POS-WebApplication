@@ -62,7 +62,7 @@ function ManageEmp() {
             <Col md={9} lg={9} style={{paddingTop:'2rem' , display:'flex' , flexDirection:'column' , height:'100%' }}>
               <Container>
                   <div style={{display:'flex' , justifyContent:'center' , alignItems:'center'}}>
-                    <h4>เพิ่มพนักงาน</h4>
+                    <h4>จัดการพนักงาน</h4>
                   </div>
                   <Table>
                             <thead style={{textAlign:'center'}}>

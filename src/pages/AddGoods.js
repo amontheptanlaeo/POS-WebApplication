@@ -80,28 +80,6 @@ function AddGoods() {
        return alert('บาร์โค้ดซ้ำ')
      }
 
-
-     
-      // await axios({
-      //   method: "POST",
-      //   url: "https://posappserver.herokuapp.com/postgoods",
-      //   data: {
-      //      Goods_ID : Goods_ID,
-      //      Count_Stock: 0,
-      //      Price: 0,
-      //      Goods_Name : Goods_Name,
-      //      Type_ID : Type_ID,
-      //      Branch_ID : localStorage.getItem('Branch_ID'),
-      //      Goods_img : Goods_img ? Goods_img:'http://www2.tistr.or.th/Projects/tistrbiza/images/default_product.png',
-      //      Store_ID : localStorage.getItem('Store_ID'),
-      //      Favorite: false
-      //   },
-      // }).then((res)=>{
-      //   alert('OK')
-      //   console.log('SUCCESS')
-      //   console.log(res)
-      // });
-
     } catch (error) {
       console.log(error)
     }
